@@ -1,0 +1,19 @@
+{
+  "name": "blog",
+  "version": "0.0.0",
+  "description": "Hans Chan's blog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csbun/blog.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/csbun/blog/issues"
+  },
+  "homepage": "https://github.com/csbun/blog",
+  "dependencies": {
+    "moment": "latest",
+    "change-case": "latest"
+  }
+}
