@@ -20,14 +20,70 @@ Views ---> (actions) ---> Dispatcher --> (registered callback) --> Stores -----+
 
 官网说 Flux 有 3 个主要的组成部分：__dispatcher__、__stores__ 和 __views__。同时，我觉得 __action__ 也是一个非常重要的概念。
 
+> 注：文中代码大部分截取自 [flux-todomvc](https://github.com/facebook/flux/tree/master/examples/flux-todomvc)
+
 ### views
 
 __view__ 很好理解，就是一大堆的 React 组件，在标准代码结构中表现为 `components/*.react.js`。在 __view__ 创建时会向 __stores__ 绑定 `'change'` 事件，当其在销毁之前取消绑定。
 
+{% highlight javascript %}
+var TodoApp = React.createClass({
+
+  // ...
+
+  componentDidMount: function() {
+    TodoStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    TodoStore.removeChangeListener(this._onChange);
+  },
+
+  render: function() {
+    // ...
+  },
+
+  /**
+   * Event handler for 'change' events coming from the TodoStore
+   */
+  _onChange: function() {
+    this.setState(getTodoState());
+  }
+});
+{% endhighlight %}
+
 另一方面，__view__ 会产生 __action__，传递给 __dispatcher__。
 
 {% highlight javascript %}
-// TODO
+var Header = React.createClass({
+  /**
+   * @return {object}
+   */
+  render: function() {
+    return (
+      <header id="header">
+        <h1>todos</h1>
+        <TodoTextInput
+          id="new-todo"
+          placeholder="What needs to be done?"
+          onSave={this._onSave}
+        />
+      </header>
+    );
+  },
+
+  /**
+   * Event handler called within TodoTextInput.
+   * Defining this here allows TodoTextInput to be used in multiple places
+   * in different ways.
+   * @param {string} text
+   */
+  _onSave: function(text) {
+    if (text.trim()){
+      TodoActions.create(text);
+    }
+  }
+});
 {% endhighlight %}
 
 ### dispatcher
@@ -76,10 +132,41 @@ module.exports = AppDispatcher;
 
 > Their role is somewhat similar to a model in a traditional MVC, but they manage the state of many objects — they are not instances of one object.
 
+{% highlight javascript %}
+var TodoStore = assign({}, EventEmitter.prototype, {
+
+  // ...
+
+  emitChange: function() {
+    this.emit(CHANGE_EVENT);
+  },
+
+  addChangeListener: function(callback) {
+    this.on(CHANGE_EVENT, callback);
+  },
+
+  removeChangeListener: function(callback) {
+    this.removeListener(CHANGE_EVENT, callback);
+  }
+});
+{% endhighlight %}
+
 在 __stores__ 里，将 __action__ 注册到 __dispatcher__，其中的回调方法直接影响其中的数据模型，而当这些数据变化的时候就会触发 `'change'` 事件。
 
 {% highlight javascript %}
-// TODO
+AppDispatcher.register(function(payload) {
+  var action = payload.action;
+
+  switch(action.actionType) {
+    case 'ACTION_NAME':
+      // ...
+    default:
+      return true;
+  }
+
+  TodoStore.emitChange();
+  return true; // No errors.  Needed by promise in Dispatcher.
+});
 {% endhighlight %}
 
 ### action
@@ -87,7 +174,19 @@ module.exports = AppDispatcher;
 我想上面已经讲清楚了，__view__ 或者服务器产生 __action__，传递给 __dispatcher__。
 
 {% highlight javascript %}
-// TODO
+
+var TodoActions = {
+
+  create: function(text) {
+    AppDispatcher.handleViewAction({
+      actionType: 'ACTION_NAME',
+      text: text
+    });
+  },
+
+  // ...
+
+};
 {% endhighlight %}
 
 
