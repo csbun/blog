@@ -2,7 +2,7 @@
 layout: post
 title:  "Flux 学习笔记"
 date:   2014-12-31 16:43:56
-categories: flux, react
+categories: flux react
 ---
 
 大部分和 Flux 有关的东西都能看到这么一个图，讲述 Flux “单向数据流”的概念。
