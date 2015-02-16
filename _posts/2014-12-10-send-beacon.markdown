@@ -15,7 +15,7 @@ categories: log async
 
 官网定义
 
-```
+```java
 partial interface Navigator {
     boolean sendBeacon(DOMString url, optional (ArrayBufferView or Blob or DOMString or FormData)? data = null);
 };
@@ -23,10 +23,10 @@ partial interface Navigator {
 
 使用
 
-{% highlight javascript %}
+```javascript
 var data = new FormData();
 navigator.sendBeacon('path/to/beacon', data);
-{% endhighlight %}
+```
 
 就是这样，会发出一个 `POST` 请求。
 
@@ -43,36 +43,36 @@ navigator.sendBeacon('path/to/beacon', data);
 
 #### get
 
-{% highlight javascript %}
+```javascript
 window.addEventListener('unload', function () {
     $.get('/log/get', { type: 'get' }, function (res) {
         console.log(res);
     });
 });
-{% endhighlight %}
+```
 
 #### post
 
-{% highlight javascript %}
+```javascript
 window.addEventListener('unload', function () {
     $.post('/log/post', { type: 'post' }, function (res) {
         console.log(res);
     });
 });
-{% endhighlight %}
+```
 
 #### sendBeacon
 
-{% highlight javascript %}
+```javascript
 window.addEventListener('unload', function () {
     var data = new FormData();
     data.append('type', 'beacon');
     navigator.sendBeacon('/log/beacon', data);
 });
-{% endhighlight %}
+```
 
 ### 后端
-{% highlight javascript %}
+```javascript
 var koa = require('koa'),
     route = require('koa-route'),
     koaBody = require('koa-body');
@@ -114,7 +114,7 @@ app.use(route.get('/log/get', function * () {
     logger('get: ' + this.request.body);
     this.body = yield output;
 }));
-{% endhighlight %}
+```
 
 ### 用例
 
@@ -135,7 +135,7 @@ app.use(route.get('/log/get', function * () {
 
 将上述前端代码改成
 
-{% highlight javascript %}
+```javascript
 window.addEventListener('unload', function () {
     $.get('/log/get', { type: 'get' }, function (res) {
         console.log(res);
@@ -144,7 +144,7 @@ window.addEventListener('unload', function () {
         console.log(res);
     });
 });
-{% endhighlight %}
+```
 
 那么后端通常能获得第一个 `get` 的请求。假如先写 `$.post` 则同样会有 `post` 请求。
 

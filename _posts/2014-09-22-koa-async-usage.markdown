@@ -7,7 +7,7 @@ categories: koa async generator
 
 ## 使用 Generator 简化异步回调
 
-{% highlight javascript %}
+```javascript
 var gen;
 function async() {
     setTimeout(function () {
@@ -21,7 +21,7 @@ function * genFn() {
 
 gen = genFn();
 gen.next();
-{% endhighlight %}
+```
 
 输出的结果是
 
@@ -31,7 +31,7 @@ res is: 100
 
 如果将后面的 `.next()` 封装起来，就变成这样
 
-{% highlight javascript %}
+```javascript
 // 当前的 Generator
 var activeGenerator;
 
@@ -81,7 +81,7 @@ gQueue(function * flow(next) {
 // y is 100
 // z is  100
 // end
-{% endhighlight %}
+```
 
 > 参考文章: [使用 (Generator) 生成器解决 JavaScript 回调嵌套问题](http://huangj.in/765)
 
@@ -91,7 +91,7 @@ koa 使用的就是上面的原理，按照 [co](https://github.com/visionmedia/
 
 main.js
 
-{% highlight javascript %}
+```javascript
 // ...
 
 var template = require('./template');
@@ -103,11 +103,11 @@ app.use(function * (next) {
 });
 
 // ...
-{% endhighlight %}
+```
 
 template.js
 
-{% highlight javascript %}
+```javascript
 exports.tpl = function (path) {
   return function (cb) {
         var tmpl = new Template(path); // 某种模板渲染器的构造函数
@@ -122,15 +122,15 @@ exports.tpl = function (path) {
     };
 };
 // ...
-{% endhighlight %}
+```
 
 注意到 `gNext` 输出的是如下形式的 function
 
-{% highlight javascript %}
+```javascript
 function (err, data) {
     // 处理 err 和 data
 }
-{% endhighlight %}
+```
 
 因此 `template.js` 中的 cb 便是上述形式。
 

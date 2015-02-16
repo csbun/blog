@@ -10,16 +10,16 @@ categories: Angular
 
 ### example
 
-{% highlight html %}
+```html
 <body ng-app="app">
     <p><input ng-model="text"></p>
     <p>input: {{text}}</p>
 </body>
-{% endhighlight %}
+```
 
-{% highlight javascript %}
+```javascript
 angular.module('app', []);
-{% endhighlight %}
+```
 
 ### ng-app
 
@@ -38,14 +38,14 @@ ng 脚本的作用域
 
 ### example
 
-{% highlight html %}
+```html
 <body ng-controller="Ctrl">
     <p><input ng-model="text"></p>
     <p><button ng-click="showMe()">Show Me</button></p>
 </body>
-{% endhighlight %}
+```
 
-{% highlight javascript %}
+```javascript
 angular.module('app', [])
     .controller('Ctrl', function ($scope) {
         $scope.text = 'hello!';
@@ -53,7 +53,7 @@ angular.module('app', [])
             alert($scope.text);
         };
     });
-{% endhighlight %}
+```
 
 ### controller
 
@@ -69,22 +69,22 @@ angular.module('app', [])
 
 ### example
 
-{% highlight html %}
+```html
 <ul>
     <li ng-repeat="item in list">
         <span item="{{age}}">{{item.name}}</span>
         <span class="gray">{{item.carrier}}</span>
     </li>
 </ul>
-{% endhighlight %}
+```
 
-{% highlight javascript %}
+```javascript
 $scope.list = [{
     age: 2,
     carrier: 'AT&T',
     name: 'MOTOROLA ATRIX\u2122 4G'
 }, ...];
-{% endhighlight %}
+```
 
 
 依赖注入
@@ -92,7 +92,7 @@ $scope.list = [{
 
 ### example
 
-{% highlight javascript %}
+```javascript
 angular.module('app', [])
     .service('DataService', function () {
         var data = [{
@@ -109,13 +109,13 @@ angular.module('app', [])
     .controller('Ctrl', function ($scope, DataService) {
         $scope.list = DataService.all();
     });
-{% endhighlight %}
+```
 
 注意到 `service` 里的 `DataService` 是我们自定义的，但在下面的 `controller` 中却可以直接使用。这个是 ng 过控制器构造函数的参数名字来推断依赖服务名称。
 
 ### 更好理解的方式
 
-{% highlight javascript %}
+```javascript
 angular.module('app', [])
     .service('DataService', function () {
         // ...
@@ -127,7 +127,7 @@ angular.module('app', [])
             // ...
         }
     ]);
-{% endhighlight %}
+```
 
 `controller` 传入数组：数组最后一个元素是 `controller` 的构造函数，前面的元素是需要注入到这个 `controller` 的服务。
 
@@ -141,7 +141,7 @@ Directive
 
 ### example
 
-{% highlight html %}
+```html
 <body ng-controller="Ctrl">
     <p>First Directive</p>
     <list></list>
@@ -149,9 +149,9 @@ Directive
     <p>Second Directive</p>
     <list></list>
 </body>
-{% endhighlight %}
+```
 
-{% highlight javascript %}
+```javascript
 angular.module('app', [])
     .service('DataService', function () {
         // ...
@@ -166,7 +166,7 @@ angular.module('app', [])
             }
         };
     });
-{% endhighlight %}
+```
 
 ### restrict
 
@@ -194,7 +194,7 @@ angular.module('app', [])
 
 可以通过下面的方式指定 `scope`。
 
-{% highlight javascript %}
+```javascript
 app.directive('list', function (DataService) {
     return {
         restrict: 'E',
@@ -206,7 +206,7 @@ app.directive('list', function (DataService) {
         }
     };
 });
-{% endhighlight %}
+```
 
 ### $element
 
@@ -223,7 +223,7 @@ Filters
 
 ### example
 
-{% highlight html %}
+```html
 <input type="text" placeholder="Search" ng-model="search.$">
 <ul class="a">
     <li ng-repeat="item in list | filter:search:strict">
@@ -231,15 +231,15 @@ Filters
         <span class="gray">{{item.carrier}}</span>
     </li>
 </ul>
-{% endhighlight %}
+```
 
 ### 自定义
 
-{% highlight html %}
+```html
 <span>{{num | fixedTwo}}</span>
-{% endhighlight %}
+```
 
-{% highlight javascript %}
+```javascript
 app.filter('fixedTwo', function () {
     return function (input) {
         try {
@@ -249,7 +249,7 @@ app.filter('fixedTwo', function () {
         }
     };
 });
-{% endhighlight %}
+```
 
 
 Module
@@ -257,7 +257,7 @@ Module
 
 ### example
 
-{% highlight javascript %}
+```javascript
 angular.module('util', [])
     .service('DataService', function ($http) {
         // ...
@@ -268,7 +268,7 @@ angular.module('util', [])
     });
 
 angular.module('app', ['util']);
-{% endhighlight %}
+```
 
 这里模块 `app` 引用了模块 `util`，因此可以使用其中的指令 `list`。
 
@@ -280,12 +280,12 @@ Route
 
 使用插件 `angular-route`。
 
-{% highlight html %}
+```html
 <div ng-view></div>
-{% endhighlight %}
+```
 
 
-{% highlight javascript %}
+```javascript
 angular.module('app', ['ngRoute', 'util'])
     .config(function($routeProvider) {
         // 路由配置
@@ -308,7 +308,7 @@ angular.module('app', ['ngRoute', 'util'])
     .controller('DetailCtrl', function ($scope) {
         $scope.name = 'Detail';
     });
-{% endhighlight %}
+```
 
 
 一些链接
