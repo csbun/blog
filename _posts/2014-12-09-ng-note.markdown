@@ -5,6 +5,8 @@ date:   2014-12-09 21:11:20
 categories: Angular
 ---
 
+{% raw %}
+
 最简单的例子
 ---
 
@@ -185,7 +187,7 @@ angular.module('app', [])
 
 网上有好多讨论，大致意思是：
 
-- `link` 做的是数据、时间绑定、dom 修改一类的操作（在 dom 渲染后）
+- `link` 做的是数据、事件绑定、dom 修改一类的操作（在 dom 渲染后）
 - `controller` 主要做业务逻辑，directive 之间的通信（[官网](https://docs.angularjs.org/guide/directive)有例子）
 
 ### $scope
@@ -316,4 +318,6 @@ angular.module('app', ['ngRoute', 'util'])
 
 - [官网](https://angularjs.org/)
 - [AngularJS中文社区](http://angularjs.cn/)
+
+{% endraw %}
 

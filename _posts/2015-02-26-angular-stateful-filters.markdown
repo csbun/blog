@@ -9,7 +9,8 @@ categories: Angular Stateful Filter Ajax
 
 Angular 在 1.3.0 之后的版本提出了 [Stateful filters](https://docs.angularjs.org/guide/filter) 的概念，但不是很推荐使用。
 
-> Stateful filters
+> ### Stateful filters
+> 
 > It is strongly discouraged to write filters that are stateful, because the execution of those can't be optimized by Angular, which often leads to performance issues. Many stateful filters can be converted into stateless filters just by exposing the hidden state as a model and turning it into an argument for the filter.
 > 
 > If you however do need to write a stateful filter, you have to mark the filter as $stateful, which means that it will be executed one or more times during the each $digest cycle.
@@ -21,12 +22,14 @@ filterFn.$stateful = true;
 ```
 
 下面是我自己的例子：
+{% raw %}
 
 ```html
 <div ng-controller="BusinessCtrl">
-    <p>{{bid | businessDisplay}}</p>
+    <p>{{ bid | businessDisplay }}</p>
 </div>
 ```
+{% endraw %}
 
 ```javascript
 angular.module('business', [])
