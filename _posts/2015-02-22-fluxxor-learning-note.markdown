@@ -7,7 +7,7 @@ categories: react flux fluxxor
 
 ## 从 Flux 开始
 
-前段时间想真正用 React 写个运营管理后台，然后就抓起 Flux 开搞，模式基本就是我之前写的[这篇文章]() 那样。但问题很快就出现了，一个字“繁琐”：我要写大量的 actions 和 stores，每个 store 还要写一些相似的逻辑去 bind 对应的 actions。
+前段时间想真正用 React 写个运营管理后台，然后就抓起 Flux 开搞，模式基本就是我之前写的[这篇文章](http://csbun.github.io/blog/flux/react/2014/12/31/flux-learning-note.html) 那样。但问题很快就出现了，一个字“繁琐”：我要写大量的 actions 和 stores，每个 store 还要写一些相似的逻辑去 bind 对应的 actions。
 
 ## 转向 Fluxxor
 
@@ -15,7 +15,7 @@ categories: react flux fluxxor
 
 ### Router
 
-使用 [react-router]() 路由作为程序入口：
+使用 [react-router](https://github.com/rackt/react-router) 路由作为程序入口：
 
 ```javascript
 var React = require('react');
