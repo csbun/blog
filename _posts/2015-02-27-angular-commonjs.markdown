@@ -29,7 +29,7 @@ define([
 });
 ```
 
-其中的 `angular` 和 `'angular-route'` 都是我用 bower 下载并在 `require.config()` 中定义的：
+其中的 `'angular'` 和 `'angular-route'` 都是用 bower 下载并在 `require.config()` 中定义的：
 
 ```javascript
 require.config({
@@ -48,8 +48,6 @@ require.config({
     },
     deps: ['public/routes']
 });
-</script>
-</html>
 ```
 
 可见这里的配置比较繁琐，而且我们还要被强迫要去了解 `angular-route` 的 module 定义是 `'ngRoute'`。
@@ -57,7 +55,7 @@ require.config({
 
 ### CommonJS 模式
 
-下面我们改用 CommonJS，首先下载不使用 bower，直接上 npm：
+下面我们改用 CommonJS，首先，下载不使用 bower了，直接上 npm：
 
 ```
 npm i --save angular
@@ -137,10 +135,10 @@ var ape = angular.module('ape', [
         require('./my.module'),
     ])
     .controller('AppCtrl', [
-        require(./my.service),
-        function (MyService) {
-            // 这里的 MyService 是形参，不一定要和上面的 SERVICE_NAME 相同
-            MyService.someMethod();
+        require(./my.service),  // 这里相当于 SERVICE_NAME (= 'MyService')
+        function (MyServiceArgName) {
+            // 这里的 MyServiceArgName 是形参，不需要和上面的 SERVICE_NAME 相同
+            MyServiceArgName.someMethod();
             // ...
         }
     ]);;

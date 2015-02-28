@@ -11,3 +11,8 @@ github_username: csbun
 # Build settings
 markdown: redcarpet
 #markdown: kramdown
+
+# 时区
+timezone: America/New_York
+
+
