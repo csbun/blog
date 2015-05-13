@@ -5,6 +5,8 @@ date:   2015-04-16 17:58:21
 categories: selenium ui test
 ---
 
+`注：` 本文__未完成__。
+
 ## 准备环境
 
 [Selenium](http://www.seleniumhq.org/) 虽然官网做得很丑，但是他所支持的环境还是很全面的，这里我记录一下我在 node 上的使用过程。
