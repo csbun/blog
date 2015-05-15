@@ -1,0 +1,29 @@
+.footer
+  padding: $spacing-unit-4 0
+  background: $monokai-invisibles
+  color: $monokai-foreground
+  text-align: center
+  @include media-min($on-palm)
+    position: fixed
+    bottom: 0
+    width: $aside-width
+    background: $monokai-invisibles
+
+  .links
+    margin: $spacing-unit-2
+    >li
+      display: inline
+      @include media-min($on-palm)
+        text-align: right
+        display: block
+
+      >a
+        &,
+        &:visited,
+        &:hover
+          color: $monokai-type
+          text-decoration: none
+
+  .footer-title
+    @include media-min($on-palm)
+      display: none

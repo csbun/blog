@@ -6,6 +6,7 @@ categories: selenium ui test
 ---
 
 `注：` 本文__未完成__。
+看看这个 http://csbun.github.io/blog/browser-perf/selenium/performance/2015/02/10/use-browser-perf.html 也用了 Selenium
 
 ## 准备环境
 

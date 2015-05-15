@@ -7,7 +7,7 @@ categories: flux react
 
 大部分和 Flux 有关的东西都能看到这么一个图，讲述 Flux “单向数据流”的概念。
 
-<img src="https://github.com/facebook/flux/raw/master/docs/img/flux-diagram-white-background.png" alt="Flux" style="max-width:700px;">
+<img src="https://github.com/facebook/flux/raw/master/docs/img/flux-diagram-white-background.png" alt="Flux" style="max-width:630px;">
 
 相同的，Geek 一点的有下面这个：
 
@@ -188,5 +188,3 @@ var TodoActions = {
 
 };
 ```
-
-

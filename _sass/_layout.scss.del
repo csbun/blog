@@ -1,3 +1,11 @@
+
+.page-content {
+    margin-left: $aside-width;
+    background: #fff;
+}
+
+
+
 /**
  * Site header
  */
