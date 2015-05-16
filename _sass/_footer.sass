@@ -6,8 +6,9 @@
   @include media-min($on-palm)
     position: fixed
     bottom: 0
-    width: $aside-width
     background: $monokai-invisibles
+  @include media-min($on-laptop)
+    width: $aside-width
 
   .links
     margin: $spacing-unit-2
@@ -23,6 +24,13 @@
         &:hover
           color: $monokai-type
           text-decoration: none
+
+    .username
+      @include media-min($on-palm)
+        display: none
+      @include media-min($on-laptop)
+        display: inline
+
 
   .footer-title
     @include media-min($on-palm)

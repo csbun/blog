@@ -1,12 +1,13 @@
-$aside-logo-palm-size: 36px
-$aside-logo-laptop-size: 160px
 
 aside
   @include media-min($on-palm)
     position: fixed
-    width: $aside-width
+    left: 0
     height: 100%
     background: $monokai-invisibles
+  @include media-min($on-laptop)
+    left: inherit
+    width: $aside-width
 
   a
     &,
@@ -30,7 +31,7 @@ aside
       border-radius: $aside-logo-laptop-size / 2
       overflow: hidden
       @include transition-fast(width)
-      @include media-min($on-palm)
+      @include media-min($on-laptop)
         float: none
         margin: auto
         width: $aside-logo-laptop-size
@@ -41,10 +42,17 @@ aside
       padding-left: $spacing-unit-4
       line-height: $aside-logo-palm-size
       @include media-min($on-palm)
-        float: none
         padding-left: 0
         padding-top: $spacing-unit-4
+        -webkit-writing-mode: vertical-rl
+        -ms-writing-mode: vertical-rl
+        writing-mode: vertical-rl
+      @include media-min($on-laptop)
+        float: none
         text-align: center
+        -webkit-writing-mode: inherit
+        -ms-writing-mode: inherit
+        writing-mode: inherit
 
 
     .menu
