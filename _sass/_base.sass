@@ -17,6 +17,13 @@
     width: 16px
     height: 16px
     vertical-align: middle
+    @include media-min($on-palm)
+      width: 21px
+      height: 21px
+    @include media-min($on-laptop)
+      width: 16px
+      height: 16px
+
 
     path
       fill: $grey-color

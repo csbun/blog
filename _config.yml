@@ -6,13 +6,12 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "/blog" # the subpath of your site, e.g. /blog/
 url: "https://csbun.github.io/blog/" # the base hostname & protocol for your site
 twitter_username: csbun
-github_username: csbun 
+github_username: csbun
 
 # Build settings
+highlighter: pygments
 markdown: redcarpet
 #markdown: kramdown
 
 # 时区
 timezone: America/New_York
-
-
