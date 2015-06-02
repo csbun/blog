@@ -1,0 +1,95 @@
+---
+layout: post
+title:  "ServiceWorker"
+date:   2015-06-02 20:57:35
+categories: ServiceWorker
+---
+
+我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 worker 线程，用于异步处理一些与页面元素、界面交互无关的工作。
+
+## 运行环境
+
+### 浏览器支持
+
+- Chrome >= 40.0
+- Firefox >= 33.0
+- Opera >= 24
+- IE、Safari 不支持
+
+### 需要 HTTPS
+
+由于安全问题，ServiceWorker 只能在 HTTPS 环境下运行。但是在开发环境，`localhost` 和 `127.0.0.1` 也是允许的。
+
+### 调试
+
+Chrome DevTools 提供了查看当前运行中的 ServiceWorker 的工具，在浏览器中打开 [chrome://inspect/#service-workers](chrome://inspect/#service-workers) 即可。
+
+另外，在开发者工具的 Sources 界面有一个 Service Workers 的 tab，在那也可以 Unregister 当前使用的 ServiceWorker。
+
+
+## 生命周期
+
+ServiceWorker 一般会经历下面一个生命周期：
+
+- Download
+- Install
+- Activate
+
+当浏览器下载好 ServiceWorker 之后会马上 install，install 成功后标记为 activated，之后进入闲置状态，等待事件触发。原则上，同一个 ServiceWorker 在其注册（Register）的域（Scope）下只会 install 和 activate 一次，即便重新页面刷新、同时多开都不会（因为 ServiceWorker 是完全脱离页面主线程在后台运行的）。
+
+浏览器在一段时间后会重新下载 ServiceWorker（MDN 上说[不超过24小时](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API#Download.2C_install_and_activate)，我没有进行验证）。若下载后如果发现有更新，会在后台进行 install，但不会立即 activate 而是处于 waiting 状态。当没有页面加载旧的 ServiceWorker 时，新的 ServiceWorker 才会 activate（但我关掉 chrome 的所有 tab 再打开并没有触发新的 ServiceWorker，大概是还没有下载新的文件吧，有必要就在调试工具中干掉就好）。
+
+
+## 使用 ServiceWorker
+
+### [register](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
+
+我们可以在页面上用下面的方式注册一个 ServiceWorker：
+
+```javascript
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw-test/sw.js', {
+    scope: '/sw-test/'
+  }).then(function (reg) {
+    // registration worked
+    console.log('Registration succeeded. Scope is ' + reg.scope);
+  }).catch(function (error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+};
+```
+
+这里指定了 scope 是 `/sw-test/`，不指定的话默认是最后这个 `.js` 文件所在的 path（MDN 上说默认是 `/` 是不对的），例如 `register('/s/w/sw.js')` 的 scope 为 `location.origin/s/w/`。而且指定的 scope 只能在默认的目录或之下，不能在其父级目录，例如，不能这样 `register('/s/w/sw.js', {scope: '/s/'})`。另外，这个地址也可以是相对路径。
+
+`register()` 方法返回的是一个 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)，如果能够下载到这个 `/sw-test/sw.js` 文件就会进入 `then` 否则 `catch`。
+
+### install
+
+register 成功之后就会触发 ServiceWorker 的 [install 事件](https://developer.mozilla.org/en-US/docs/Web/API/InstallEvent)，可以在 `sw.js` 文件中绑定：
+
+```javascript
+// Set the callback for the install step
+self.addEventListener('install', function (event) {
+    // Perform install steps
+});
+```
+
+<!-- TODO -->
+
+
+
+## 对比 web worker
+
+<!-- TODO -->
+
+- [Worker](https://developer.mozilla.org/en-US/docs/Web/API/Worker)
+- [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+
+
+## 参考资料
+
+- [ServiceWorker on MDN](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker)
+- [ServiceWorker API on MDN](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API)
+- [Using Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers)
+- [Introduction to Service Worker](http://www.html5rocks.com/en/tutorials/service-worker/introduction/)

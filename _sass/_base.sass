@@ -29,6 +29,18 @@
       fill: $grey-color
 
 
+
 /**
- *
+ * Blockquotes
+ * markdown 里面的 > 之后的片段
  */
+blockquote
+  color: $grey-color
+  border-left: 4px solid $grey-color-light
+  padding-left: $spacing-unit-2
+  font-size: $base-font-size - 1
+  letter-spacing: -1px
+  font-style: italic
+
+  > :last-child
+    margin-bottom: 0
