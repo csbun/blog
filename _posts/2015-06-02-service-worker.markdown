@@ -42,9 +42,9 @@ ServiceWorker 一般会经历下面一个生命周期：
 
 ## 使用 ServiceWorker
 
-### [register](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
+### register
 
-我们可以在页面上用下面的方式注册一个 ServiceWorker：
+我们可以在页面上用下面的方式注册（[register](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)）一个 ServiceWorker：
 
 ```javascript
 if ('serviceWorker' in navigator) {
@@ -70,10 +70,57 @@ register 成功之后就会触发 ServiceWorker 的 [install 事件](https://dev
 
 ```javascript
 // Set the callback for the install step
+// 这里的 `self` 即为当前的 ServiceWorker
 self.addEventListener('install', function (event) {
     // Perform install steps
 });
 ```
+
+通常我们在 ServiceWorker 里面需要缓存一些静态资源，那么我们可以开启一个 [cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache) 来保存他们：
+
+```javascript
+var CACHE_NAME = 'v1';
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function (cache) {
+        cache.addAll(urlsToCache).then(function () {
+          console.log('cache success.');
+        });
+      }).catch(function (error) {
+        // TODO 我在 chrome 上面跑会报 cache.addAll is not a function
+        console.error('cache failed:', error);
+      })
+  );
+});
+```
+
+### activate
+
+上面说过旧的 ServiceWorker 全部失效后新的 ServiceWorker 才会 activated，那么我们可以在 activate 时将旧的不需要的 cache 清除掉：
+
+```javascript
+var expectedCacheNames = ['v2', 'v3'];
+self.addEventListener('activate', function(event) {
+  // Active worker won't be treated as activated until promise resolves successfully.
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (expectedCacheNames.indexOf(cacheName) == -1) {
+            console.log('Deleting out of date cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+```
+
+### fetch
+
+在 ServiceWorker 闲置时，我们可以让其监听主线程上的 request，进行处理。
 
 <!-- TODO -->
 
