@@ -5,7 +5,7 @@ date:   2015-06-02 20:57:35
 categories: ServiceWorker
 ---
 
-我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 worker 线程，用于异步处理一些与页面元素、界面交互无关的工作。
+我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 [worker](https://developer.mozilla.org/en-US/docs/Web/API/) 线程，用于异步处理一些与页面元素、界面交互无关的工作。
 
 ## 运行环境
 
@@ -156,14 +156,6 @@ self.addEventListener('fetch', function (event) {
 ```
 
 这里的 fetch 会将页面上所有请求都截获，包括当前页面的 http、img、css、script 和 XMLHttpRequest 等，所以当我把服务停掉，刷新页面时都能正常访问！因为上述资源都被 cache 了，不会有请求到服务端，因此更新页面之后也不会立即更新！因此使用需谨慎，或者更改逻辑，区分资源，不要全部都 cache。
-
-
-## 对比 web worker
-
-<!-- TODO -->
-
-- [Worker](https://developer.mozilla.org/en-US/docs/Web/API/Worker)
-- [Using Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
 
 
 ## 参考资料
