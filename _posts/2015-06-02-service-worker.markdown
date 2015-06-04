@@ -70,13 +70,13 @@ register 成功之后就会触发 ServiceWorker 的 [install 事件](https://dev
 
 ```javascript
 // Set the callback for the install step
-// 这里的 `self` 即为当前的 ServiceWorker
+// 这里的 `self` 即为当前的 ServiceWorker，用 `this` 也可以
 self.addEventListener('install', function (event) {
     // Perform install steps
 });
 ```
 
-通常我们在 ServiceWorker 里面需要缓存一些静态资源，那么我们可以开启一个 [cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache) 来保存他们：
+通常我们在 ServiceWorker 里面需要缓存或者预加载一些静态资源，那么我们可以开启一个 [cache](https://developer.mozilla.org/en-US/docs/Web/API/Cache) 来保存他们：
 
 ```javascript
 var CACHE_NAME = 'v1';
@@ -120,10 +120,42 @@ self.addEventListener('activate', function(event) {
 
 ### fetch
 
-在 ServiceWorker 闲置时，我们可以让其监听主线程上的 request，进行处理。
+在 ServiceWorker 闲置时，我们可以让其监听主线程上的 request，进行处理。例如，我们可以把一些请求的返回数据 cache 下来，这样即使应用在离线状态下也可以使用。（听起来和 Application Cache 好像吖）
 
-<!-- TODO -->
+```javascript
+var CACHE_NAME = 'v1';
+self.addEventListener('fetch', function (event) {
+  var eventResponse = caches.match(event.request)
+    .then(function (response) {
+      // 命中 cache，直接返回
+      if (response) {
+        return response;
+      }
 
+      // 没有命中，则克隆一个 request 出来（因为 request 是 stream）
+      var fetchRequest = event.request.clone();
+      // 真实请求
+      return fetch(fetchRequest).then(function (response) {
+        // 假设我们只 cache 有效的 response
+        if(!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
+        }
+        // 因为 response 是 stream，所以要 clone 让浏览器和 cache 分别自行处理
+        var responseToCache = response.clone();
+        // 请求的返回值放入 cache
+        caches.open(CACHE_NAME).then(function (cache) {
+          cache.put(event.request, responseToCache);
+        });
+        // 同时输出
+        return response;
+      });
+    });
+  // 响应 fetch 事件输出
+  event.respondWith(eventResponse);
+});
+```
+
+这里的 fetch 会将页面上所有请求都截获，包括当前页面的 http、img、css、script 和 XMLHttpRequest 等，所以当我把服务停掉，刷新页面时都能正常访问！因为上述资源都被 cache 了，不会有请求到服务端，因此更新页面之后也不会立即更新！因此使用需谨慎，或者更改逻辑，区分资源，不要全部都 cache。
 
 
 ## 对比 web worker
