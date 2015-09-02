@@ -140,7 +140,7 @@ var Somewhere = React.createClass({
 
 var routes = (
   <Route name="home" path="/" handler={App}>
-    <Route name="somewhere" path="pate/:to/:somewhere" handler={Somewhere}/>
+    <Route name="somewhere" path="go/to/:somewhere" handler={Somewhere}/>
     { /* more <Route> here */ }
     <DefaultRoute handler={ProjectList}/>
   </Route>
