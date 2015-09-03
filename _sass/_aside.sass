@@ -22,7 +22,10 @@ aside
     background: $monokai-background
     @extend %clearfix
     @include media-min($on-palm)
+      width: $aside-logo-palm-size
       padding: $spacing-unit $spacing-unit-4
+    @include media-min($on-laptop)
+      width: initial
 
 
     .logo
