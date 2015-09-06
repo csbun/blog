@@ -138,6 +138,50 @@ less.render(sourceCode, {
 });
 ```
 
+
+### When
+
+只能用于判断 boolean 值的条件语句：
+
+```css
+@condition1: true;
+@condition2: #fff;
+.btn when (@condition1) { /* 这里判断成功 */
+    width: 100px;
+}
+.btn when (@condition2) { /* 这里判断失败 */
+    height: 25px;
+}
+```
+
+编译后：
+
+```css
+.btn {
+    width: 100px;
+}
+```
+
+同样也有 `when not` 可以使用：
+
+```css
+@img: "path/to/img.png";
+.btn when (@img = "") {
+    background-color: #fff;
+}
+.btn when not (@img = "") {
+    background-image: url(@img);
+}
+```
+
+编译后：
+
+```css
+.btn {
+    background-image: url(path/to/img.png);
+}
+```
+
 ### Extend
 
 适用一些共同样式的情况，如：
