@@ -56,7 +56,7 @@ animationCallback();
 
 ```javascript
 var myNonEssentialWork = deadline => {
-    console.log(deadline.timeRemaining);
+    console.log(deadline.timeRemaining());
     // ...
 };
 var timeout = 2000;
@@ -66,7 +66,7 @@ requestIdleCallback(myNonEssentialWork, timeout);
 - 当“空闲”时会调用 myNonEssentialWork 函数
 - 如果一直“不空闲”，超过 timeout 时长也会执行 myNonEssentialWork
 - myNonEssentialWork 接收一个 IdleCallbackDeadline 对象
-    + deadline.timeRemaining 当前的空闲时间还剩多少
+    + deadline.timeRemaining() 当前的空闲时间还剩多少
     + deadline.didTimeout 是否因为超时强制执行
 
 
@@ -84,7 +84,7 @@ let myNonEssentialWork = deadline => {
     }
 
     // 这要有时间且还有活，就干
-    while (deadline.timeRemaining > 0 && elementsToAdd.length > 0) {
+    while (deadline.timeRemaining() > 0 && elementsToAdd.length > 0) {
         // 创建代码片段
         let elToAdd = elementsToAdd.pop();
         let el = document.createElement(elToAdd.tag);
@@ -168,7 +168,7 @@ function start() {
         }
 
         // 这要有时间且还有活，就干
-        while (deadline.timeRemaining > 0 && elementsToAdd.length > 0) {
+        while (deadline.timeRemaining() > 0 && elementsToAdd.length > 0) {
             // 创建代码片段
             var elToAdd = elementsToAdd.pop();
             var el = document.createElement(elToAdd.tag);
