@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AngularJS with RequireJS | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言虽然 Angular 本身提供 module 的方法，但是她仅仅只是一个不全面的 依赖管理，并没有 加载 的功能，于是我第一反应就是用上 RequireJS。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS with RequireJS">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/02/ng-with-requirejs/index.html">
+<meta property="og:site_name" content="Hans Chan's Blog">
+<meta property="og:description" content="前言虽然 Angular 本身提供 module 的方法，但是她仅仅只是一个不全面的 依赖管理，并没有 加载 的功能，于是我第一反应就是用上 RequireJS。">
+<meta property="og:updated_time" content="2015-10-27T10:08:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS with RequireJS">
+<meta name="twitter:description" content="前言虽然 Angular 本身提供 module 的方法，但是她仅仅只是一个不全面的 依赖管理，并没有 加载 的功能，于是我第一反应就是用上 RequireJS。">
+  
+    <link rel="alternative" href="/blog/atom.xml" title="Hans Chan&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hans Chan&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ng-with-requirejs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2015/02/ng-with-requirejs/" class="article-date">
+  <time datetime="2015-02-15T10:52:39.000Z" itemprop="datePublished">2015-02-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AngularJS with RequireJS
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2><p>&#x867D;&#x7136; <a href="https://angularjs.org/" target="_blank" rel="external">Angular</a> &#x672C;&#x8EAB;&#x63D0;&#x4F9B; <code>module</code> &#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;&#x5979;&#x4EC5;&#x4EC5;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x4E0D;&#x5168;&#x9762;&#x7684; <strong>&#x4F9D;&#x8D56;&#x7BA1;&#x7406;</strong>&#xFF0C;&#x5E76;&#x6CA1;&#x6709; <strong>&#x52A0;&#x8F7D;</strong> &#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4E8E;&#x662F;&#x6211;&#x7B2C;&#x4E00;&#x53CD;&#x5E94;&#x5C31;&#x662F;&#x7528;&#x4E0A; <a href="http://requirejs.org/" target="_blank" rel="external">RequireJS</a>&#x3002;</p>
+<a id="more"></a>
+<h2 id="&#x51C6;&#x5907;">&#x51C6;&#x5907;</h2><p>&#x6211;&#x4E60;&#x60EF;&#x7528; <a href="http://bower.io/" target="_blank" rel="external">bower</a>&#xFF0C;&#x4E0B;&#x8F7D;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x5F88;&#x7B80;&#x5355;&#xFF1A;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bower <span class="operator"><span class="keyword">install</span> <span class="comment">--save requirejs</span></span><br><span class="line">bower <span class="keyword">install</span> <span class="comment">--save angular</span></span><br><span class="line">bower <span class="keyword">install</span> <span class="comment">--save angular-route</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="&#x76EE;&#x5F55;&#x7ED3;&#x6784;">&#x76EE;&#x5F55;&#x7ED3;&#x6784;</h2><p>&#x8FD9;&#x6B21;&#x6211;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4E0D;&#x60F3;&#x6309;&#x5B98;&#x65B9; example &#x90A3;&#x6837; <code>service, resource, controller, ...</code>&#x5212;&#x5206;&#xFF0C;&#x800C;&#x662F;&#x76F4;&#x63A5;&#x6309; module &#x5212;&#x5206;&#xFF0C;&#x7C97;&#x7565;&#x5982;&#x4E0B;</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ape</span><br><span class="line">&#x251C;&#x2500;&#x2500; index<span class="class">.html</span></span><br><span class="line">&#x2514;&#x2500;&#x2500; public</span><br><span class="line">    &#x251C;&#x2500;&#x2500; bower_components</span><br><span class="line">    &#x2502;   &#x251C;&#x2500;&#x2500; angular</span><br><span class="line">    &#x2502;   &#x251C;&#x2500;&#x2500; angular-route</span><br><span class="line">    &#x2502;   &#x2514;&#x2500;&#x2500; requirejs</span><br><span class="line">    &#x251C;&#x2500;&#x2500; dashboard</span><br><span class="line">    &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; dashboard<span class="class">.html</span></span><br><span class="line">    &#x251C;&#x2500;&#x2500; business</span><br><span class="line">    &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; business<span class="class">.controller</span><span class="class">.js</span></span><br><span class="line">    &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; business<span class="class">.html</span></span><br><span class="line">    &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; business<span class="class">.service</span><span class="class">.js</span></span><br><span class="line">    &#x251C;&#x2500;&#x2500; modules<span class="class">.js</span></span><br><span class="line">    &#x2514;&#x2500;&#x2500; routes.js</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x55EF;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x9879;&#x76EE;&#x5C31;&#x53EB; ape &#x5427;&#x3002;</p>
+</blockquote>
+<h2 id="&#x7F16;&#x7801;">&#x7F16;&#x7801;</h2><p>&#x6363;&#x9F13;&#x7684;&#x8FC7;&#x7A0B;&#x5E76;&#x6CA1;&#x6709;&#x6211;&#x60F3;&#x8C61;&#x4E2D;&#x7B80;&#x5355;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x5C31;&#x76F4;&#x63A5;&#x5199;&#x51FA;&#x6700;&#x7EC8;&#x7684;&#x7ED3;&#x679C;&#xFF1A;</p>
+<h3 id="&#x5165;&#x53E3;">&#x5165;&#x53E3;</h3><p><code>index.html</code> &#x53EA;&#x52A0;&#x8F7D; <code>require.js</code>&#x3002;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE HTML&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">&quot;Content-Type&quot;</span> <span class="attribute">content</span>=<span class="value">&quot;text/html; charset=utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">title</span>&gt;</span>ng-RequireJS<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-controller</span>=<span class="value">&quot;AppCtrl&quot;</span> <span class="attribute">class</span>=<span class="value">&quot;nifty-ready pace-done&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>{{title}}<span class="comment">&lt;!-- &#x8FD9;&#x91CC; `&#x4E24;&#x4E2A;&#x5927;&#x62EC;&#x53F7;&#x5305;&#x7740; title` &#x663E;&#x793A;&#x4E0D;&#x51FA;&#x5F00;&#xFF0C;&#x56E7; --&gt;</span><span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-view</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">&quot;public/bower_components/requirejs/require.js&quot;</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="built_in">require</span>.config({</span><br><span class="line">    paths: {</span><br><span class="line">        <span class="string">&apos;angular&apos;</span>: <span class="string">&apos;public/bower_components/angular/angular&apos;</span>,</span><br><span class="line">        <span class="comment">// &apos;angular-resource&apos;: &apos;lib/angular-resource&apos;,</span></span><br><span class="line">        <span class="string">&apos;angular-route&apos;</span>: <span class="string">&apos;public/bower_components/angular-route/angular-route&apos;</span>,</span><br><span class="line">        <span class="string">&apos;modules&apos;</span>: <span class="string">&apos;public/modules&apos;</span>,</span><br><span class="line">    },</span><br><span class="line">    shim: {</span><br><span class="line">        <span class="string">&apos;angular&apos;</span>: {</span><br><span class="line">            exports : <span class="string">&apos;angular&apos;</span></span><br><span class="line">        },</span><br><span class="line">        <span class="comment">// &apos;angular-resource&apos;: { deps:[&apos;angular&apos;]},</span></span><br><span class="line">        <span class="string">&apos;angular-route&apos;</span>: {</span><br><span class="line">            deps: [<span class="string">&apos;angular&apos;</span>],</span><br><span class="line">            exports: <span class="string">&apos;angular-route&apos;</span></span><br><span class="line">        }</span><br><span class="line">    },</span><br><span class="line">    deps: [<span class="string">&apos;public/routes&apos;</span>]</span><br><span class="line">});</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x4E0D;&#x7528; <code>&lt;html ng-app=&quot;ape&quot;&gt;</code>&#xFF0C;&#x800C;&#x662F;&#x540E;&#x9762;&#x4F7F;&#x7528; <code>angular.bootstrap</code> &#x6765;&#x542F;&#x52A8;&#x3002;&#x800C;&#x4E14;&#x5FC5;&#x987B;&#x8981;&#x8FD9;&#x4E48;&#x505A;&#xFF0C;&#x4E0D;&#x7136;&#x4F1A;&#x62A5;&#x627E;&#x4E0D;&#x5230; module &#x4E4B;&#x7C7B;&#x7684;&#x9519;&#x8BEF;&#x3002;</p>
+<h3 id="&#x6A21;&#x5757;&#x58F0;&#x660E;">&#x6A21;&#x5757;&#x58F0;&#x660E;</h3><p>&#x6211;&#x5728; <code>modules.js</code> &#x4E2D;&#x58F0;&#x660E;&#x4E86;&#x5168;&#x90E8;&#x7684; <code>module</code>&#xFF0C;&#x65B9;&#x4FBF;&#x4F7F;&#x7528;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">&apos;angular&apos;</span>,</span><br><span class="line">    <span class="string">&apos;angular-route&apos;</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">angular</span>) </span>{</span><br><span class="line"><span class="pi">    &apos;use strict&apos;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> {</span><br><span class="line">        business: angular.module(<span class="string">&apos;business&apos;</span>, []),</span><br><span class="line">        ape: angular.module(<span class="string">&apos;ape&apos;</span>, [</span><br><span class="line">                <span class="string">&apos;ngRoute&apos;</span>,</span><br><span class="line">                <span class="string">&apos;business&apos;</span></span><br><span class="line">            ])</span><br><span class="line">    };</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h3 id="&#x8DEF;&#x7531;">&#x8DEF;&#x7531;</h3><p><code>routes.js</code> &#x662F; <code>require.config</code> &#x5B9A;&#x4E49;&#x7684;&#x5165;&#x53E3;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x6307;&#x5B9A;&#x8DEF;&#x7531; hash&#xFF0C;&#x5E76;&#x7528; <code>angular.bootstrap</code> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">&apos;angular&apos;</span>,</span><br><span class="line">    <span class="string">&apos;modules&apos;</span>,</span><br><span class="line">    <span class="string">&apos;public/business/business.controller&apos;</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">angular, modules</span>) </span>{</span><br><span class="line"><span class="pi">    &apos;use strict&apos;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#x5176;&#x5B9E;&#x8FD9;&#x91CC;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; angular.module(&apos;ape&apos;).config(...)</span></span><br><span class="line">    modules.ape</span><br><span class="line">        .config([</span><br><span class="line">            <span class="string">&apos;$routeProvider&apos;</span>,</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">$routeProvider</span>) </span>{</span><br><span class="line">                $routeProvider</span><br><span class="line">                    .when(<span class="string">&apos;/dashboard&apos;</span>, {</span><br><span class="line">                        templateUrl: <span class="string">&apos;public/dashboard/dashboard.html&apos;</span></span><br><span class="line">                    })</span><br><span class="line">                    .when(<span class="string">&apos;/business&apos;</span>, {</span><br><span class="line">                        controller: <span class="string">&apos;BusinessCtrl&apos;</span>,</span><br><span class="line">                        templateUrl: <span class="string">&apos;public/business/business.html&apos;</span></span><br><span class="line">                    })</span><br><span class="line">                    .otherwise({</span><br><span class="line">                        redirectTo: <span class="string">&apos;/dashboard&apos;</span></span><br><span class="line">                    });</span><br><span class="line">            }</span><br><span class="line">        ])</span><br><span class="line">        .controller(<span class="string">&apos;AppCtrl&apos;</span>, [</span><br><span class="line">            <span class="string">&apos;$scope&apos;</span>, </span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>{</span><br><span class="line">                $scope.title = <span class="string">&apos;APE&apos;</span>;</span><br><span class="line">            }</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">    angular.bootstrap(<span class="built_in">document</span>, [<span class="string">&apos;ape&apos;</span>]);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h3 id="&#x5B50;&#x6A21;&#x5757;">&#x5B50;&#x6A21;&#x5757;</h3><p>&#x5B50;&#x6A21;&#x5757;&#x57FA;&#x672C;&#x5C31;&#x662F;&#x4E1A;&#x52A1;&#x5185;&#x5BB9;&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x4EE5; business &#x6A21;&#x5757;&#x4E3A;&#x4F8B;&#xFF1A;</p>
+<h4 id="businessservicejs">business.service.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">&apos;angular&apos;</span>,</span><br><span class="line">    <span class="string">&apos;modules&apos;</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">angular, modules</span>) </span>{</span><br><span class="line"><span class="pi">    &apos;use strict&apos;</span>;</span><br><span class="line"></span><br><span class="line">    modules.business</span><br><span class="line">        .service(<span class="string">&apos;BusinessService&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">            <span class="keyword">return</span> {</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            };</span><br><span class="line">        });</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h4 id="businesscontrollerjs">business.controller.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">&apos;modules&apos;</span>,</span><br><span class="line">    <span class="string">&apos;./business.service&apos;</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span> (<span class="params">modules</span>) </span>{</span><br><span class="line"><span class="pi">    &apos;use strict&apos;</span>;</span><br><span class="line"></span><br><span class="line">    modules.business</span><br><span class="line">        .controller(<span class="string">&apos;BusinessCtrl&apos;</span>, [</span><br><span class="line">            <span class="string">&apos;$scope&apos;</span>,</span><br><span class="line">            <span class="string">&apos;BusinessService&apos;</span>,</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">$scope, BusinessService</span>) </span>{</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            }</span><br><span class="line">        ]);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h2 id="&#x540E;&#x8BB0;">&#x540E;&#x8BB0;</h2><p>&#x6309; RequireJS &#x7684;&#x903B;&#x8F91;&#xFF0C;&#x5176;&#x5B9E;&#x6839;&#x636E;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;&#xFF0C;&#x5728;&#x8FDB;&#x5165;&#x5230; <code>router.js</code> &#x65F6;&#x5C31;&#x8981;&#x628A;&#x5168;&#x90E8;&#x6587;&#x4EF6;&#x90FD;&#x52A0;&#x8F7D;&#x4E0B;&#x6765;&#xFF0C;&#x4F46;&#x8FD9;&#x6837;&#x603B;&#x6BD4;&#x628A;&#x5168;&#x90E8;&#x7684; script &#x4E00;&#x4E2A;&#x4E2A;&#x63D2;&#x5165;&#x5230; html &#x5F3A;&#xFF08;&#x5F53;&#x7136;&#x8981;&#x662F;&#x4EE3;&#x7801;&#x5408;&#x5E76;&#x7684;&#x8BDD;&#x5C31;&#x6CA1;&#x4EC0;&#x4E48;&#x597D;&#x8BB2;&#x4E86;&#xFF09;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x8FD8;&#x65E0;&#x610F;&#x4E2D;&#x53D1;&#x73B0;&#x4E00;&#x4E2A; <a href="https://github.com/ocombe/ocLazyLoad" target="_blank" rel="external">ocLazyLoad</a>&#xFF0C;&#x5B9E;&#x73B0;&#x61D2;&#x52A0;&#x8F7D; Angular &#x6A21;&#x5757;&#xFF0C;&#x6709;&#x7A7A;&#x518D;&#x7814;&#x7A76;&#x4E00;&#x4E0B;&#x3002;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/02/ng-with-requirejs/" data-id="ciga4wtrs002kthq9jizxdawd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Angular/">Angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RequireJS/">RequireJS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2015/02/fluxxor-learning-note/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Fluxxor 学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2015/02/use-browser-perf/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用 browser-perf 测试网页性能</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/blog/tags/CommonJS/" style="font-size: 10px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 10px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/browser-perf/" style="font-size: 10px;">browser-perf</a> <a href="/blog/tags/ci/" style="font-size: 10px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/test/" style="font-size: 13.33px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2015/09/using-contenteditable/">Using Contenteditable</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/using-iron-node/">使用 iron-node 进行 Node Debug</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/google-new-logo/">Google 换新 Logo 了</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/raf-and-ric/">requestAnimationFrame 和 requestIdleCallback</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/07/meteor-react/">Meteor + React</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Hans Chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/blog/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

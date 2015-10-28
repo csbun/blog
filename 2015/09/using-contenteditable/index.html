@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Using Contenteditable | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近才发现的这个东西啊，但是查了一下 MDN，貌似已经很普及了，连 IE6 都支持（虽然有一大堆的 bug）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Contenteditable">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/09/using-contenteditable/index.html">
+<meta property="og:site_name" content="Hans Chan's Blog">
+<meta property="og:description" content="最近才发现的这个东西啊，但是查了一下 MDN，貌似已经很普及了，连 IE6 都支持（虽然有一大堆的 bug）。">
+<meta property="og:updated_time" content="2015-10-27T10:08:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using Contenteditable">
+<meta name="twitter:description" content="最近才发现的这个东西啊，但是查了一下 MDN，貌似已经很普及了，连 IE6 都支持（虽然有一大堆的 bug）。">
+  
+    <link rel="alternative" href="/blog/atom.xml" title="Hans Chan&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hans Chan&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-using-contenteditable" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2015/09/using-contenteditable/" class="article-date">
+  <time datetime="2015-09-21T07:14:03.000Z" itemprop="datePublished">2015-09-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Using Contenteditable
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&#x6700;&#x8FD1;&#x624D;&#x53D1;&#x73B0;&#x7684;&#x8FD9;&#x4E2A;&#x4E1C;&#x897F;&#x554A;&#xFF0C;&#x4F46;&#x662F;&#x67E5;&#x4E86;&#x4E00;&#x4E0B; <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/contentEditable" target="_blank" rel="external">MDN</a>&#xFF0C;&#x8C8C;&#x4F3C;&#x5DF2;&#x7ECF;&#x5F88;&#x666E;&#x53CA;&#x4E86;&#xFF0C;&#x8FDE; IE6 &#x90FD;&#x652F;&#x6301;&#xFF08;&#x867D;&#x7136;&#x6709;&#x4E00;&#x5927;&#x5806;&#x7684; bug&#xFF09;&#x3002;</p>
+<a id="more"></a>
+<h2 id="&#x7528;&#x6CD5;">&#x7528;&#x6CD5;</h2><h3 id="javascript">JavaScript</h3><p>&#x5F88;&#x7B80;&#x5355;&#x7684;&#xFF0C;&#x5C31;&#x662F;&#x968F;&#x4FBF;&#x5728;&#x9875;&#x9762;&#x4E0A;&#x641E;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x7136;&#x540E;&#x8BBE;&#x7F6E;&#x4E3A;&#x53EF;&#x7F16;&#x8F91;&#xFF1A;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">p</span> <span class="attribute">id</span>=<span class="value">&quot;editable&quot;</span>&gt;</span>I&apos;m editable!<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.getElementById(<span class="string">&apos;editable&apos;</span>);</span><br><span class="line">el.contentEditable = <span class="string">&apos;true&apos;</span>;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D; <code>contentEditable</code> &#x7684;&#x503C;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x6709;&#x4E09;&#x79CD;&#x9009;&#x62E9;&#xFF1A;</p>
+<ul>
+<li><code>&apos;true&apos;</code> &#x53EF;&#x7F16;&#x8F91;&#x7684;</li>
+<li><code>&apos;false&apos;</code> &#x4E0D;&#x53EF;&#x7F16;&#x8F91;&#x7684;</li>
+<li><code>&apos;inherit&apos;</code> &#x7EE7;&#x627F;&#x7236;&#x5143;&#x7D20;&#x7684;&#x72B6;&#x6001;</li>
+</ul>
+<h3 id="attribute">Attribute</h3><p>&#x8FD9;&#x4E2A;&#x662F; HTML5 &#x4E2D;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5168;&#x5C40;&#x5C5E;&#x6027;&#xFF0C;<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/contenteditable" target="_blank" rel="external">MDN</a>&#xFF1A;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">p</span> <span class="attribute">contenteditable</span>=<span class="value">&quot;true&quot;</span>&gt;</span>I&apos;m editable!<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="&#x7528;&#x9014;">&#x7528;&#x9014;</h2><p>&#x5F53;&#x6211;&#x770B;&#x5230;&#x8FD9;&#x8D27;&#xFF0C;&#x6211;&#x7B2C;&#x4E00;&#x53CD;&#x5E94;&#x5C31;&#x662F;&#x62FF;&#x6765;&#x505A;&#x201C;&#x81EA;&#x5B9A;&#x4E49;&#x9875;&#x9762;&#x201D;&#xFF0C;&#x8FD0;&#x8425;&#x4EBA;&#x5458;&#x5E94;&#x8BE5;&#x4F1A;&#x89C9;&#x5F97;&#x5F88;&#x5B9E;&#x5728;&#xFF0C;&#x5927;&#x81F4;&#x539F;&#x7406;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li>&#x8FD0;&#x8425;&#x7AEF;&#x4ECE;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#x8F93;&#x51FA;&#x9875;&#x9762;</li>
+<li>&#x9875;&#x9762;&#x4E2D;&#x53EF;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x90E8;&#x5206;&#x6807;&#x8BC6;&#x4E3A; contenteditable</li>
+<li>&#x8FD0;&#x8425;&#x4EBA;&#x5458;&#x4FEE;&#x6539;&#x8BE5;&#x90E8;&#x5206;&#x5185;&#x5BB9;&#x540E;&#x70B9;&#x51FB;&#x4FDD;&#x5B58;</li>
+<li>&#x83B7;&#x53D6; contenteditable &#x5143;&#x7D20;&#x7684; innerHTML&#xFF0C;&#x56DE;&#x4F20;&#x81F3;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x670D;&#x52A1;</li>
+<li>&#x7EC8;&#x7AEF;&#x7528;&#x6237;&#x4F7F;&#x7528;&#x66F4;&#x65B0;&#x540E;&#x7684;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#x7684;&#x6570;&#x636E;&#x6E32;&#x67D3;&#x9875;&#x9762;</li>
+</ul>
+<p>&#x8FD9;&#x91CC;&#x6709;&#x4E00;&#x4E2A;&#x6211;&#x7528; localStorage &#x7528;&#x4F5C;&#x865A;&#x62DF;&#x7684;&#x6570;&#x636E;&#x5B58;&#x50A8;&#x670D;&#x52A1;&#xFF1A;</p>
+<p></p><p data-height="750" data-theme-id="18973" data-slug-hash="avNpZw" data-default-tab="result" data-user="csbun" class="codepen">See the Pen <a href="http://codepen.io/csbun/pen/avNpZw/" target="_blank" rel="external">avNpZw</a> by csbun (<a href="http://codepen.io/csbun" target="_blank" rel="external">@csbun</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+<h2 id="&#x5B9E;&#x4F8B;">&#x5B9E;&#x4F8B;</h2><p>&#x8FD9;&#x91CC;&#x6709;&#x66F4;&#x591A;&#x6709;&#x8DA3;&#x7684;&#x5B9E;&#x4F8B;&#xFF1A;</p>
+<ul>
+<li><a href="http://substance.io/" target="_blank" rel="external">substance</a></li>
+<li><a href="http://getcontenttools.com/demo" target="_blank" rel="external">ContentTools</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/09/using-contenteditable/" data-id="ciga4wtph0007thq9ft0gxs6v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/contentEditable/">contentEditable</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2015/09/using-iron-node/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用 iron-node 进行 Node Debug</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/blog/tags/CommonJS/" style="font-size: 10px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 10px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/browser-perf/" style="font-size: 10px;">browser-perf</a> <a href="/blog/tags/ci/" style="font-size: 10px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/test/" style="font-size: 13.33px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2015/09/using-contenteditable/">Using Contenteditable</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/using-iron-node/">使用 iron-node 进行 Node Debug</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/google-new-logo/">Google 换新 Logo 了</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/raf-and-ric/">requestAnimationFrame 和 requestIdleCallback</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/07/meteor-react/">Meteor + React</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Hans Chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/blog/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

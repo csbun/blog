@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>利用 sendBeacon 发送统计信息 | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言今天看到这样一篇文章《Send beacon data in Chrome 39》
+大致是说 navigator.sendBeacon 可以用来发送一些小量的数据，特别适合统计场景，且这个请求是异步的，不受浏览器行为限制：即使浏览器关闭请求也能照样发出。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 sendBeacon 发送统计信息">
+<meta property="og:url" content="http://csbun.github.io/blog/2014/12/send-beacon/index.html">
+<meta property="og:site_name" content="Hans Chan's Blog">
+<meta property="og:description" content="前言今天看到这样一篇文章《Send beacon data in Chrome 39》
+大致是说 navigator.sendBeacon 可以用来发送一些小量的数据，特别适合统计场景，且这个请求是异步的，不受浏览器行为限制：即使浏览器关闭请求也能照样发出。">
+<meta property="og:updated_time" content="2015-10-27T10:08:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用 sendBeacon 发送统计信息">
+<meta name="twitter:description" content="前言今天看到这样一篇文章《Send beacon data in Chrome 39》
+大致是说 navigator.sendBeacon 可以用来发送一些小量的数据，特别适合统计场景，且这个请求是异步的，不受浏览器行为限制：即使浏览器关闭请求也能照样发出。">
+  
+    <link rel="alternative" href="/blog/atom.xml" title="Hans Chan&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hans Chan&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-send-beacon" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2014/12/send-beacon/" class="article-date">
+  <time datetime="2014-12-10T09:37:53.000Z" itemprop="datePublished">2014-12-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用 sendBeacon 发送统计信息
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2><p>&#x4ECA;&#x5929;&#x770B;&#x5230;&#x8FD9;&#x6837;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x300A;<a href="http://updates.html5rocks.com/2014/10/Send-beacon-data-in-Chrome-39" target="_blank" rel="external">Send beacon data in Chrome 39</a>&#x300B;</p>
+<p>&#x5927;&#x81F4;&#x662F;&#x8BF4; <code>navigator.sendBeacon</code> &#x53EF;&#x4EE5;&#x7528;&#x6765;&#x53D1;&#x9001;&#x4E00;&#x4E9B;&#x5C0F;&#x91CF;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x7279;&#x522B;&#x9002;&#x5408;&#x7EDF;&#x8BA1;&#x573A;&#x666F;&#xFF0C;&#x4E14;&#x8FD9;&#x4E2A;&#x8BF7;&#x6C42;&#x662F;&#x5F02;&#x6B65;&#x7684;&#xFF0C;&#x4E0D;&#x53D7;&#x6D4F;&#x89C8;&#x5668;&#x884C;&#x4E3A;&#x9650;&#x5236;&#xFF1A;&#x5373;&#x4F7F;&#x6D4F;&#x89C8;&#x5668;&#x5173;&#x95ED;&#x8BF7;&#x6C42;&#x4E5F;&#x80FD;&#x7167;&#x6837;&#x53D1;&#x51FA;&#x3002;</p>
+<a id="more"></a>
+<h2 id="&#x7528;&#x6CD5;">&#x7528;&#x6CD5;</h2><p>&#x5B98;&#x7F51;&#x5B9A;&#x4E49;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">partial <span class="class"><span class="keyword">interface</span> <span class="title">Navigator</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">sendBeacon</span><span class="params">(DOMString url, optional (ArrayBufferView or Blob or DOMString or FormData)</span>? data </span>= <span class="keyword">null</span>);</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x4F7F;&#x7528;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="keyword">new</span> FormData();</span><br><span class="line">navigator.sendBeacon(<span class="string">&apos;path/to/beacon&apos;</span>, data);</span><br></pre></td></tr></table></figure>
+<p>&#x5C31;&#x662F;&#x8FD9;&#x6837;&#xFF0C;&#x4F1A;&#x53D1;&#x51FA;&#x4E00;&#x4E2A; <code>POST</code> &#x8BF7;&#x6C42;&#x3002;</p>
+<h2 id="&#x6D4B;&#x8BD5;">&#x6D4B;&#x8BD5;</h2><p>&#x4E8E;&#x662F;&#x6211;&#x505A;&#x4E86;&#x4E2A;&#x6D4B;&#x8BD5;&#xFF0C;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#xFF1A;</p>
+<ul>
+<li>&#x6D4F;&#x89C8;&#x5668;&#xFF1A;Chrome&#xFF0C;&#x7248;&#x672C; 41.0.2244.0 canary (64-bit)</li>
+<li>&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#xFF1A;koa&#xFF0C;v0.11.0</li>
+</ul>
+<h3 id="&#x524D;&#x7AEF;">&#x524D;&#x7AEF;</h3><p>&#x524D;&#x7AEF;&#x8BBE;&#x7F6E;&#x4E86;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<h4 id="get">get</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&apos;unload&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">    $.get(<span class="string">&apos;/log/get&apos;</span>, { type: <span class="string">&apos;get&apos;</span> }, <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(res);</span><br><span class="line">    });</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h4 id="post">post</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&apos;unload&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">    $.post(<span class="string">&apos;/log/post&apos;</span>, { type: <span class="string">&apos;post&apos;</span> }, <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(res);</span><br><span class="line">    });</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h4 id="sendbeacon">sendBeacon</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&apos;unload&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> data = <span class="keyword">new</span> FormData();</span><br><span class="line">    data.append(<span class="string">&apos;type&apos;</span>, <span class="string">&apos;beacon&apos;</span>);</span><br><span class="line">    navigator.sendBeacon(<span class="string">&apos;/log/beacon&apos;</span>, data);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<h3 id="&#x540E;&#x7AEF;">&#x540E;&#x7AEF;</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> koa = <span class="built_in">require</span>(<span class="string">&apos;koa&apos;</span>),</span><br><span class="line">    route = <span class="built_in">require</span>(<span class="string">&apos;koa-route&apos;</span>),</span><br><span class="line">    koaBody = <span class="built_in">require</span>(<span class="string">&apos;koa-body&apos;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = koa();</span><br><span class="line">app.use(koaBody());</span><br><span class="line"></span><br><span class="line"><span class="comment">// log</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span> * (<span class="params">next</span>) </span>{</span><br><span class="line">    <span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">yield</span> next;</span><br><span class="line">    <span class="keyword">var</span> ms = <span class="keyword">new</span> <span class="built_in">Date</span>() - start;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&apos;[&apos;</span> + <span class="keyword">this</span>.method + <span class="string">&apos;]&apos;</span> + ms + <span class="string">&apos;ms: &apos;</span> + <span class="keyword">this</span>.url);</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#x5EF6;&#x8FDF;&#x8F93;&#x51FA;</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">output</span> (<span class="params">cb</span>) </span>{</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">        cb(<span class="literal">null</span>, <span class="built_in">JSON</span>.stringify({</span><br><span class="line">            success: <span class="literal">true</span></span><br><span class="line">        }));</span><br><span class="line">    }, <span class="number">1000</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#x6A21;&#x62DF; sendBeacon</span></span><br><span class="line">app.use(route.post(<span class="string">&apos;/log/beacon&apos;</span>, <span class="function"><span class="keyword">function</span> * (<span class="params"></span>) </span>{</span><br><span class="line">    logger(<span class="string">&apos;beacon: &apos;</span> + <span class="keyword">this</span>.request.body);</span><br><span class="line">    <span class="keyword">this</span>.body = <span class="keyword">yield</span> output;</span><br><span class="line">}));</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#x6A21;&#x62DF; post</span></span><br><span class="line">app.use(route.post(<span class="string">&apos;/log/post&apos;</span>, <span class="function"><span class="keyword">function</span> * (<span class="params"></span>) </span>{</span><br><span class="line">    logger(<span class="string">&apos;post: &apos;</span> + <span class="keyword">this</span>.request.body);</span><br><span class="line">    <span class="keyword">this</span>.body = <span class="keyword">yield</span> output;</span><br><span class="line">}));</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#x6A21;&#x62DF; get</span></span><br><span class="line">app.use(route.get(<span class="string">&apos;/log/get&apos;</span>, <span class="function"><span class="keyword">function</span> * (<span class="params"></span>) </span>{</span><br><span class="line">    logger(<span class="string">&apos;get: &apos;</span> + <span class="keyword">this</span>.request.body);</span><br><span class="line">    <span class="keyword">this</span>.body = <span class="keyword">yield</span> output;</span><br><span class="line">}));</span><br></pre></td></tr></table></figure>
+<h3 id="&#x7528;&#x4F8B;">&#x7528;&#x4F8B;</h3><ul>
+<li>&#x70B9;&#x51FB;&#x9875;&#x9762;&#x4E2D;&#x7684;&#x94FE;&#x63A5;&#xFF08;&#x5916;&#x94FE;&#xFF09;</li>
+<li>&#x5237;&#x65B0;&#x9875;&#x9762;</li>
+<li>&#x5173;&#x95ED;&#x9875;&#x9762;&#xFF08;CTRL + w&#xFF09;</li>
+<li>&#x5173;&#x95ED;&#x6D4F;&#x89C8;&#x5668;&#xFF08;CTRL + q&#xFF09;</li>
+</ul>
+<h3 id="&#x7ED3;&#x679C;">&#x7ED3;&#x679C;</h3><ul>
+<li>get: &#x65E0;&#x7EDF;&#x8BA1;&#x65E5;&#x5FD7;</li>
+<li>post: &#x65E0;&#x7EDF;&#x8BA1;&#x65E5;&#x5FD7;</li>
+<li>beacon: 4&#x79CD;&#x60C5;&#x51B5;&#x90FD;&#x6709;&#x7EDF;&#x8BA1;&#x65E5;&#x5FD7;</li>
+</ul>
+<p>&#x867D;&#x7136;&#x5728; beacon &#x4E2D;&#x80FD;&#x83B7;&#x53D6;&#x5230;&#x7EDF;&#x8BA1;&#x65E5;&#x5FD7;&#xFF0C;&#x4F46; body &#x4E2D;&#x6CA1;&#x6709;&#x83B7;&#x5F97;&#x4FE1;&#x606F;&#x3002;&#x5728; Inspector &#x4E2D;&#x770B;&#x5230;&#x8BF7;&#x6C42;&#x7684;&#x4FE1;&#x606F;&#x662F;&#x5728; <code>Request Payload</code> &#x4E2D;&#xFF0C;&#x6709;&#x5F85;&#x8003;&#x5BDF;&#x3002;</p>
+<h2 id="&#x5947;&#x602A;&#x73B0;&#x8C61;">&#x5947;&#x602A;&#x73B0;&#x8C61;</h2><p>&#x5C06;&#x4E0A;&#x8FF0;&#x524D;&#x7AEF;&#x4EE3;&#x7801;&#x6539;&#x6210;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&apos;unload&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</span><br><span class="line">    $.get(<span class="string">&apos;/log/get&apos;</span>, { type: <span class="string">&apos;get&apos;</span> }, <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(res);</span><br><span class="line">    });</span><br><span class="line">    $.post(<span class="string">&apos;/log/post&apos;</span>, { type: <span class="string">&apos;post&apos;</span> }, <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>{</span><br><span class="line">        <span class="built_in">console</span>.log(res);</span><br><span class="line">    });</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<p>&#x90A3;&#x4E48;&#x540E;&#x7AEF;&#x901A;&#x5E38;&#x80FD;&#x83B7;&#x5F97;&#x7B2C;&#x4E00;&#x4E2A; <code>get</code> &#x7684;&#x8BF7;&#x6C42;&#x3002;&#x5047;&#x5982;&#x5148;&#x5199; <code>$.post</code> &#x5219;&#x540C;&#x6837;&#x4F1A;&#x6709; <code>post</code> &#x8BF7;&#x6C42;&#x3002;</p>
+<h3 id="zepto-&#x7684;&#x95EE;&#x9898;">zepto &#x7684;&#x95EE;&#x9898;&#xFF1F;</h3><p>&#x4E8E;&#x662F;&#x6211;&#x81EA;&#x5DF1;&#x5199;&#x4E00;&#x4E2A; XMLHttpRequest&#xFF0C;&#x8FD9;&#x4E2A;&#x73B0;&#x8C61;&#x5C31;&#x6D88;&#x5931;&#x4E86;&#x3002;&#x6709;&#x5F85;&#x8003;&#x5BDF;&#x3002;</p>
+<h2 id="&#x540E;&#x8BB0;">&#x540E;&#x8BB0;</h2><p>&#x636E;&#x8BF4;&#x53EA;&#x6709; Chrome 37 &#x4EE5;&#x4E0A;&#x53EF;&#x4EE5;&#x7528;&#xFF0C;&#x6211;&#x8BD5;&#x4E86;&#x4E00;&#x4E0B; UC&#x6D4F;&#x89C8;&#x5668; &#x4E0D;&#x884C;&#xFF0C;&#x5475;&#x5475;&#x3002;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2014/12/send-beacon/" data-id="ciga4wts0002xthq9t5j36i58" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/async/">async</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/log/">log</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2014/12/flux-learning-note/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Flux 学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2014/12/ng-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Angular 1.x 学习笔记 —— 入门</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/blog/tags/CommonJS/" style="font-size: 10px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 10px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/browser-perf/" style="font-size: 10px;">browser-perf</a> <a href="/blog/tags/ci/" style="font-size: 10px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/test/" style="font-size: 13.33px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2015/09/using-contenteditable/">Using Contenteditable</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/using-iron-node/">使用 iron-node 进行 Node Debug</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/google-new-logo/">Google 换新 Logo 了</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/raf-and-ric/">requestAnimationFrame 和 requestIdleCallback</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/07/meteor-react/">Meteor + React</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Hans Chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/blog/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Docker With Node | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Install DockerWe can use docker CLI by install Boot2Docker or GUI via Kitematic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker With Node">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/06/docker-with-node/index.html">
+<meta property="og:site_name" content="Hans Chan's Blog">
+<meta property="og:description" content="Install DockerWe can use docker CLI by install Boot2Docker or GUI via Kitematic">
+<meta property="og:updated_time" content="2015-10-27T10:11:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker With Node">
+<meta name="twitter:description" content="Install DockerWe can use docker CLI by install Boot2Docker or GUI via Kitematic">
+  
+    <link rel="alternative" href="/blog/atom.xml" title="Hans Chan&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hans Chan&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-docker-with-node" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2015/06/docker-with-node/" class="article-date">
+  <time datetime="2015-06-18T12:41:05.000Z" itemprop="datePublished">2015-06-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker With Node
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="install-docker">Install Docker</h2><p>We can use docker CLI by install <a href="http://docs.docker.com/installation/mac/" target="_blank" rel="external">Boot2Docker</a> or GUI via <a href="https://kitematic.com/" target="_blank" rel="external">Kitematic</a></p>
+<a id="more"></a>
+<h3 id="install-boot2docker">Install <a href="http://docs.docker.com/installation/mac/" target="_blank" rel="external">Boot2Docker</a></h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boot2docker </span>init</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>This creates a new virtual machine. You only need to run this command once.</p>
+</blockquote>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boot2docker </span>start</span><br></pre></td></tr></table></figure>
+<p>Then u will see at the first time</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">To connect the Docker client to the Docker daemon, please <span class="built_in">set</span>:</span><br><span class="line">    <span class="keyword">export</span> DOCKER_HOST=tcp:<span class="comment">//192.168.59.103:2376</span></span><br><span class="line">    <span class="keyword">export</span> DOCKER_CERT_PATH=/Users/xxx/.boot2docker/certs/boot2docker-vm</span><br><span class="line">    <span class="keyword">export</span> DOCKER_TLS_VERIFY=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>Do it then run <code>boot2docker start</code> again. this time we get</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">Waiting</span> for <span class="variable">VM</span> <span class="keyword">and</span> <span class="variable">Docker</span> daemon to start...</span><br><span class="line">.o</span><br><span class="line"><span class="variable">Started</span>.</span><br><span class="line">...</span><br><span class="line"><span class="variable">Your</span> environment variables are already set correctly.</span><br></pre></td></tr></table></figure>
+<p>Now we get <code>docker</code> in our cli, next time we will just run <code>boot2docker start</code> to get it. (Or just run the <code>boot2docker</code> Application)</p>
+<h3 id="install-kitematic">Install <a href="https://kitematic.com/" target="_blank" rel="external">Kitematic</a></h3><p>click <code>Docker CLI</code> at bottom left and run the cli</p>
+<h2 id="get-node-image">Get Node Image</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull <span class="keyword">node</span><span class="identifier"></span><span class="title"></span></span><br></pre></td></tr></table></figure>
+<h2 id="run-node">Run Node</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir docker-<span class="keyword">node</span><span class="identifier"></span><span class="title">-test</span></span><br><span class="line">cd docker-<span class="keyword">node</span><span class="identifier"></span><span class="title">-test</span></span><br><span class="line">touch index.js</span><br><span class="line">touch Dockerfile</span><br><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<p>Edit index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&apos;Hello World&apos;</span>);</span><br></pre></td></tr></table></figure>
+<p>Edit Dockerfile</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM <span class="keyword">node</span><span class="identifier"></span><span class="title">:onbuild</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The &#x2018;onbuild&#x2019; version is based on the plain &#x2018;iojs&#x2019; version used above, but it copies your node application to the container and then runs its. Creating a derivative of this image can be as simple as referencing it and specifying the port you want to expose.</p>
+</blockquote>
+<h2 id="build-and-push">Build and Push</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">docker</span> login</span><br></pre></td></tr></table></figure>
+<p>This will run only once if we did not login</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker build -t csbun/docker-<span class="keyword">node</span><span class="identifier"></span><span class="title">-test</span> .</span><br><span class="line">...</span><br><span class="line">docker push csbun/docker-<span class="keyword">node</span><span class="identifier"></span><span class="title">-test</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Then u can see ur repo on <a href="https://registry.hub.docker.com/repos/" target="_blank" rel="external">Docker Hub</a> and <a href="https://kitematic.com/" target="_blank" rel="external">Kitematic</a></p>
+<h2 id="run-a-web-app">Run a Web App</h2><h3 id="edit-project">Edit Project</h3><p>In this example we use <a href="http://koajs.com/" target="_blank" rel="external">Koa</a> as a server:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="tag">i</span> koa &#x2014;save</span><br></pre></td></tr></table></figure>
+<p>Update index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&apos;use strict&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="built_in">require</span>(<span class="string">&apos;koa&apos;</span>)();</span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span> * (<span class="params">next</span>) </span>{</span><br><span class="line">  <span class="keyword">this</span>.body = <span class="string">&apos;Hello World&apos;</span>;</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> port = process.env.PORT || <span class="number">3000</span>;</span><br><span class="line">app.listen(port, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&apos;Koa server listening on port &apos;</span> + port);</span><br><span class="line">});</span><br></pre></td></tr></table></figure>
+<p>Update Dockerfile</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM <span class="keyword">node</span><span class="identifier"></span><span class="title">:onbuild</span></span><br><span class="line">expose <span class="number">3000</span></span><br></pre></td></tr></table></figure>
+<p>Here are something about <a href="https://docs.docker.com/reference/builder/#expose" target="_blank" rel="external">expose</a></p>
+<h3 id="build-and-run">Build and Run</h3><p>This time, we build it in our local VM. First we need to get the IP of the virtual host:</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boot2docker </span><span class="literal">ip</span></span><br></pre></td></tr></table></figure>
+<p>The VM&#x2019;s Host only interface IP address is: <code>192.168.59.103</code>. Then build and run:</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t docker-<span class="keyword">node</span><span class="identifier"></span><span class="title">-test</span> .</span><br><span class="line">...</span><br><span class="line">docker run --rm  -p <span class="number">40100</span>:<span class="number">3000</span> docker-<span class="keyword">node</span><span class="identifier"></span><span class="title">-test</span></span><br></pre></td></tr></table></figure>
+<p>Now test it on <code>http://192.168.59.103:40100/</code>.</p>
+<blockquote>
+<p>If we use Kitematic, the ip of it is different from what we get from boot2docker.</p>
+</blockquote>
+<h2 id="stop-container">Stop Container</h2><p>See what&#x2019;s running in docker</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">docker</span> ps</span><br></pre></td></tr></table></figure>
+<p>Then we can something like this:</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER ID        IMAGE                           ...</span><br><span class="line"><span class="number">678</span>e64c1fe45        docker-<span class="keyword">node</span><span class="identifier">-test:</span><span class="title">latest</span>   ...</span><br></pre></td></tr></table></figure>
+<p>To stop this image, run</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop <span class="number">678e64</span>c1fe45</span><br></pre></td></tr></table></figure>
+<h2 id="references">References</h2><ul>
+<li><a href="http://blog.codefresh.io/up-and-running-with-io-js-and-docker/" target="_blank" rel="external">Up and running with io.js and Docker</a></li>
+<li><a href="https://github.com/lukebond/requirelx-dockerlisbon-talk-2015-05/blob/master/requirelx-2015-05.md" target="_blank" rel="external">Introduction to Docker for the Node.js Developer</a></li>
+<li><a href="https://github.com/wsargent/docker-cheat-sheet" target="_blank" rel="external">Docker Cheat Sheet</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/06/docker-with-node/" data-id="ciga4wtqq0014thq9cscrjbkj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node/">Node</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2015/07/less/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Less 使用简记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2015/06/service-worker/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ServiceWorker</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/blog/tags/CommonJS/" style="font-size: 10px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 10px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/browser-perf/" style="font-size: 10px;">browser-perf</a> <a href="/blog/tags/ci/" style="font-size: 10px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/test/" style="font-size: 13.33px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2015/09/using-contenteditable/">Using Contenteditable</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/using-iron-node/">使用 iron-node 进行 Node Debug</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/google-new-logo/">Google 换新 Logo 了</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/raf-and-ric/">requestAnimationFrame 和 requestIdleCallback</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/07/meteor-react/">Meteor + React</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Hans Chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/blog/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
