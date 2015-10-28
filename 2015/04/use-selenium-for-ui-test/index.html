@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用 Selenium 进行 UI 测试 | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="注： 本文未完成。看看这个 http://csbun.github.io/blog/browser-perf/selenium/performance/2015/02/10/use-browser-perf.html 也用了 Selenium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Selenium 进行 UI 测试">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/04/use-selenium-for-ui-test/index.html">
+<meta property="og:site_name" content="Hans Chan's Blog">
+<meta property="og:description" content="注： 本文未完成。看看这个 http://csbun.github.io/blog/browser-perf/selenium/performance/2015/02/10/use-browser-perf.html 也用了 Selenium">
+<meta property="og:updated_time" content="2015-10-27T10:07:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Selenium 进行 UI 测试">
+<meta name="twitter:description" content="注： 本文未完成。看看这个 http://csbun.github.io/blog/browser-perf/selenium/performance/2015/02/10/use-browser-perf.html 也用了 Selenium">
+  
+    <link rel="alternative" href="/blog/atom.xml" title="Hans Chan&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hans Chan&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-use-selenium-for-ui-test" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2015/04/use-selenium-for-ui-test/" class="article-date">
+  <time datetime="2015-04-16T09:58:21.000Z" itemprop="datePublished">2015-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用 Selenium 进行 UI 测试
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>&#x6CE8;&#xFF1A;</code> &#x672C;&#x6587;<strong>&#x672A;&#x5B8C;&#x6210;</strong>&#x3002;<br>&#x770B;&#x770B;&#x8FD9;&#x4E2A; <a href="http://csbun.github.io/blog/browser-perf/selenium/performance/2015/02/10/use-browser-perf.html">http://csbun.github.io/blog/browser-perf/selenium/performance/2015/02/10/use-browser-perf.html</a> &#x4E5F;&#x7528;&#x4E86; Selenium</p>
+<a id="more"></a>
+<h2 id="&#x51C6;&#x5907;&#x73AF;&#x5883;">&#x51C6;&#x5907;&#x73AF;&#x5883;</h2><p><a href="http://www.seleniumhq.org/" target="_blank" rel="external">Selenium</a> &#x867D;&#x7136;&#x5B98;&#x7F51;&#x505A;&#x5F97;&#x5F88;&#x4E11;&#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x6240;&#x652F;&#x6301;&#x7684;&#x73AF;&#x5883;&#x8FD8;&#x662F;&#x5F88;&#x5168;&#x9762;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x8BB0;&#x5F55;&#x4E00;&#x4E0B;&#x6211;&#x5728; node &#x4E0A;&#x7684;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; npm &#x9879;&#x76EE;&#xFF0C;&#x7136;&#x540E;&#x4E0B;&#x8F7D; <a href="https://www.npmjs.com/package/selenium-webdriver" target="_blank" rel="external">selenium-webdriver</a></p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> init</span><br><span class="line"><span class="built_in">npm</span> i --save selenium-webdriver</span><br></pre></td></tr></table></figure>
+<h2 id="&#x6700;&#x7B80;&#x5355;&#x7684;&#x6D4B;&#x8BD5;">&#x6700;&#x7B80;&#x5355;&#x7684;&#x6D4B;&#x8BD5;</h2><p>&#x55EF;&#xFF0C;&#x5B89;&#x88C5; npm &#x4E0A;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5F00;&#x59CB;&#x5199;&#x4E00;&#x4E9B;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x4E86;&#xFF0C;&#x521B;&#x5EFA;&#x4E00;&#x4E2A; index.js&#xFF1A;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> webdriver = <span class="built_in">require</span>(<span class="string">&apos;selenium-webdriver&apos;</span>),</span><br><span class="line">    By = <span class="built_in">require</span>(<span class="string">&apos;selenium-webdriver&apos;</span>).By,</span><br><span class="line">    until = <span class="built_in">require</span>(<span class="string">&apos;selenium-webdriver&apos;</span>).until;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> driver = <span class="keyword">new</span> webdriver.Builder()</span><br><span class="line">    .forBrowser(<span class="string">&apos;firefox&apos;</span>)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">driver.get(<span class="string">&apos;http://www.google.com/ncr&apos;</span>);</span><br><span class="line">driver.findElement(By.name(<span class="string">&apos;q&apos;</span>)).sendKeys(<span class="string">&apos;webdriver&apos;</span>);</span><br><span class="line">driver.findElement(By.name(<span class="string">&apos;btnG&apos;</span>)).click();</span><br><span class="line">driver.wait(until.titleIs(<span class="string">&apos;webdriver - Google Search&apos;</span>), <span class="number">1000</span>);</span><br><span class="line">driver.quit();</span><br></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x884C; <code>node index.js</code> &#x5C31;&#x4F1A;&#x770B;&#x5230;&#x4F60;&#x7684; Firefox &#x5F39;&#x51FA;&#x6765;&#x7136;&#x540E;&#x6253;&#x5F00;&#x4E86; google &#x9996;&#x9875;&#xFF0C;&#x63A5;&#x7740;&#x641C;&#x7D22;&#x4E86; &#x2018;webdriver&#x2019; &#x4E4B;&#x540E;&#x5C31;&#x5173;&#x95ED;&#x4E86;&#x3002;</p>
+<blockquote>
+<p>&#x5047;&#x5982;&#x4F60;&#x7684;&#x7F51;&#x901F;&#x4E0D;&#x591F;&#x5FEB;&#xFF0C;&#x5728; 1000ms &#x5185;&#x8FD8;&#x6CA1;&#x8DF3;&#x8F6C;&#x5230;&#x641C;&#x7D22;&#x9875;&#xFF08;until.titleIs(&#x2018;webdriver - Google Search&#x2019;)&#xFF09;&#x5C31;&#x4F1A;&#x7206;&#x4E00;&#x4E2A; timeout &#x7684;&#x9519;&#x8BEF;&#x3002;</p>
+</blockquote>
+<h2 id="firefox-ide">Firefox IDE</h2><p>&#x4E0D;&#x60F3;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x8BDD;&#xFF0C;&#x8FD8;&#x6709; <a href="http://www.seleniumhq.org/projects/ide/" target="_blank" rel="external">Selenium IDE</a> &#x53EF;&#x4EE5;&#x7528;&#x3002;&#x88C5;&#x5230; Firefox &#x91CC;&#x9762;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x70B9;&#x51FB;&#x63D2;&#x4EF6;&#x6309;&#x94AE;&#x5F39;&#x51FA;&#x5DE5;&#x5177;&#x6846;&#xFF0C;&#x7136;&#x540E;&#x9009;&#x62E9;&#x9700;&#x8981;&#x7684; Command &#x7B49;&#xFF0C;&#x6267;&#x884C;&#x4E5F;&#x80FD;&#x5728; Log &#x4E2D;&#x770B;&#x5230;&#x6267;&#x884C;&#x6548;&#x679C;&#x3002;</p>
+<h2 id="&#x6DFB;&#x52A0;-webdriver">&#x6DFB;&#x52A0; webdriver</h2><p>&#x4E0A;&#x9762;&#x6211;&#x4EEC;&#x7528;&#x5230;&#x7684;&#x662F;&#x9ED8;&#x8BA4;&#x7684; Firefox&#xFF0C;&#x5982;&#x679C;&#x8981;&#x4F7F;&#x7528;&#x522B;&#x7684;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x5C31;&#x5F97;&#x4E0B;&#x8F7D;&#x4E00;&#x4E2A;&#x6269;&#x5C55;&#x7684; webdriver&#xFF0C;&#x5B98;&#x7F51;&#x4E0A;&#x7684; <a href="http://www.seleniumhq.org/download/" target="_blank" rel="external">Third Party Browser Drivers</a> &#x53EF;&#x4EE5;&#x4E0B;&#x8F7D;&#x5F97;&#x5230;&#x3002;&#x89E3;&#x538B;&#x4E0B;&#x6765;&#x662F;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x5B98;&#x65B9;&#x5EFA;&#x8BAE;&#x653E;&#x5728;&#x73AF;&#x5883;&#x53D8;&#x91CF; PATH &#x76EE;&#x5F55;&#x4E0B;&#x3002;&#x4F46;&#x6211;&#x6CA1;&#x8FD9;&#x4E48;&#x505A;&#xFF08;&#x6211;&#x5C31;&#x662F;&#x60F3;&#x8BD5;&#x8BD5;&#x800C;&#x5DF2;&#xFF09;&#xFF0C;&#x6211;&#x76F4;&#x63A5;&#x628A;&#x89E3;&#x538B;&#x51FA;&#x6765;&#x7684; <a href="http://chromedriver.storage.googleapis.com/index.html?path=2.15/" target="_blank" rel="external">chromedriver</a> &#x653E;&#x5728;&#x6267;&#x884C; node &#x7684;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x540C;&#x6837;&#x7684;&#x6548;&#x679C;&#x3002;</p>
+<p>&#x7136;&#x540E;&#x4FEE;&#x6539;&#x4E00;&#x4E0B; index.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> driver = <span class="keyword">new</span> webdriver.Builder()</span><br><span class="line">    .forBrowser(<span class="string">&apos;chrome&apos;</span>)</span><br></pre></td></tr></table></figure>
+<p>&#x518D;&#x6B21;&#x8FD0;&#x884C;&#x65F6;&#x5F39;&#x51FA;&#x6765;&#x7684;&#x5C31;&#x662F; chrome &#x4E86;&#x3002;</p>
+<h3 id="selenium-for-android">Selenium for Android</h3><p>TODO <a href="http://selendroid.io/" target="_blank" rel="external">selendroid</a><br>&#x8FD9;&#x90E8;&#x5206;&#x6709;&#x70B9;&#x9EBB;&#x70E6;&#xFF0C;&#x540E;&#x7EED;&#x518D;&#x505A;&#x3002;</p>
+<h2 id="the-standalone-selenium-server">The Standalone Selenium Server</h2><p>&#x5982;&#x679C;&#x5168;&#x90E8;&#x5DE5;&#x4F5C;&#x90FD;&#x662F;&#x5728;&#x5F53;&#x524D;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#x5B8C;&#x6210;&#xFF0C;&#x5176;&#x5B9E;&#x4E0D;&#x9700;&#x8981; Selenium Server&#xFF0C;&#x4F46;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5C06;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x90E8;&#x7F72;&#x5728;&#x67D0;&#x4E2A;&#x8FDC;&#x7A0B;&#x673A;&#x5668;&#x4E0A;&#xFF0C;&#x53C8;&#x6CA1;&#x529E;&#x6CD5;&#x8FD0;&#x884C;&#x5176;&#x547D;&#x4EE4;&#x884C;&#xFF0C;&#x90A3;&#x4E48; Selenium Server &#x5C31;&#x63D0;&#x4F9B;&#x4E86;&#x8FD9;&#x4E48;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x7684; proxy&#xFF0C;&#x8BA9;&#x4F60;&#x53EF;&#x4EE5;&#x8FDC;&#x7A0B;&#x8FD0;&#x884C;&#x4F60;&#x7684;&#x6D4B;&#x8BD5;&#x811A;&#x672C;&#x3002;&#xFF08;&#x5B98;&#x7F51;&#x8FD8;&#x4ECB;&#x7ECD;&#x4E86;<a href="http://www.seleniumhq.org/docs/03_webdriver.jsp#webdriver-and-the-selenium-server" target="_blank" rel="external">&#x5176;&#x4ED6;&#x60C5;&#x51B5;</a>&#xFF09;</p>
+<h3 id="&#x5B89;&#x88C5;&#x53CA;&#x542F;&#x52A8;">&#x5B89;&#x88C5;&#x53CA;&#x542F;&#x52A8;</h3><p>&#x5728;&#x5B89;&#x88C5;&#x53EF; JDK&#x4E4B;&#x540E;&#xFF0C;&#x5728;<a href="http://selenium-release.storage.googleapis.com/index.html" target="_blank" rel="external">&#x8FD9;&#x91CC;&#x4E0B;&#x8F7D;</a>&#x6700;&#x65B0;&#x7248;&#x672C;&#x7684; jar &#x5305;&#xFF08;&#x5047;&#x8BBE;&#x6211;&#x73B0;&#x5728;&#x4E0B;&#x8F7D;&#x7684;&#x662F; 2.45&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x8FD0;&#x884C;</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">java</span> <span class="tag">-jar</span> <span class="tag">selenium-server-standalone-2</span><span class="class">.45</span><span class="class">.0</span><span class="class">.jar</span></span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x65F6;&#x5019;&#x8BBF;&#x95EE; <a href="http://localhost:4444/wd/hub" target="_blank" rel="external">http://localhost:4444/wd/hub</a> &#x5C31;&#x80FD;&#x770B;&#x5230; Server &#x4E86;&#xFF01;</p>
+<h3 id="&#x8FD0;&#x884C;&#x6D4B;&#x8BD5;">&#x8FD0;&#x884C;&#x6D4B;&#x8BD5;</h3><p>&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x6709; chromedriver&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x754C;&#x9762;&#x4E0A; <strong>Create Session</strong> &#x9009;&#x62E9; Browser &#x4E3A; <strong>chrome</strong>&#x3002;</p>
+<p>TODO &#x6CA1;&#x641E;&#x61C2;&#x600E;&#x4E48;&#x7528;</p>
+<h2 id="&#x53C2;&#x8003;&#x8D44;&#x6599;">&#x53C2;&#x8003;&#x8D44;&#x6599;</h2><ul>
+<li><a href="https://github.com/fool2fish" target="_blank" rel="external">&#x6C89;&#x9C7C;</a> &#x7FFB;&#x8BD1;&#x7684; <a href="https://github.com/fool2fish/selenium-doc" target="_blank" rel="external">selenium &#x4E2D;&#x6587;&#x6587;&#x6863;</a></li>
+<li><a href="http://randomjavascript.blogspot.co.uk/2015/04/look-no-hands-using-selenium-and-nodejs.html" target="_blank" rel="external">Look! No Hands! - Using Selenium and Node.js for interactive UI testing</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/04/use-selenium-for-ui-test/" data-id="ciga4wtqz001ithq9x054b3sb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Selenium/">Selenium</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/test/">test</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ui/">ui</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2015/05/mutation-observer-and-event/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          用 MutationObserver 和 Mutation events 监听 DOM 变化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2015/04/navigator-permissions/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">用 navigator.permissions 检查浏览器权限</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/blog/tags/CommonJS/" style="font-size: 10px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/React/" style="font-size: 16.67px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 10px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/browser-perf/" style="font-size: 10px;">browser-perf</a> <a href="/blog/tags/ci/" style="font-size: 10px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/test/" style="font-size: 13.33px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2015/09/using-contenteditable/">Using Contenteditable</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/using-iron-node/">使用 iron-node 进行 Node Debug</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/google-new-logo/">Google 换新 Logo 了</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/09/raf-and-ric/">requestAnimationFrame 和 requestIdleCallback</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2015/07/meteor-react/">Meteor + React</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Hans Chan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/blog/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
