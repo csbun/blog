@@ -22,11 +22,11 @@ showlogo: false # whether to show the logo in the header
 # Sidebar
 sidebar: right # set to false if you don't want a sidebar
 widgets:
+- tagcloud
+- archive
 - recent_posts
 # - category
 # - tag
-- tagcloud
-- archive
 thumbnail: true
 
 # Contacts
@@ -48,17 +48,8 @@ cdn: google #If your site loads slowly change it to "google" , because "useso" i
 # Miscellaneous
 google_site_verification:
 google_analytics:
-favicon: favicon.png
+favicon: favicon.ico
 twitter:
 google_plus:
 fb_admins:
 fb_app_id:
-
-
-# hexo-generator-tag
-tag_generator:
-  per_page: 10
-  enable_index_page: true
-  orderby: name
-  order: 1
-

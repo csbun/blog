@@ -1,15 +1,18 @@
 <% switch (type) {
     case 'archive':
-    var last;
+    var lastY, lastM;
     page.posts.each(function(post, i){
     var year = post.date.year();
-    if (last != year){
-      if (last != null){ %>
+    var month = post.date.format('MM');
+    if (lastY != year || lastM != month){
+      if (lastY != null){ %>
         </div></section>
       <% }
-      last = year; %>
+      lastY = year; lastM = month; %>
       <div class="archive-year-wrap">
         <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
+        -
+        <a href="<%- url_for('archives/' + year + '/' + month) %>" class="archive-year"><%= month %></a>
       </div>
       <section class="archives-wrap">
         <div class="archives">

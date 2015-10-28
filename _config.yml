@@ -7,7 +7,7 @@ title: Hans Chan's Blog
 subtitle:
 description:
 author: Hans Chan
-language:
+language: en
 timezone:
 
 author_title: 'Frontend Engineer'
@@ -78,6 +78,9 @@ deploy:
   type: git
   repo: https://github.com/csbun/blog
   branch: gh-pages
+
+# Disqus
+disqus_shortname: csbun
 
 # 目录
 toc:
