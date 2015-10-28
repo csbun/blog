@@ -1,5 +1,6 @@
 ---
 layout: post
+banner: gallery/taiwan/DSC03791.jpg
 title:  "requestAnimationFrame 和 requestIdleCallback"
 date:   2015-09-01 21:06:01
 tags:

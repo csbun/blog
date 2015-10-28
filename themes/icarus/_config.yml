@@ -1,0 +1,64 @@
+# Logo
+logo: css/images/logo.png # Empty this to unset logo
+email: icsbun@gmail.com
+
+# Header
+menu:
+  Home: .
+  Archives: archives
+#  Categories: categories
+  Tags: tags
+#  About: about
+
+# Content
+excerpt_link: Read More
+fancybox: true
+
+# Profile
+profile: true # whether to show profile bar
+gravatar: true # whether to use gravatar with the email
+showlogo: false # whether to show the logo in the header
+
+# Sidebar
+sidebar: right # set to false if you don't want a sidebar
+widgets:
+- recent_posts
+# - category
+# - tag
+- tagcloud
+- archive
+thumbnail: true
+
+# Contacts
+contacts:
+  github: https://github.com/csbun
+  weibo: http://weibo.com/csbun
+#  twitter: https://twitter.com/csbun
+#  facebook: https://www.facebook.com/icsbun
+#  dribbble: '#'
+  rss: atom.xml
+
+# Links
+links:
+  Hexo: http://hexo.io
+
+# CDN
+cdn: google #If your site loads slowly change it to "google" , because "useso" is slow out of China
+
+# Miscellaneous
+google_site_verification:
+google_analytics:
+favicon: favicon.png
+twitter:
+google_plus:
+fb_admins:
+fb_app_id:
+
+
+# hexo-generator-tag
+tag_generator:
+  per_page: 10
+  enable_index_page: true
+  orderby: name
+  order: 1
+

@@ -1,5 +1,6 @@
 ---
 layout: post
+banner: gallery/taiwan/DSC03842.jpg
 title:  "使用 iron-node 进行 Node Debug"
 date:   2015-09-15 15:05:33
 tags:

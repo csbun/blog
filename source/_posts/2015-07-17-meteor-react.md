@@ -1,5 +1,6 @@
 ---
 layout: post
+banner: gallery/taiwan/DSC03626.jpg
 title:  "Meteor + React"
 date:   2015-07-17 22:13:05
 tags:

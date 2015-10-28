@@ -1,5 +1,6 @@
 ---
 layout: post
+banner: gallery/taiwan/DSC04115.jpg
 title:  "Using Contenteditable"
 date:   2015-09-21 15:14:03
 tags:

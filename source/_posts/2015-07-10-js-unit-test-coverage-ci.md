@@ -1,5 +1,6 @@
 ---
 layout: post
+banner: gallery/taiwan/DSC03507.jpg
 title:  "JS 单元测试代码覆盖率和持续集成"
 date:   2015-07-10 19:43:29
 tags:
