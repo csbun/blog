@@ -46,8 +46,8 @@ links:
 cdn: google #If your site loads slowly change it to "google" , because "useso" is slow out of China
 
 # Miscellaneous
-google_site_verification:
-google_analytics:
+google_site_verification: w7Jze6jotMvxHSzsNqwEukg5f2L6VNFgRcPZBwBGln8
+google_analytics: UA-69725995-1
 favicon: favicon.ico
 twitter:
 google_plus:
