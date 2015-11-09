@@ -3,7 +3,6 @@ layout: post
 title:  "使用 browser-perf 测试网页性能"
 date:   2015-02-10 09:53:01
 tags:
-- browser-perf
 - Selenium
 - performance
 ---
