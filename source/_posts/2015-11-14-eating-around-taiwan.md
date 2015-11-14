@@ -1,5 +1,5 @@
 title: 台湾最好吃
-banner: gallery/TODO.jpg
+banner: gallery/taiwan/DSC04220.jpg
 tags:
   - 美食
 category:
@@ -120,5 +120,5 @@ date: 2015-11-14 20:20:10
 
 {% asset_img DSC04318.jpg 台中 逢甲夜市 官芝霖 大肠包小肠 %}
 
-以上美食，不要问我价格，最多不到 150 TND。在台湾就是随便吃，炒鸡便宜！也不要问我拍照技术什么时候变这么好了，我不会告诉你这些都是我女票拍的，我只负责吃。没什么贡献的我回来本来想画一张台南美食地图的，可惜技术不到家，字也丑，最终放弃，[这有](https://github.com/csbun/blog/tree/master/source/_posts/2015-11-14-eating-around-taiwan/tainan.jpg) 一张我们在台南吃过的东西也少部分景点的 Google Map 截图，爱看不看。
+以上美食，不要问我价格，最多不到 150 TND。在台湾就是随便吃，炒鸡便宜！也不要问我拍照技术什么时候变这么好了，我不会告诉你这些都是我女票拍的，我只负责吃。没什么贡献的我回来本来想画一张台南美食地图的，可惜技术不到家，字也丑，最终放弃，[这有](https://raw.githubusercontent.com/csbun/blog/master/source/_posts/2015-11-14-eating-around-taiwan/tainan.jpg) 一张我们在台南吃过的东西也少部分景点的 Google Map 拼接图，爱看不看。
 
