@@ -1,0 +1,1470 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          120.675433,
+          24.147119
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?q=24.147119,120.675433",
+        "Location": {
+          "Latitude": "24.147119",
+          "Longitude": "120.675433"
+        },
+        "Published": "2015-10-04T05:00:57Z",
+        "Title": "24.147119,120.675433",
+        "Updated": "2015-10-18T06:35:52Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.515045,
+          25.048704
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=17328172697257262060",
+        "Location": {
+          "Address": "100台湾台北市中正區市民大道一段100號",
+          "Business Name": "日本藥妝堂",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0487040",
+            "Longitude": "121.5150450"
+          }
+        },
+        "Published": "2015-10-06T12:46:20Z",
+        "Title": "日本藥妝堂",
+        "Updated": "2015-10-06T12:46:20Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5079041,
+          25.0426559
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=9375370271844523",
+        "Location": {
+          "Address": "108台湾台北市萬華區成都路3號",
+          "Business Name": "成都杨桃冰",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0426559",
+            "Longitude": "121.5079041"
+          }
+        },
+        "Published": "2015-10-06T11:58:15Z",
+        "Title": "成都楊桃冰",
+        "Updated": "2015-10-06T11:58:15Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5163059,
+          25.0454742
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=12027691383850610920",
+        "Location": {
+          "Address": "100台湾台北市中正區許昌街26之3號",
+          "Business Name": "阿泉面线",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0454742",
+            "Longitude": "121.5163059"
+          }
+        },
+        "Published": "2015-10-06T10:39:22Z",
+        "Title": "阿泉麵線",
+        "Updated": "2015-10-06T10:39:22Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5075663,
+          25.0450997
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=8200617324496163431",
+        "Location": {
+          "Address": "108台湾台北市萬華區漢中街32巷1號",
+          "Business Name": "谢谢鱿鱼羹",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0450997",
+            "Longitude": "121.5075663"
+          }
+        },
+        "Published": "2015-10-06T10:36:40Z",
+        "Title": "謝謝魷魚羹",
+        "Updated": "2015-10-06T10:36:40Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5221411,
+          25.0308462
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=1911984524436894455",
+        "Location": {
+          "Address": "106台湾台北市中正區杭州南路二段48號",
+          "Business Name": "老张牛肉面",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0308462",
+            "Longitude": "121.5221411"
+          }
+        },
+        "Published": "2015-10-06T02:31:55Z",
+        "Title": "老張牛肉麵",
+        "Updated": "2015-10-06T02:31:55Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5185243,
+          25.0320529
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=15694935650441423724",
+        "Location": {
+          "Address": "100台湾台北市中正區羅斯福路一段10號",
+          "Business Name": "金峰魯肉飯",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0320529",
+            "Longitude": "121.5185243"
+          }
+        },
+        "Published": "2015-10-06T02:30:35Z",
+        "Title": "Jinfeng Braised Meat Rice 金峰魯肉飯",
+        "Updated": "2015-10-06T02:30:35Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5413404,
+          25.0468259
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=14748599052693994235",
+        "Location": {
+          "Address": "104台湾台北市中山區八德路二段274號",
+          "Business Name": "林東芳牛肉麵",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0468259",
+            "Longitude": "121.5413404"
+          }
+        },
+        "Published": "2015-10-06T02:05:33Z",
+        "Title": "林東芳牛肉麵 Lin Dong Fang beef noodles",
+        "Updated": "2015-10-06T02:05:33Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5115722,
+          25.0428874
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=7146908118306293494",
+        "Location": {
+          "Address": "100台湾台北市中正區博愛路103號",
+          "Business Name": "世运食品",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0428874",
+            "Longitude": "121.5115722"
+          }
+        },
+        "Published": "2015-10-06T02:05:01Z",
+        "Title": "Olympia",
+        "Updated": "2015-10-06T02:05:01Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.51191,
+          25.0442019
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=3428234873676918937",
+        "Location": {
+          "Address": "100台湾台北市中正區武昌街一段37號",
+          "Business Name": "辉松食品 (原黑松牛轧糖)",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0442019",
+            "Longitude": "121.5119100"
+          }
+        },
+        "Published": "2015-10-06T02:01:29Z",
+        "Title": "輝松國際事業有限公司",
+        "Updated": "2015-10-06T02:01:29Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5142383,
+          25.0459284
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=9880937532736076361",
+        "Location": {
+          "Address": "100台湾台北市中正區開封街一段2之?號",
+          "Business Name": "万师父牛肉卷饼",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0459284",
+            "Longitude": "121.5142383"
+          }
+        },
+        "Published": "2015-10-06T01:28:49Z",
+        "Title": "万师父牛肉卷饼",
+        "Updated": "2015-10-06T01:28:49Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.515583,
+          25.0465749
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=1883008475077155034",
+        "Location": {
+          "Address": "100台湾台北市中正區忠孝西路一段50之1號B1樓",
+          "Business Name": "康是美",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0465749",
+            "Longitude": "121.5155830"
+          }
+        },
+        "Published": "2015-10-06T01:17:40Z",
+        "Title": "Cosmed",
+        "Updated": "2015-10-06T01:17:40Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.5086639,
+          25.044996
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=5562438306505185381",
+        "Location": {
+          "Address": "108台湾台北市萬華區中華路一段88號",
+          "Business Name": "美华泰(中华店)",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0449960",
+            "Longitude": "121.5086639"
+          }
+        },
+        "Published": "2015-10-06T01:10:14Z",
+        "Title": "Mirada",
+        "Updated": "2015-10-06T01:10:14Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.5506337,
+          24.3115312
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=207608892990589433",
+        "Location": {
+          "Address": "436台湾台中市清水區",
+          "Business Name": "高美湿地",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.3115312",
+            "Longitude": "120.5506337"
+          }
+        },
+        "Published": "2015-10-05T08:29:10Z",
+        "Title": "Gaomei Wetland",
+        "Updated": "2015-10-05T08:29:10Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.592712,
+          24.181195
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=16587615292508987772",
+        "Location": {
+          "Address": "434台湾台中市龍井區新興路一巷1號",
+          "Business Name": "东海莲心冰鸡爪冻",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1811950",
+            "Longitude": "120.5927120"
+          }
+        },
+        "Published": "2015-10-04T13:59:29Z",
+        "Title": "東海蓮心冰雞爪凍",
+        "Updated": "2015-10-04T13:59:29Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6465868,
+          24.175922
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=543144919740215453",
+        "Location": {
+          "Address": "407台湾台中市西屯區慶和街29-49號",
+          "Business Name": "爆漿炭烤按摩雞排",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1759220",
+            "Longitude": "120.6465868"
+          }
+        },
+        "Published": "2015-10-04T12:30:37Z",
+        "Title": "爆漿炭烤按摩雞排",
+        "Updated": "2015-10-04T12:30:37Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.646087,
+          24.1795
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=6369323692775732507",
+        "Location": {
+          "Address": "407台湾台中市西屯區逢甲路20巷10弄5號",
+          "Business Name": "官芝霖大肠包小肠",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1795000",
+            "Longitude": "120.6460870"
+          }
+        },
+        "Published": "2015-10-04T11:42:44Z",
+        "Title": "官芝霖大腸包小腸",
+        "Updated": "2015-10-04T11:42:44Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6791234,
+          24.1421356
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=9981468758949762128",
+        "Location": {
+          "Address": "400台湾台中市中區三民路二段85號",
+          "Business Name": "王记菜头粿糯米肠",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1421356",
+            "Longitude": "120.6791234"
+          }
+        },
+        "Published": "2015-10-04T07:33:16Z",
+        "Title": "王記菜頭粿糯米腸",
+        "Updated": "2015-10-04T07:33:16Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6787185,
+          24.1422987
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=4913553852427506048",
+        "Location": {
+          "Address": "400台湾台中市中區三民路二段87號",
+          "Business Name": "李海鲁肉饭",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1422987",
+            "Longitude": "120.6787185"
+          }
+        },
+        "Published": "2015-10-04T05:45:06Z",
+        "Title": "李海魯肉飯",
+        "Updated": "2015-10-04T05:45:06Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.66659,
+          24.157258
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=17845051430333271862",
+        "Location": {
+          "Address": "404台湾台中市北區館前路1號",
+          "Business Name": "國立自然科學博物館",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1572580",
+            "Longitude": "120.6665900"
+          }
+        },
+        "Published": "2015-10-04T05:04:13Z",
+        "Title": "國立自然科學博物館",
+        "Updated": "2015-10-04T05:04:13Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.646457,
+          24.178842
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=3367729731243104289",
+        "Location": {
+          "Latitude": "24.178842",
+          "Longitude": "120.646457"
+        },
+        "Published": "2015-10-04T04:59:47Z",
+        "Title": "逢甲夜市",
+        "Updated": "2015-10-04T04:59:47Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.646457,
+          24.178842
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=3367729731243104289",
+        "Location": {
+          "Latitude": "24.178842",
+          "Longitude": "120.646457"
+        },
+        "Published": "2015-10-04T04:59:47Z",
+        "Title": "逢甲夜市",
+        "Updated": "2015-10-04T04:59:47Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6791788,
+          24.1426484
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=16691464278785122494",
+        "Location": {
+          "Address": "403台湾台中市西屯區台灣大道一段公有第二市場",
+          "Business Name": "山河鲁肉饭",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1426484",
+            "Longitude": "120.6791788"
+          }
+        },
+        "Published": "2015-10-04T04:58:14Z",
+        "Title": "山河魯肉飯",
+        "Updated": "2015-10-04T04:58:14Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6855437,
+          24.1414496
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=2548309179968309461",
+        "Location": {
+          "Address": "400台湾台中市中區公園路1號",
+          "Business Name": "阿水狮猪脚大王",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1414496",
+            "Longitude": "120.6855437"
+          }
+        },
+        "Published": "2015-10-04T04:57:56Z",
+        "Title": "阿水狮猪脚大王",
+        "Updated": "2015-10-04T04:57:56Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.683516,
+          24.137836
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=15042038957971567208",
+        "Location": {
+          "Latitude": "24.137836",
+          "Longitude": "120.683516"
+        },
+        "Published": "2015-10-04T04:54:13Z",
+        "Title": "Miyahara",
+        "Updated": "2015-10-04T04:54:13Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.683516,
+          24.137836
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=15042038957971567208",
+        "Location": {
+          "Latitude": "24.137836",
+          "Longitude": "120.683516"
+        },
+        "Published": "2015-10-04T04:54:13Z",
+        "Title": "Miyahara",
+        "Updated": "2015-10-04T04:54:13Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6106567,
+          24.1835981
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=15293381817922650218",
+        "Location": {
+          "Address": "407台湾台中市西屯區台灣大道四段1727號",
+          "Business Name": "东海大学",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1835981",
+            "Longitude": "120.6106567"
+          }
+        },
+        "Published": "2015-10-04T04:52:33Z",
+        "Title": "Tunghai University",
+        "Updated": "2015-10-04T04:52:33Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6098824,
+          24.1337465
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=891171269462967684",
+        "Location": {
+          "Address": "408台湾台中市南屯區春安路56巷",
+          "Business Name": "彩虹眷村",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1337465",
+            "Longitude": "120.6098824"
+          }
+        },
+        "Published": "2015-10-04T04:50:52Z",
+        "Title": "彩虹眷村",
+        "Updated": "2015-10-04T04:50:52Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6462778,
+          24.1650546
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=555213851798539752",
+        "Location": {
+          "Address": "407台湾台中市西屯區惠中路156巷1號",
+          "Business Name": "酣旅,HoneyBnB",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1650546",
+            "Longitude": "120.6462778"
+          }
+        },
+        "Published": "2015-10-04T04:36:23Z",
+        "Title": "酣旅,HoneyBnB",
+        "Updated": "2015-10-04T04:36:23Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1974498,
+          22.9898949
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=6228391598456173407",
+        "Location": {
+          "Address": "700台湾台南市中西區西門路763號",
+          "Business Name": "小西脚青草茶",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9898949",
+            "Longitude": "120.1974498"
+          }
+        },
+        "Published": "2015-10-03T16:41:31Z",
+        "Title": "小西腳青草茶",
+        "Updated": "2015-10-03T16:41:31Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.6788799,
+          24.1421449
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=2822268166987950583",
+        "Location": {
+          "Address": "400台湾台中市中區三民路二段第二市場",
+          "Business Name": "老赖茶栈",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "24.1421449",
+            "Longitude": "120.6788799"
+          }
+        },
+        "Published": "2015-10-03T15:21:51Z",
+        "Title": "老賴茶棧",
+        "Updated": "2015-10-03T15:21:51Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2063235,
+          23.0015234
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=12084477058726453726",
+        "Location": {
+          "Address": "704台湾台南市北區公園南路169號",
+          "Business Name": "阿憨鹹粥",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0015234",
+            "Longitude": "120.2063235"
+          }
+        },
+        "Published": "2015-10-03T15:03:18Z",
+        "Title": "阿憨鹹粥",
+        "Updated": "2015-10-03T15:03:18Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2051926,
+          22.9991676
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=8499262648163743853",
+        "Location": {
+          "Address": "704台湾台南市北區忠義路三段27號",
+          "Business Name": "古早味鱼丸汤",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9991676",
+            "Longitude": "120.2051926"
+          }
+        },
+        "Published": "2015-10-03T15:03:12Z",
+        "Title": "古早味魚丸湯",
+        "Updated": "2015-10-03T15:03:12Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2119093,
+          23.0134674
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=5321093910901660931",
+        "Location": {
+          "Address": "704台湾台南市北區公園路595-4號",
+          "Business Name": "鴻源金好吃牛肉麵(原上好吃)",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0134674",
+            "Longitude": "120.2119093"
+          }
+        },
+        "Published": "2015-10-03T12:57:03Z",
+        "Title": "鴻源金好吃牛肉麵(原上好吃)",
+        "Updated": "2015-10-03T12:57:03Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.197291,
+          22.987183
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=13254971973167830619",
+        "Location": {
+          "Latitude": "22.987183",
+          "Longitude": "120.197291"
+        },
+        "Published": "2015-10-03T11:27:17Z",
+        "Title": "藍晒圖文創園區",
+        "Updated": "2015-10-03T11:27:17Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.197291,
+          22.987183
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=13254971973167830619",
+        "Location": {
+          "Latitude": "22.987183",
+          "Longitude": "120.197291"
+        },
+        "Published": "2015-10-03T11:27:17Z",
+        "Title": "藍晒圖文創園區",
+        "Updated": "2015-10-03T11:27:17Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2040666,
+          22.9891277
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=11220780884503943427",
+        "Location": {
+          "Address": "700台湾台南市中西區府前路一段199號",
+          "Business Name": "莉莉水果店",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9891277",
+            "Longitude": "120.2040666"
+          }
+        },
+        "Published": "2015-10-03T10:59:48Z",
+        "Title": "莉莉水果店",
+        "Updated": "2015-10-03T10:59:48Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2048655,
+          22.9891517
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=8900202290878478045",
+        "Location": {
+          "Address": "70046台湾台南市中西區府前路一段218號",
+          "Business Name": "克林台包",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9891517",
+            "Longitude": "120.2048655"
+          }
+        },
+        "Published": "2015-10-03T10:31:13Z",
+        "Title": "克林台包",
+        "Updated": "2015-10-03T10:31:13Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2064738,
+          22.9902571
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=300975792201487936",
+        "Location": {
+          "Address": "700台湾台南市中西區開山路74號",
+          "Business Name": "台湾黑轮2元",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9902571",
+            "Longitude": "120.2064738"
+          }
+        },
+        "Published": "2015-10-03T10:27:59Z",
+        "Title": "台灣黑輪",
+        "Updated": "2015-10-03T10:27:59Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.204838,
+          22.989572
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=9688623970173945063",
+        "Location": {
+          "Address": "700台湾台南市中西區南門路71號",
+          "Business Name": "草祭書店",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9895720",
+            "Longitude": "120.2048380"
+          }
+        },
+        "Published": "2015-10-03T09:23:32Z",
+        "Title": "草祭二手書店",
+        "Updated": "2015-10-03T09:23:32Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2048338,
+          22.98992
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=7177288601832733031",
+        "Location": {
+          "Address": "700台湾台南市中西區南門路53號",
+          "Business Name": "不老庄药膳食品",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9899200",
+            "Longitude": "120.2048338"
+          }
+        },
+        "Published": "2015-10-03T09:22:13Z",
+        "Title": "不老庄药膳食品",
+        "Updated": "2015-10-03T09:22:13Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.209345,
+          23.0053481
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=10387474582752828844",
+        "Location": {
+          "Address": "704台湾台南市北區公園北路116巷7-1號",
+          "Business Name": "六圓(南)",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0053481",
+            "Longitude": "120.2093450"
+          }
+        },
+        "Published": "2015-10-03T02:08:17Z",
+        "Title": "六圓(南)",
+        "Updated": "2015-10-03T02:08:17Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2069292,
+          22.9981924
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=16259321547352114051",
+        "Location": {
+          "Address": "704台湾台南市北區成功路58號",
+          "Business Name": "荣兴水果店",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9981924",
+            "Longitude": "120.2069292"
+          }
+        },
+        "Published": "2015-10-02T13:21:26Z",
+        "Title": "栄興水果店",
+        "Updated": "2015-10-02T13:21:26Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.197545,
+          22.9943431
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=7490879652874859371",
+        "Location": {
+          "Address": "700台湾台南市中西區正興街66-1號",
+          "Business Name": "炸蛋葱油饼",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9943431",
+            "Longitude": "120.1975450"
+          }
+        },
+        "Published": "2015-10-02T12:39:20Z",
+        "Title": "炸蛋葱油餅",
+        "Updated": "2015-10-02T12:39:20Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2053589,
+          22.9895651
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=3365612770392452255",
+        "Location": {
+          "Address": "700台湾台南市中西區府前路一段196巷25號",
+          "Business Name": "保哥黑輪",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9895651",
+            "Longitude": "120.2053589"
+          }
+        },
+        "Published": "2015-10-02T12:30:25Z",
+        "Title": "保哥黑輪",
+        "Updated": "2015-10-02T12:30:25Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2052049,
+          22.9826606
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=6867552422731110472",
+        "Location": {
+          "Address": "700台湾台南市中西區五妃街206號",
+          "Business Name": "懷舊小棧",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9826606",
+            "Longitude": "120.2052049"
+          }
+        },
+        "Published": "2015-10-02T11:40:22Z",
+        "Title": "懷舊小棧",
+        "Updated": "2015-10-02T11:40:22Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2056936,
+          22.9845119
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=2072473965704847836",
+        "Location": {
+          "Address": "700台湾台南市中西區慶中街198號",
+          "Business Name": "EVA伊娃日式泡芙专卖店",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9845119",
+            "Longitude": "120.2056936"
+          }
+        },
+        "Published": "2015-10-02T11:34:57Z",
+        "Title": "EVA伊娃日式泡芙專賣店",
+        "Updated": "2015-10-02T11:34:57Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1533631,
+          22.9999491
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=5548317001042168304",
+        "Location": {
+          "Address": "708台湾台南市安平區安北路433號",
+          "Business Name": "同记安平豆花",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9999491",
+            "Longitude": "120.1533631"
+          }
+        },
+        "Published": "2015-10-02T06:17:13Z",
+        "Title": "同記安平豆花",
+        "Updated": "2015-10-02T06:17:13Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1532217,
+          22.9998158
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=10268085909536429323",
+        "Location": {
+          "Address": "708台湾台南市安平區安北路441號",
+          "Business Name": "茂記黑豆花大王",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9998158",
+            "Longitude": "120.1532217"
+          }
+        },
+        "Published": "2015-10-02T06:16:59Z",
+        "Title": "茂記黑豆花大王",
+        "Updated": "2015-10-02T06:16:59Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1996231,
+          23.0106814
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=11689104562749232220",
+        "Location": {
+          "Address": "704台湾台南市北區海安路三段",
+          "Business Name": "台南花园夜市",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0106814",
+            "Longitude": "120.1996231"
+          }
+        },
+        "Published": "2015-10-02T06:16:21Z",
+        "Title": "Tainan Flower Night Market",
+        "Updated": "2015-10-02T06:16:21Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1971469,
+          22.9944661
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=17643995673658980913",
+        "Location": {
+          "Address": "700台湾台南市中西區正興街80號",
+          "Business Name": "泰成水果店",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9944661",
+            "Longitude": "120.1971469"
+          }
+        },
+        "Published": "2015-10-02T06:16:08Z",
+        "Title": "泰成水果店",
+        "Updated": "2015-10-02T06:16:08Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2015126,
+          22.9972912
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=13689159620552425817",
+        "Location": {
+          "Address": "台湾台南市中西區民族路石精臼市場(民族路上在赤崁樓與西門路圓環中間)",
+          "Business Name": "八宝冰、花生仁汤",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9972912",
+            "Longitude": "120.2015126"
+          }
+        },
+        "Published": "2015-10-02T06:15:50Z",
+        "Title": "八宝冰、花生仁汤",
+        "Updated": "2015-10-02T06:15:50Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2009637,
+          22.9974174
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=17407309914285622768",
+        "Location": {
+          "Address": "700台湾台南市中西區民族路二段262號",
+          "Business Name": "阿忠魚粥",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9974174",
+            "Longitude": "120.2009637"
+          }
+        },
+        "Published": "2015-10-02T06:14:51Z",
+        "Title": "阿忠魚粥",
+        "Updated": "2015-10-02T06:14:51Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2066672,
+          23.0004103
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=11005477751414286542",
+        "Location": {
+          "Address": "704台湾台南市北區崇安街54號",
+          "Business Name": "連得堂餅家",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0004103",
+            "Longitude": "120.2066672"
+          }
+        },
+        "Published": "2015-10-02T06:14:17Z",
+        "Title": "連得堂餅家",
+        "Updated": "2015-10-02T06:14:17Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1739,
+          22.9981516
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=7689724687637564184",
+        "Location": {
+          "Address": "708台湾台南市安平區安平路436號",
+          "Business Name": "義豐阿琦冬瓜茶",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9981516",
+            "Longitude": "120.1739000"
+          }
+        },
+        "Published": "2015-10-02T06:12:48Z",
+        "Title": "義豐阿琦冬瓜茶",
+        "Updated": "2015-10-02T06:12:48Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.2074269,
+          23.0015181
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=8387396375659946375",
+        "Location": {
+          "Address": "704台湾台南市北區公園南路98號no",
+          "Business Name": "西羅殿牛肉湯",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0015181",
+            "Longitude": "120.2074269"
+          }
+        },
+        "Published": "2015-10-02T06:10:58Z",
+        "Title": "西羅殿牛肉湯",
+        "Updated": "2015-10-02T06:10:58Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1616822,
+          23.0003186
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=10909194985680982242",
+        "Location": {
+          "Address": "708台湾台南市安平區安平路786號",
+          "Business Name": "陈家蚵卷",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "23.0003186",
+            "Longitude": "120.1616822"
+          }
+        },
+        "Published": "2015-10-02T06:10:43Z",
+        "Title": "陳家蚵捲",
+        "Updated": "2015-10-02T06:10:43Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          120.1688957,
+          22.998989
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=7839681485010592679",
+        "Location": {
+          "Address": "708台湾台南市安平區安平路612號",
+          "Business Name": "王氏鱼皮",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "22.9989890",
+            "Longitude": "120.1688957"
+          }
+        },
+        "Published": "2015-10-02T06:10:34Z",
+        "Title": "王氏魚皮店",
+        "Updated": "2015-10-02T06:10:34Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.84447,
+          25.1091159
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=5112914677897150999",
+        "Location": {
+          "Address": "224台湾新北市瑞芳區輕便路268號",
+          "Business Name": "老松的家",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.1091159",
+            "Longitude": "121.8444700"
+          }
+        },
+        "Published": "2015-09-26T02:46:58Z",
+        "Title": "老松的家",
+        "Updated": "2015-09-26T02:46:58Z"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          121.514009,
+          25.046844
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "Google Maps URL": "http://maps.google.com/?cid=16595848656299218954",
+        "Location": {
+          "Address": "100台湾台北市中正區忠孝西路一段72號3樓",
+          "Business Name": "玺爱旅店",
+          "Country Code": "TW",
+          "Geo Coordinates": {
+            "Latitude": "25.0468440",
+            "Longitude": "121.5140090"
+          }
+        },
+        "Published": "2015-09-24T10:49:16Z",
+        "Title": "Say Love Hotel",
+        "Updated": "2015-09-24T10:49:16Z"
+      },
+      "type": "Feature"
+    }
+  ]
+}

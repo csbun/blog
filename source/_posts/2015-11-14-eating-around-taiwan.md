@@ -5,6 +5,7 @@ tags:
 category:
   - 旅行
 date: 2015-11-14 20:20:10
+update: 2015-11-20 17:51:00
 ---
 
 
@@ -15,13 +16,13 @@ date: 2015-11-14 20:20:10
 <!-- more -->
 
 
-## 台湾鲁肉饭
+## 台湾魯肉饭
 
-没错，就是这个鲁，不是那个卤。为什么上来就说这个，因为貌似大陆也经常看到吖！
+没错，就是这个魯，不是那个卤。为什么上来就说这个，因为貌似大陆也经常看到吖！
 
-台湾有各种各样的鲁肉饭，肉燥饭，猪油捞饭（请允许我偷懒统称为鲁肉饭）。和大陆见到的同名作品不同，宝岛的鲁肉饭通常都只是普通家用饭碗大小，甚至更小，而且，没有那半个卤鸡蛋！觉得比较好吃的是台北的 **金峰鲁肉饭**：
+台湾有各种各样的魯肉饭，肉燥饭，猪油捞饭（请允许我偷懒统称为魯肉饭）。和大陆见到的同名作品不同，宝岛的魯肉饭通常都只是普通家用饭碗大小，甚至更小，而且，没有那半个卤鸡蛋！觉得比较好吃的是台北的 **金峰魯肉饭**：
 
-{% asset_img DSC04479.jpg 台北 金峰鲁肉饭 %}
+{% asset_img DSC04479.jpg 台北 金峰魯肉饭 %}
 
 和 **大隐酒食** 的猪油捞饭：
 
@@ -120,5 +121,404 @@ date: 2015-11-14 20:20:10
 
 {% asset_img DSC04318.jpg 台中 逢甲夜市 官芝霖 大肠包小肠 %}
 
-以上美食，不要问我价格，最多不到 150 TND。在台湾就是随便吃，炒鸡便宜！也不要问我拍照技术什么时候变这么好了，我不会告诉你这些都是我女票拍的，我只负责吃。没什么贡献的我回来本来想画一张台南美食地图的，可惜技术不到家，字也丑，最终放弃，[这有](https://raw.githubusercontent.com/csbun/blog/master/source/_posts/2015-11-14-eating-around-taiwan/tainan.jpg) 一张我们在台南吃过的东西也少部分景点的 Google Map 拼接图，爱看不看。
+以上美食，不要问我价格，最多不到 150 TND。在台湾就是随便吃，炒鸡便宜！也不要问我拍照技术什么时候变这么好了，我不会告诉你这些都是我女票拍的，我只负责吃。没什么贡献的我回来本来想画一张台南美食地图的，可惜技术不到家，字也丑，最终放弃。不甘心的我还是从 Google Map 导出了部分我们在台湾吃过的东西和少景点的数据（到台南才开始记录，所以东岸的几乎没有），转换成百度地图如下。
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=j5D7AFvOU6flFPs1XVv9RcoR"></script>
+<div style="width:100%;height:550px;border:#ccc solid 1px;font-size:12px" id="map"></div>
+<script type="text/javascript">
+  //创建和初始化地图函数：
+  function initMap(){
+    createMap();//创建地图
+    setMapEvent();//设置地图事件
+    addMapControl();//向地图添加控件
+    addMapOverlay();//向地图添加覆盖物
+  }
+  function createMap(){ 
+    map = new BMap.Map("map"); 
+    map.centerAndZoom(new BMap.Point(120.194652,22.994535),14);
+  }
+  function setMapEvent(){
+    map.enableScrollWheelZoom();
+    map.enableKeyboard();
+    map.enableDragging();
+    map.enableDoubleClickZoom()
+  }
+  function addClickHandler(target,window){
+    target.addEventListener("click",function(){
+      target.openInfoWindow(window);
+    });
+  }
+  function addMapOverlay(){
+    var markers = [
+      {
+        "t": "成都楊桃冰",
+        "p": {
+          "lng": 121.5185096,
+          "lat": 25.0460545
+        }
+      },
+      {
+        "t": "阿泉麵線",
+        "p": {
+          "lng": 121.5269114,
+          "lat": 25.0488728
+        }
+      },
+      {
+        "t": "謝謝魷魚羹",
+        "p": {
+          "lng": 121.51817179999999,
+          "lat": 25.048498300000002
+        }
+      },
+      {
+        "t": "老張牛肉麵",
+        "p": {
+          "lng": 121.5327466,
+          "lat": 25.0342448
+        }
+      },
+      {
+        "t": "金峰魯肉飯",
+        "p": {
+          "lng": 121.52912979999999,
+          "lat": 25.0354515
+        }
+      },
+      {
+        "t": "林東芳牛肉麵",
+        "p": {
+          "lng": 121.55194589999999,
+          "lat": 25.050224500000002
+        }
+      },
+      {
+        "t": "辉松食品 (原黑松牛轧糖)",
+        "p": {
+          "lng": 121.5225155,
+          "lat": 25.0476005
+        }
+      },
+      {
+        "t": "万师父牛肉卷饼",
+        "p": {
+          "lng": 121.5248438,
+          "lat": 25.049327
+        }
+      },
+      {
+        "t": "高美湿地",
+        "p": {
+          "lng": 120.5612392,
+          "lat": 24.3149298
+        }
+      },
+      {
+        "t": "東海蓮心冰雞爪凍",
+        "p": {
+          "lng": 120.6033175,
+          "lat": 24.1845936
+        }
+      },
+      {
+        "t": "爆漿炭烤按摩雞排",
+        "p": {
+          "lng": 120.65719229999999,
+          "lat": 24.1793206
+        }
+      },
+      {
+        "t": "官芝霖大腸包小腸",
+        "p": {
+          "lng": 120.65669249999999,
+          "lat": 24.1828986
+        }
+      },
+      {
+        "t": "王記菜頭粿糯米腸",
+        "p": {
+          "lng": 120.68972889999999,
+          "lat": 24.1455342
+        }
+      },
+      {
+        "t": "李海魯肉飯",
+        "p": {
+          "lng": 120.689324,
+          "lat": 24.145697300000002
+        }
+      },
+      {
+        "t": "國立自然科學博物館",
+        "p": {
+          "lng": 120.6771955,
+          "lat": 24.1606566
+        }
+      },
+      {
+        "t": "逢甲夜市",
+        "p": {
+          "lng": 120.6570625,
+          "lat": 24.1822406
+        }
+      },
+      {
+        "t": "逢甲夜市",
+        "p": {
+          "lng": 120.6570625,
+          "lat": 24.1822406
+        }
+      },
+      {
+        "t": "山河魯肉飯",
+        "p": {
+          "lng": 120.6897843,
+          "lat": 24.146047
+        }
+      },
+      {
+        "t": "宮原眼科",
+        "p": {
+          "lng": 120.6941215,
+          "lat": 24.1412346
+        }
+      },
+      {
+        "t": "T东海大学",
+        "p": {
+          "lng": 120.6212622,
+          "lat": 24.1869967
+        }
+      },
+      {
+        "t": "彩虹眷村",
+        "p": {
+          "lng": 120.6204879,
+          "lat": 24.1371451
+        }
+      },
+      {
+        "t": "小西腳青草茶",
+        "p": {
+          "lng": 120.2080553,
+          "lat": 22.9932935
+        }
+      },
+      {
+        "t": "老賴茶棧",
+        "p": {
+          "lng": 120.6894854,
+          "lat": 24.145543500000002
+        }
+      },
+      {
+        "t": "阿憨鹹粥",
+        "p": {
+          "lng": 120.216929,
+          "lat": 23.004922
+        }
+      },
+      {
+        "t": "古早味魚丸湯",
+        "p": {
+          "lng": 120.2157981,
+          "lat": 23.0025662
+        }
+      },
+      {
+        "t": "鴻源金好吃牛肉麵(原上好吃)",
+        "p": {
+          "lng": 120.2225148,
+          "lat": 23.016866
+        }
+      },
+      {
+        "t": "藍晒圖文創園區",
+        "p": {
+          "lng": 120.2078965,
+          "lat": 22.990581600000002
+        }
+      },
+      {
+        "t": "莉莉水果店",
+        "p": {
+          "lng": 120.2146721,
+          "lat": 22.9925263
+        }
+      },
+      {
+        "t": "克林台包",
+        "p": {
+          "lng": 120.215471,
+          "lat": 22.9925503
+        }
+      },
+      {
+        "t": "台灣黑輪",
+        "p": {
+          "lng": 120.2170793,
+          "lat": 22.9936557
+        }
+      },
+      {
+        "t": "草祭二手書店",
+        "p": {
+          "lng": 120.21544349999999,
+          "lat": 22.9929706
+        }
+      },
+      {
+        "t": "不老庄药膳食品",
+        "p": {
+          "lng": 120.2154393,
+          "lat": 22.993318600000002
+        }
+      },
+      {
+        "t": "栄興水果店",
+        "p": {
+          "lng": 120.2175347,
+          "lat": 23.001591
+        }
+      },
+      {
+        "t": "炸蛋葱油餅",
+        "p": {
+          "lng": 120.2081505,
+          "lat": 22.9977417
+        }
+      },
+      {
+        "t": "保哥黑輪",
+        "p": {
+          "lng": 120.21596439999999,
+          "lat": 22.9929637
+        }
+      },
+      {
+        "t": "懷舊小棧",
+        "p": {
+          "lng": 120.2158104,
+          "lat": 22.9860592
+        }
+      },
+      {
+        "t": "EVA伊娃日式泡芙專賣店",
+        "p": {
+          "lng": 120.2162991,
+          "lat": 22.9879105
+        }
+      },
+      {
+        "t": "同記安平豆花",
+        "p": {
+          "lng": 120.1639686,
+          "lat": 23.0033477
+        }
+      },
+      {
+        "t": "茂記黑豆花大王",
+        "p": {
+          "lng": 120.1638272,
+          "lat": 23.0032144
+        }
+      },
+      {
+        "t": "台南花园夜市",
+        "p": {
+          "lng": 120.2102286,
+          "lat": 23.01408
+        }
+      },
+      {
+        "t": "泰成水果店",
+        "p": {
+          "lng": 120.2077524,
+          "lat": 22.9978647
+        }
+      },
+      {
+        "t": "八宝冰、花生仁汤",
+        "p": {
+          "lng": 120.2121181,
+          "lat": 23.0006898
+        }
+      },
+      {
+        "t": "阿忠魚粥",
+        "p": {
+          "lng": 120.2115692,
+          "lat": 23.000816
+        }
+      },
+      {
+        "t": "連得堂餅家",
+        "p": {
+          "lng": 120.2172727,
+          "lat": 23.0038089
+        }
+      },
+      {
+        "t": "義豐阿琦冬瓜茶",
+        "p": {
+          "lng": 120.1845055,
+          "lat": 23.0015502
+        }
+      },
+      {
+        "t": "西羅殿牛肉湯",
+        "p": {
+          "lng": 120.2180324,
+          "lat": 23.0049167
+        }
+      },
+      {
+        "t": "陳家蚵捲",
+        "p": {
+          "lng": 120.1722877,
+          "lat": 23.0037172
+        }
+      },
+      {
+        "t": "王氏魚皮店",
+        "p": {
+          "lng": 120.17950119999999,
+          "lat": 23.002387600000002
+        }
+      }
+    ];
+    var allPoints = [];
+    for(var index = 0; index < markers.length; index++ ){
+      var icon = new BMap.Icon(
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAZCAMAAAAGyf7hAAABDlBMVEUAAADtLS3MzMzcJC/////+/f3Q0NDTHzDjKC756OrHHDTrKy38/PzffozvR0fKLEP++/z5+fnn5+f22t7vvcTssrrihpP1hYXWYXHyX1/SSl3xV1fJIzruNzfYIzDWIjDgJy/99vbz8/P68vP67O7t7e324OT33uHY2Njxxszttr7rrrfmmaTLjZbggo/1jY3XXW7JXGvNRVjPPVHwT0/NNUriLzbMHTH39/f84eHd3d3i29z71dXS0tLRy837y8v6ycngxMjwwcjLxcbLvL75urrKqq73nJzahpL1kJD1i4vbdIL0f3/Jc3/zcHDyaGjVVmjUU2XHQFPrSk3nQETpQEPHLUPvQUHjMzrGIjnzNEA/AAAAAXRSTlMAQObYZgAAARVJREFUKM9Vzdd6gkAQBeChLk1BEJGi2DWWxGjU9N57L+//ItldQOBczffv7BygMTrW0C732pBJvzJfIYRW3lhOyBgtuC/fLdYYqe5txDhWPp3nH4amoUdaDj7udqhQnfexdV6XW0UmDVcw8KLikr3aY/ykBriswrnE9ni+6VNFI4Dpkmzc8zhX8X+A6i+ZbgieRriJsUEmX8DorHEq0fHl5NBJ6kkRkw+yAc5R3lRdBpDfpBxyD00NYBioGZP0M7MLAIXsVWUiiiJG2Uu1vn3BsizgWLqUHHy/ZGMEW1Gjg9/XxESKwm1ITP2bEBqYQNOukrPhEyse7Xd3tQiF3ozDJccDs1USYB1rEc4OWiUtJbqspPIPOm8ZiopMvjYAAAAASUVORK5CYII=",
+        new BMap.Size(20,25),
+        { offset: new BMap.Size(10, 25) }
+      );
+      var point = new BMap.Point(markers[index].p.lng,markers[index].p.lat);
+      allPoints.push(point);
+      var marker = new BMap.Marker(point, { icon: icon });
+      var label = new BMap.Label(markers[index].t,{offset: new BMap.Size(22,5)});
+      marker.setLabel(label);
+      map.addOverlay(marker);
+    };
+    setTimeout(function() {
+      new BMap.Convertor().translate(allPoints, 1, allPoints.length, function(data) {
+        console.log(data)
+      });
+      
+    }, 5000);
+  }
+  //向地图添加控件
+  function addMapControl(){
+    var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+    scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+    map.addControl(scaleControl);
+    var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+    map.addControl(navControl);
+    var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+    map.addControl(overviewControl);
+  }
+  var map;
+    initMap();
+</script>
 
