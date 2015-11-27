@@ -6,8 +6,16 @@
   overflow: hidden
 
 .article-banner
-  width:100%
-  height:auto
+  font-size: 0
+  display: block
+  overflow: hidden
+  & > img
+    width:100%
+    height:auto
+    font-size: 0
+    transition: transform 1s ease
+    &:hover
+      transform: scale(1.05)
 
 .article-meta
   clearfix()
