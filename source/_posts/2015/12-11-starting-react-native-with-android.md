@@ -88,10 +88,9 @@ brew install gradle
 但是添加环境变量这个还是要做的：
 
 ```
-# brew 安装的 android-sdk，我当前的版本是 24.4.1
-export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1_1
-# brew 安装的 gradle，我当前的版本是 2.9
-export GRADLE_HOME=/usr/local/Cellar/gradle/2.9/bin
+# brew 安装的 android-sdk 和 gradle
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export GRADLE_HOME=/usr/local/opt/gradle
 ```
 
 ### 下载工具
