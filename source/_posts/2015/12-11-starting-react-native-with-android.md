@@ -1,5 +1,5 @@
 title: 在 Android 上开始使用 React Native
-banner: gallery/TODO.jpg
+banner: gallery/taiwan/DSC03244.jpg
 tags:
   - Android
   - React
