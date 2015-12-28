@@ -219,9 +219,7 @@ export default {
 }));
 ```
 
-可以看出，完全没有多余的代码，而且甚至模块都没有了，看不到任何的 `require` 定义，`import` 的内容直接 inline 到主文档中了。
-
-<!-- 这回我就好奇了，如果依赖关系再复杂一点，还会是怎样呢？且听下回分解。 TODO: 复杂的例子 -->
+可以看出，完全没有多余的代码，而且甚至模块都没有了，看不到任何的 `require` 定义，`import` 的内容直接 inline 到主文档中了。这回我就好奇了，如果依赖关系再复杂一点，还会是怎样呢？于是我造了一个稍微复杂一点的 [例子](https://github.com/csbun/tree-shaking-demo/tree/master/rollup)，结果还是 [inline 到一起了](https://github.com/csbun/tree-shaking-demo/blob/master/rollup/bundle.js)！
 
 但是，上面这两个例子都有一个问题，为嘛我需要将源码复制出来？难道不能直接 import ？
 
