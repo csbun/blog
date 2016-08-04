@@ -79,7 +79,7 @@ Run `node ssr.js` comes out the html string:
 <div server-rendered="true" class="server-uptime"><h1>Hans</h1> <h2>age 18</h2> <p>this is a component</p></div>
 ```
 
- The root element has a `server-rendered="true"` attribute. We'll talk about it [later](#TODO).
+ The root element has a `server-rendered="true"` attribute. We'll talk about it [later](#client-side-hydration).
 
 ## Bundle Renderer
 
@@ -300,11 +300,13 @@ app.listen(PORT, function () {
 
 Now, start the server and hit [http://127.0.0.1:3000/](http://127.0.0.1:3000/) on your favorite browser. But we get a warning message in the DevTool:
 
-```
-[Vue warn]: The client-side rendered virtual DOM tree is not matching server-rendered content. Bailing hydration and performing full client-side render.
-```
+`[Vue warn]: The client-side rendered virtual DOM tree is not matching server-rendered content. Bailing hydration and performing full client-side render.`
 
-Cause we have the `data()` function returning a random value in *src/App.vue*, so we got different html string form server and client via virtual-DOM. Let's make some change:
+Cause we have the `data()` function returning a random value in *src/App.vue*, so we got different html string form server and client via virtual-DOM.
+
+> In server-rendered output, the root element will have the server-rendered="true" attribute. On the client, when you mount a Vue instance to an element with this attribute, it will attempt to "hydrate" the existing DOM instead of creating new DOM nodes.
+
+Let's make some change:
 
 ```html src/App.vue
 <template>
