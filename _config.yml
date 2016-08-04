@@ -13,7 +13,7 @@ timezone:
 author_title: '傻逼切图仔'
 location: '广州 · Guangzhou, China'
 follow: https://github.com/csbun/
-timezone:
+# timezone:
 since: 2014 # The start year showing in your copyright section.
 
 
