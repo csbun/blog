@@ -11,13 +11,14 @@
   overflow: hidden
   &.narrow
     max-height: 250px
+    & > img
+      transition: transform 1s ease
+      &:hover
+        transform: scale(1.05)
   & > img
     width:100%
     height:auto
     font-size: 0
-    transition: transform 1s ease
-    &:hover
-      transform: scale(1.05)
 
 .article-meta
   clearfix()
