@@ -8,7 +8,7 @@ tags:
 - deserialization
 ---
 
-好长时间没写 Java，发现序列化、反序列化一个 JSON 数据真不是个容易的事情（主要还是年纪大了，记不住）。于是记录一下使用 [Gson](https://github.com/google/gson) 反序列化的方法。
+好长时间没写 Java，发现序列化、反序列化一个 JSON 数据真不是个容易的事情（主要还是年纪大了，记不住）。于是记录一下使用 [Gson](https://github.com/google/gson) 反序列化的方法。文中涉及的代码都可以在这个 [gson-deserialization-example](https://github.com/csbun/gson-deserialization-example) 中找到。
 
 > 作者本身不懂 Java，本着不负责的态度写下这些内容，大牛勿喷，想抄代码的菜鸟请珍重。
 > 本文基于转换期间没有异常情况讨论，实际情况请珍重。
