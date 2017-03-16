@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/csbun/blog",
   "scripts": {
+    "new": "hexo new",
     "start": "hexo s",
     "d": "hexo g && hexo d"
   },
