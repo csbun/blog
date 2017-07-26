@@ -6,6 +6,12 @@ tags:
 - vue
 ---
 
+## 致读者
+
+weex 有风险，入门需谨慎。
+
+<!-- more -->
+
 ## 入门
 
 ### Hello World
