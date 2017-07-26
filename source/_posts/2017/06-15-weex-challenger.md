@@ -1,5 +1,5 @@
-title: weex-challenger
-banner: gallery/TODO.jpg
+title: 我试了一下 weex
+banner: gallery/sri-lanka/P60412-162831.jpg
 date: 2017-06-15 20:03:59
 tags:
 - weex
@@ -153,4 +153,10 @@ export default new Vue(Vue.util.extend({ el: '#root', router }, App));
 router.push('/foo');
 ```
 
-完整的代码示例请看 [这里](https://github.com/csbun/weex-challenger/tree/v0.2.0)。
+完整的代码示例请看 [这里](https://github.com/csbun/weex-challenger/tree/v0.2.0)，更新的内容看这个 [commit](https://github.com/csbun/weex-challenger/commit/8e7f0443a0336f30cdc33ee9fc3bc4ae1b079a1b)。
+
+## 发布
+
+因为玩过 [React Native](https://facebook.github.io/react-native/)，打包成一个应用本是一件不复杂的事情，然而在 weex 中就没那么规范了。
+
+[weex-toolkit](https://www.npmjs.com/package/weex-toolkit) 虽然已经集成了 [weexpack](https://www.npmjs.com/package/weexpack) 的功能，但二者初始化出来的项目完全不同。也就是 `weex-toolkit init` != `weexpack create`，以致于后面的 `weexpack platform` 也无法继续。暂时没空折腾了。。。

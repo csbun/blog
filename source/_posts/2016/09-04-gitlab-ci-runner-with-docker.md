@@ -82,6 +82,12 @@ If you want to use Docker runner, [install][install-docker] and start it before 
 ```sh
 # install
 curl -sSL https://get.docker.com/ | sh
+# UPDATE: 2017-07-25: install docker for CentOS6：
+# rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# yum update -y
+# yum -y install docker-io
+# UPDATE: END
+
 # start the Docker daemon on CentOS
 sudo service docker start
 ```
