@@ -9,6 +9,8 @@ tags:
 
 npm [自身提供](https://docs.npmjs.com/misc/scripts)了一些 script，并且有一些特定的规则，最近用到了几个，在这里记录一下，下文提到的代码仓库在 [这里](https://github.com/csbun/npm-scripts-example) 可以看到。
 
+<!-- more -->
+
 ## publish
 
 通常，我们使用 `npm publish` 会把所在 package 的当前版本发布到 npm 上。但如果我们还希望有更多的操作，就可能需要用到下面这些：
