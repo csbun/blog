@@ -1,5 +1,4 @@
-title: Puppeteer 与 Chrome Headless —— 从入门到爬虫
-banner: gallery/taiwan/P51001-124942.jpg
+title: 译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫
 date: 2017-09-01 00:14:09
 tags:
 - Puppeteer
@@ -7,9 +6,7 @@ tags:
 - Headless
 ---
 
-**这里是 [GitHub 英文原文](https://github.com/emadehsan/thal)**
-
-**这里是 [Medium 英文原文](https://medium.com/@e_mad_ehsan/getting-started-with-puppeteer-and-chrome-headless-for-web-scrapping-6bf5979dee3e)**
+**这里是 [GitHub 英文原文](https://github.com/emadehsan/thal)** / **[Medium 英文原文](https://medium.com/@e_mad_ehsan/getting-started-with-puppeteer-and-chrome-headless-for-web-scrapping-6bf5979dee3e)**
 
 ![A Desert in painters perception](https://github.com/csbun/thal/raw/master/media/desertious.jpg)
 
@@ -18,6 +15,8 @@ tags:
 > 译者注：关于 PhantomJS 和 Selenium IDE for Firefox 停止维护并没有找到相关的公告，但这两个项目的确已经都超过 2 年没有发布新版本了。但另一个今年 5 月才开启的项目 [Chromeless](https://github.com/graphcool/chromeless) 目前在 Github 上已经超过 1w star，目前还非常活跃。
 
 Chrome 作为浏览器市场的领头羊，**Chrome Headless** 必将成为 web 应用 **自动化测试** 的行业标杆。所以我整合了这份如何利用 **Chrome Headless** 做 `网页爬虫` 的入门指南。
+
+<!-- more -->
 
 ## TL;DR
 
