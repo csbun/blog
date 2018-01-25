@@ -19,10 +19,10 @@
     "d": "hexo g && hexo d"
   },
   "hexo": {
-    "version": "3.2.2"
+    "version": "3.5.0"
   },
   "dependencies": {
-    "hexo": "^3.2.2",
+    "hexo": "^3.2.0",
     "hexo-algolia": "^0.2.0",
     "hexo-deployer-git": "^0.2.0",
     "hexo-generator-archive": "^0.1.4",
@@ -30,8 +30,8 @@
     "hexo-generator-feed": "^1.2.0",
     "hexo-generator-index": "^0.2.0",
     "hexo-generator-tag": "^0.2.0",
-    "hexo-renderer-ejs": "^0.2.0",
-    "hexo-renderer-marked": "^0.2.11",
+    "hexo-renderer-ejs": "^0.3.0",
+    "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.1",
     "hexo-server": "^0.2.0",
     "hexo-toc": "^1.0.1"

@@ -9,7 +9,7 @@ Preact 中的 [`h` 方法](https://github.com/developit/preact/blob/master/src/h
 
 <!-- more -->
 
-TL;DR;
+## TL;DR;
 
 请直接看最后，[带注释的源码](#带注释的源码)。
 
@@ -318,60 +318,60 @@ const EMPTY_CHILDREN = [];
 export function h(nodeName, attributes) {
   // 问题点：children=EMPTY_CHILDREN 为何不直接在这里直接初始化 children=[]
   // 那下面也可以减少一次判断 `else if (children===EMPTY_CHILDREN)`
-	let children=EMPTY_CHILDREN, lastSimple, child, simple, i;
+  let children=EMPTY_CHILDREN, lastSimple, child, simple, i;
   // 首先将 children 反序推入 stack
-	for (i=arguments.length; i-- > 2; ) {
-		stack.push(arguments[i]);
-	}
+  for (i=arguments.length; i-- > 2; ) {
+    stack.push(arguments[i]);
+  }
   // 如果有 attributes.children，也推入 stack，并删除这个属性
-	if (attributes && attributes.children!=null) {
-		if (!stack.length) stack.push(attributes.children);
-		delete attributes.children;
-	}
+  if (attributes && attributes.children!=null) {
+    if (!stack.length) stack.push(attributes.children);
+    delete attributes.children;
+  }
   // 循环遍历 stack/children
-	while (stack.length) {
-		if ((child = stack.pop()) && child.pop!==undefined) {
+  while (stack.length) {
+    if ((child = stack.pop()) && child.pop!==undefined) {
       // 如果 child 本身也是个数组（也可能来自上面的 attributes.children），那也将其反序 push 到 stack 中（之后在 while 又会被 pop 出来）
-			for (i=child.length; i--; ) stack.push(child[i]);
-		}
-		else {
+      for (i=child.length; i--; ) stack.push(child[i]);
+    }
+    else {
       // boolean 值转为 null？
-			if (typeof child==='boolean') child = null;
+      if (typeof child==='boolean') child = null;
 
       // 当 nodeName 不是函数（自定义的 Component），且 child 是 null、number、string 时视为 simple，且全部转为 string
-			if ((simple = typeof nodeName!=='function')) {
-				if (child==null) child = '';
-				else if (typeof child==='number') child = String(child);
-				else if (typeof child!=='string') simple = false;
-			}
+      if ((simple = typeof nodeName!=='function')) {
+        if (child==null) child = '';
+        else if (typeof child==='number') child = String(child);
+        else if (typeof child!=='string') simple = false;
+      }
 
-			if (simple && lastSimple) {
+      if (simple && lastSimple) {
         // 如果连续两个 child 都是 simple 的，那自接将当期 child 字符串拼接到上一个后面
-				children[children.length-1] += child;
-			}
-			else if (children===EMPTY_CHILDREN) {
+        children[children.length-1] += child;
+      }
+      else if (children===EMPTY_CHILDREN) {
         // 第一个 child
-				children = [child];
-			}
-			else {
+        children = [child];
+      }
+      else {
         // 其他不 simple 的 child
-				children.push(child);
-			}
+        children.push(child);
+      }
 
-			lastSimple = simple;
-		}
-	}
+      lastSimple = simple;
+    }
+  }
 
   // 构建 VNode
-	let p = new VNode();
-	p.nodeName = nodeName;
-	p.children = children;
-	p.attributes = attributes==null ? undefined : attributes;
-	p.key = attributes==null ? undefined : attributes.key;
+  let p = new VNode();
+  p.nodeName = nodeName;
+  p.children = children;
+  p.attributes = attributes==null ? undefined : attributes;
+  p.key = attributes==null ? undefined : attributes.key;
 
-	// if a "vnode hook" is defined, pass every created VNode to it
-	if (options.vnode!==undefined) options.vnode(p);
+  // if a "vnode hook" is defined, pass every created VNode to it
+  if (options.vnode!==undefined) options.vnode(p);
 
-	return p;
+  return p;
 }
 ```
