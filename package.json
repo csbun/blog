@@ -16,7 +16,7 @@
   "scripts": {
     "new": "hexo new",
     "start": "hexo s",
-    "d": "hexo g && hexo algolia && hexo d"
+    "d": "hexo g && hexo d && hexo algolia"
   },
   "hexo": {
     "version": "3.5.0"
