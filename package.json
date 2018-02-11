@@ -16,14 +16,14 @@
   "scripts": {
     "new": "hexo new",
     "start": "hexo s",
-    "d": "hexo g && hexo d"
+    "d": "hexo g && hexo algolia && hexo d"
   },
   "hexo": {
     "version": "3.5.0"
   },
   "dependencies": {
     "hexo": "^3.2.0",
-    "hexo-algolia": "^0.2.0",
+    "hexo-algolia": "^1.2.4",
     "hexo-deployer-git": "^0.2.0",
     "hexo-generator-archive": "^0.1.4",
     "hexo-generator-category": "^0.1.3",

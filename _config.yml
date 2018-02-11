@@ -96,6 +96,5 @@ feed:
 algolia:
   applicationID: 1DJDVE2IL4
   apiKey: c784a416f2e153ae75b1288ed8c3b0d8
-  adminApiKey: 
   indexName: BLOG
   chunkSize: 5000
