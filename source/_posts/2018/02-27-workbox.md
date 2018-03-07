@@ -1,4 +1,4 @@
-title: workbox
+title: Workbox
 banner: gallery/TODO.jpg
 date: 2018-02-27 17:38:34
 tags:
@@ -125,7 +125,6 @@ workbox.routing.registerRoute(
 - 新的 css 生效（`staleWhileRevalidate`）
 - css、js 请求返回为 304，使用浏览器缓存
 
-
 ## 离线应用
 
 要做到能够完全离线，我们还必须让主文档也能被缓存下来，例如我们还是使用 `networkFirst` 来处理主文档：
@@ -143,6 +142,8 @@ workbox.routing.registerRoute(
 缓存成功后，即便断网，页面依旧可以访问及使用：
 
 {% asset_img ol1.png Web 完全离线 %}
+
+具体 [Demo](https://csbun.github.io/workbox-examples/workbox-get-started/index.html) 和 [原码](https://github.com/csbun/workbox-examples/tree/master/workbox-get-started)。
 
 ## 跨域请求
 
@@ -165,5 +166,120 @@ workbox.routing.registerRoute(
 > 1. An Express-style route, like '/path/to/:anything' for same-origin or 'https://cross-origin.com/path/to/:anything' for cross-origin routes.
 > 2. A regular expression that will be tested against request URLs. For cross-origin routes, you must use a RegExp that matches the start of the full URL, like new RegExp('https://cross-origin\.com/').
 
-具体的 [Demo](TODO) 和 [源码](https://github.com/csbun/workbox-examples/tree/master/workbox-cross-origin)
+具体的 [Demo](https://csbun.github.io/workbox-examples/workbox-cross-origin/index.html) 和 [源码](https://github.com/csbun/workbox-examples/tree/master/workbox-cross-origin)
 
+
+## CLI 工具
+
+细心的小朋友一定发现了，上面的 `routing` 需要第三次访问才能真正从 Cache 中将缓存返回（或者支持离线），有没有办法将这个时间提前到第二次呢？这里，我们直接用 CLI 工具来解决这个问题。
+
+当作为命令行工具时，Workbox 有 3 个主要的命令：
+
+- `workbox wizard` 生成配置文件 _workbox-config.js_；
+- `workbox generateSW` 生成 prefetch 的 ServiceWorker JS 文件（依赖 _workbox-config.js_）；
+- `workbox injectManifest` 将 prefetch 代码注入到指定的 JS 文件（依赖 _workbox-config.js_）；
+
+### generateSW
+
+首先修改配置文件 _workbox-config.js_ 如下：
+
+```javascript
+module.exports = {
+  "globDirectory": "./",        // 匹配根目录
+  "globPatterns": [             // 匹配的文件
+    "**/*.{css,png,html,js}"
+  ],
+  "globIgnores": [              // 忽略的文件
+    "build/**",
+    "workbox-config.js"
+  ],
+  "swDest": "build.sw.js"       // 目标输出
+};
+```
+
+运行 `workbox generateSW` 我们即可在 _build/sw.js_ 中看到类似的内容：
+
+```javascript
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.1/workbox-sw.js");
+
+self.__precacheManifest = [
+  {
+    "url": "css/style.css",
+    "revision": "835ba5c376a3f48dba17d3a9dc152fc3"
+  },
+  // ...
+  {
+    "url": "js/index.js",
+    "revision": "589daa65882023b238e57abbb6caa643"
+  }
+].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+```
+
+从方法名我们可以猜测出，将 `__precacheManifest` 列表中的文件（即配置中 `globPatterns` 匹配的文件）预加载下来，下次拦截到即从 Cache 中返回。详情可以查看 [precaching 接口文档](https://developers.google.com/web/tools/workbox/reference-docs/v3.0.0-alpha.5/workbox.precaching)。
+
+### injectManifest
+
+但是，很多时候，我们已经有一段 ServiceWorker 的逻辑，希望添加相关的 precaching 代码但不希望增加更多的 sw 文件。于是我需要在 **原本的 sw 文件(_sw.tpl.js_)** 中添加如下代码：
+
+```javascript
+// Workbox injectManifest
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.1/workbox-sw.js");
+workbox.precaching.precacheAndRoute([]);
+// Workbox injectManifest End
+
+// 其他自定义 sw 内容
+// ...
+```
+
+并修改 _workbox-config.js_ (或通过 `workbox wizard --injectManifest` 生成)：
+
+```javascript
+module.exports = {
+  "globDirectory": "./",
+  "globPatterns": [
+    "**/*.{css,png,html,js}"
+  ],
+  "globIgnores": [
+    "build/**",
+    "workbox-config.js",
+    "js/sw.tpl.js"              // “原本的 sw 文件(sw.tpl.js)”
+  ],
+  "swDest": "build.sw.js",
+  // 添加下面这行，指向 “原本的 sw 文件(sw.tpl.js)”
+  "swSrc": "./js/sw.tpl.js"     // 输入源
+};
+```
+
+最后通过运行 `workbox injectManifest` 我们即可在 _build/sw.js_ 中看到类似的内容：
+
+```javascript
+// Workbox injectManifest
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.1/workbox-sw.js");
+workbox.precaching.precacheAndRoute([
+  {
+    "url": "css/style.css",
+    "revision": "835ba5c376a3f48dba17d3a9dc152fc3"
+  },
+  // ...
+  {
+    "url": "js/sw.tpl.js",
+    "revision": "acc39fc40b04d67b8403e7347d32f43b"
+  }
+]);
+// Workbox injectManifest End
+
+// 其他自定义 sw 内容
+// ...
+```
+
+再次进入页面看看效果，第一次访问，已经将全部资源 cache 下来了：
+
+{% asset_img cli1.png 第一次访问全部进行 Cache %}
+
+第二次访问，资源已经全部从 Service Worker 中返回，做到完全离线：
+
+{% asset_img cli2.png 第二次访问 Web 完全离线 %}
+
+具体 [Demo](https://csbun.github.io/workbox-examples/workbox-using-cli/index.html) 和 [原码](https://github.com/csbun/workbox-examples/tree/master/workbox-using-cli)。
