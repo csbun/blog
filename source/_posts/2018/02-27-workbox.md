@@ -7,11 +7,11 @@ tags:
 - PWA
 ---
 
-JavaScript Libraries for adding offline support to web apps.
+[Workbox](https://developers.google.com/web/tools/workbox/) · JavaScript Libraries for adding offline support to web apps.
 
 一个为网页应用添加离线支持的 JavaScript 库。
 
-> 本文内容基于 Workbox@3.0.0-beta.1
+> 本文内容基于 Workbox@3.0.0
 
 <!-- more -->
 
@@ -19,13 +19,13 @@ JavaScript Libraries for adding offline support to web apps.
 
 Workbox 作为 SW 模块使用，提供了两个最主要的接口：
 
-- [🔗](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-sw.Router#registerRoute) `workbox.routing.registerRoute`，接受两个参数，第一个参数 capture 是正则表达式或 Express 风格的路由字符串，声明需要匹配那些请求，第二个参数用于告诉 Workbox 对前面拦截到的请求做何处理。
-- [🔗](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-sw.Strategies) `workbox.strategies.xxx`，用在 registerRoute 的第二个参数，表明使用何种缓存策略。
+- [🔗](https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.routing#registerRoute) `workbox.routing.registerRoute`，接受两个参数，第一个参数 capture 是正则表达式或 Express 风格的路由字符串，声明需要匹配那些请求，第二个参数用于告诉 Workbox 对前面拦截到的请求做何处理。
+- [🔗](https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.strategies) `workbox.strategies.xxx`，用在 registerRoute 的第二个参数，表明使用何种缓存策略。
 
 最简单的例子：
 
 ```js
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.0/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
 
 // JS 请求: 网络优先
 workbox.routing.registerRoute(
@@ -94,15 +94,15 @@ workbox.routing.registerRoute(
 ### #2
 
 于是我们刷新页面看看效果：
-{% asset_img gs1.png Web 第二次访问时的效果 %}
+{% asset_img gs2.png Web 第二次访问时的效果 %}
 
 - 全部的 css、png、js 文件均被 ServiceWorker 拦截（图中 from ServiceWorker 可以看出）
 - workbox-core 在拦截后重新发起了 fetch 请求并返回页面，fetch 后服务端返回 304 依然可以使用浏览器本地缓存策略
 - 上述命中规则的请求都被缓存到 Cache Storage 中
 
-> 为了方便看到效果，我设置服务端 Cache Control 失效（`max-age=-1`），使得每次请求都能到达服务端
+> 为了方便看到效果，我设置服务端 Cache Control 失效（`max-age=0`），使得每次请求都能到达服务端
 
-{% asset_img get-started-3.png Web Cache Storage %}
+{% asset_img gs3.png Web Cache Storage %}
 
 ### #3
 
@@ -150,7 +150,7 @@ workbox.routing.registerRoute(
 ```html
 <div>
   <p>不同域的文件</p>
-  <p><img src="https://developers.google.com/web/tools/workbox/thumb.png" alt="不同域的文件"></p>
+  <p><img src="https://developers.google.com/web/tools/workbox/images/Workbox-Logo-Grey.svg" alt="不同域的文件"></p>
 
   <p>不同域的文件 且 <code>access-control-allow-origin: *</code></p>
   <img src="https://unpkg.com/resize-image@0.0.4/example/google.png" alt="不同域的文件 且 allow cross origin">
@@ -159,10 +159,32 @@ workbox.routing.registerRoute(
 <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
 ```
 
-经测试，Workbox 可以用 `networkFirst` 和 `staleWhileRevalidate` 两种策略 Cache 跨域资源，而 `cacheFirst` 则完全不行。这与 [API 文档](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-sw.Router#registerRoute) 中的对 `capture` 参数说法并不相同。
+经测试，Workbox 可以用 `networkFirst` 和 `staleWhileRevalidate` 两种策略 Cache 跨域资源，而 `cacheFirst` 则完全不行。按 [官网的解释](https://developers.google.com/web/tools/workbox/guides/handle-third-party-requests#workbox_caches_opaque_response_sometimes)，Fetch 跨域的请求是无法知道该请求是否成功，因此 `cacheFirst` 则有可能缓存下了失败的请求，并从此以后都会接管页面的这个请求导致页面错误。而 `networkFirst` 和 `staleWhileRevalidate` 是有更新机制的，即使一次错误下次也许就修复了呢。
 
-> 1. An Express-style route, like '/path/to/:anything' for same-origin or 'https://cross-origin.com/path/to/:anything' for cross-origin routes.
-> 2. A regular expression that will be tested against request URLs. For cross-origin routes, you must use a RegExp that matches the start of the full URL, like new RegExp('https://cross-origin\.com/').
+> `cacheFirst` 例子中即使开启 `Offline` 也能浏览到页面是因为 html 是同域的，而跨域的静态资源有浏览器缓存。如果同时开启 `Disabel cache` 就无法看到相关图片等静态资源了。
+
+如果真的执意要使用 `cacheFirst` 缓存跨域资源，则可以使用 [cacheableResponse.Plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox.cacheableResponse.Plugin)：
+
+```javascript
+// Force Caching of Opaque Responses
+workbox.routing.registerRoute(
+  new RegExp('https://developers\.google\.com/'),
+  workbox.strategies.cacheFirst({
+    cacheName: `${CACHE_NAME}:cache-first`,
+    plugins: [
+      // Force Cache
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200], // One or more status codes that a Response can have and be considered cacheable.
+      }),
+    ]
+  }),
+);
+```
+
+此时能看到 `https://developers.google.com/` 域名下的资源也被缓存了：
+
+{% asset_img co1.png 强制跨域 CacheFirst %}
+
 
 具体的 [Demo](https://csbun.github.io/workbox-examples/workbox-cross-origin/index.html) 和 [源码](https://github.com/csbun/workbox-examples/tree/master/workbox-cross-origin)
 
@@ -195,7 +217,7 @@ module.exports = {
 };
 ```
 
-运行 `workbox generateSW` 我们即可在 _build/sw.js_ 中看到类似的内容：
+运行 `workbox generateSW` 我们即可在 _build.sw.js_ 中看到类似的内容：
 
 ```javascript
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.1/workbox-sw.js");
@@ -219,7 +241,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 ### injectManifest
 
-但是，很多时候，我们已经有一段 ServiceWorker 的逻辑，希望添加相关的 precaching 代码但不希望增加更多的 sw 文件。于是我需要在 **原本的 sw 文件(_sw.tpl.js_)** 中添加如下代码：
+但是，很多时候，我们已经有一段 ServiceWorker 的逻辑，希望添加相关的 precaching 代码但不希望增加更多的 sw 文件。（另一方面，可能你的业务是在国内跑的，你的用户是访问不了 googleapis.com 的 CDN 文件，generateSW 生成的 importScripts 就没什么用了。）于是我需要在 **原本的 sw 文件(_sw.tpl.js_)** 中添加如下代码：
 
 ```javascript
 // Workbox injectManifest
@@ -250,7 +272,7 @@ module.exports = {
 };
 ```
 
-最后通过运行 `workbox injectManifest` 我们即可在 _build/sw.js_ 中看到类似的内容：
+最后通过运行 `workbox injectManifest` 我们即可在 _build.sw.js_ 中看到类似的内容：
 
 ```javascript
 // Workbox injectManifest
@@ -281,3 +303,160 @@ workbox.precaching.precacheAndRoute([
 {% asset_img cli2.png 第二次访问 Web 完全离线 %}
 
 具体 [Demo](https://csbun.github.io/workbox-examples/workbox-using-cli/index.html) 和 [原码](https://github.com/csbun/workbox-examples/tree/master/workbox-using-cli)。
+
+## 配合 Webpack 使用
+
+很多时候，项目是通过 webpack 构建的，于是我们期望在构建过程中，可以将所用到的静态资源进行预加载。如下有个简单的例子：
+
+```javascript index.js
+// 业务代码
+require('../css/style.css');
+
+const elImg = document.createElement('img');
+elImg.src = require('../images/icon-48.png');
+
+document.body.appendChild(elImg);
+```
+
+因此我们至少有 3 个静态资源：
+
+- _index.js_ （上述的 js 业务代码）
+- _style.css_使用 （`mini-css-extract-plugin`）
+- _icon-48.png_ （使用 `file-loader`）
+
+于是我们在 _webpack.config.js_ 中添加 `workbox-webpack-plugin`，这里我们不再需要 _workbox-config.js_ 了：
+
+```javascript webpack.config.js
+const workboxPlugin = require('workbox-webpack-plugin');
+
+module.exports = {
+  // ...
+  plugins: [
+    // ...
+    new workboxPlugin.GenerateSW({
+      swDest: 'build.sw.js',
+    }),
+  ]
+};
+```
+
+在输出目录，我们可以看到除了原有的静态资源之外，增加了两个文件：
+
+- _build.sw.js_，我们指定的 Service Worker 文件
+
+```javascript build.sw.js
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js");
+
+importScripts(
+  "precache-manifest.d82f19f6bd4f26897690a1e0456d5844.js"
+);
+
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+```
+
+- _precache-manifest.hash.js_，上述 sw.js 引用的资源列表文件
+
+```javascript precache-manifest.hash.js
+self.__precacheManifest = [
+  {
+    "revision": "1cedcdd1e2143f97cfaf",
+    "url": "main.1cedc.css"
+  },
+  {
+    "revision": "17c19a267f8873556a2ae3981095789d",
+    "url": "index.html"
+  },
+  {
+    "revision": "1cedcdd1e2143f97cfaf",
+    "url": "index.1cedc.js"
+  },
+  {
+    "url": "7186d37d76d392b0e8ad935d7829f6fb.png"
+  }
+];
+```
+
+其实这个动作其实和 CLI 的 `workbox generateSW` 非常相似，`workboxPlugin` 也有另一个 API 为 `workboxPlugin.InjectManifest({ swSrc, swDest })`，与命令行的 `workbox injectManifest` 对应，这里不再累述，更多细节可以看 [官方介绍](https://developers.google.com/web/tools/workbox/guides/codelabs/webpack)。
+
+### 使用本地 workbox-sw.js
+
+回到之前说到的 Google CND 的问题，我们的确期望 _workbox-sw.js_ 部署在自己的服务器会更好，看看 [配置文档](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#configuration) 还真能这么搞：
+
+```javascript
+new workboxPlugin.GenerateSW({
+  swDest: 'build.sw.js',
+  // workbox-sw.js 部署本地服务器
+  importWorkboxFrom: 'local',
+  // （预加载）忽略某些文件
+  exclude: [
+    /index\.html$/,
+  ],
+}),
+```
+
+结果会是，`dist` 输出会变成这样：
+
+```
+dist
+├── 7186d37d76d392b0e8ad935d7829f6fb.png
+├── build.sw.js
+├── index.1cedc.js
+├── index.html
+├── main.1cedc.css
+├── precache-manifest.12198be40483126171d738fb87e6043e.js
+└── workbox-v3.0.0
+    ├── ...
+    ├── workbox-sw.js
+    └── workbox-sw.js.map
+```
+
+目录下会增加一个 _workbox-v3.0.0_ 文件夹，_build.sw.js_ 将应用其中的文件。
+
+### 动态更新
+
+配合最开始提及的缓存策略，一切都可以通过插件配置生成：
+
+```javascript
+new workboxPlugin.GenerateSW({
+  // ...
+  // 动态更新缓存
+  runtimeCaching: [{
+    urlPattern: /index\.html/,
+    handler: 'networkFirst',
+  }, {
+    urlPattern: /\.(js|css|png|jpg|gif)/,
+    handler: 'staleWhileRevalidate',
+  }],
+}),
+```
+
+生成的如下：
+
+```javascript
+importScripts("workbox-v3.0.0/workbox-sw.js");
+workbox.setConfig({modulePathPrefix: "workbox-v3.0.0"});
+
+importScripts(
+  "precache-manifest.12198be40483126171d738fb87e6043e.js"
+);
+
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+// 增加了以下内容
+workbox.routing.registerRoute(/index\.html/, workbox.strategies.networkFirst(), 'GET');
+workbox.routing.registerRoute(/\.(js|css|png|jpg|gif)/, workbox.strategies.staleWhileRevalidate(), 'GET');
+```
+
+访问页面看看效果，第一次访问，资源全部预加载完毕。
+
+{% asset_img wp1.png 第一次访问进行 Cache %}
+
+第二次访问，被标识为 `exclude` 的 `index.html` 也被缓存到 `workbox-runtime` 的 Cache Storage 下面（这里这么做只是为了功能测试），其他资源按 `staleWhileRevalidate` 的规则直接从 Cache 返回。
+
+{% asset_img wp2.png 第二次访问 %}
+
+之后离线都能访问了。具体 [Demo](https://csbun.github.io/workbox-examples/workbox-using-webpack/dist/index.html) 和 [原码](https://github.com/csbun/workbox-examples/tree/master/workbox-using-webpack)。
