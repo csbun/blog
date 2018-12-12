@@ -62,7 +62,7 @@ npm [自身提供](https://docs.npmjs.com/misc/scripts)了一些 script，并且
 
 即
 
-```
+```text
 # npm@3
 prepublish -> [上传至 npm] -> publish -> postpublish
 ```
@@ -108,7 +108,7 @@ npm WARN prepublish-on-install See the deprecation note in `npm help scripts` fo
 
 即
 
-```
+```text
 # npm@5
 prepublish -> prepare -> prepublishOnly -> prepack -> postpack -> [上传至 npm] -> publish -> postpublish
 ```
@@ -168,7 +168,7 @@ npm-scripts-example@0.0.5 /path/to/npm-scripts-example
 
 即
 
-```
+```text
 # npm@3
 [fetch] -> preinstall -> [extract] -> install -> postinstall -> prepublish
 ```
@@ -206,7 +206,7 @@ added 1 package in 2.348s
 
 即
 
-```
+```text
 # npm@3
 [fetch] -> preinstall -> [extract] -> install -> postinstall -> prepublish -> prepare
 ```
@@ -244,6 +244,6 @@ npm-scripts-example-main@0.0.1 /path/to/project
 
 即
 
-```
+```text
 [fetch] -> preinstall -> [extract] -> install -> postinstall
 ```
