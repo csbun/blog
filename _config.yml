@@ -79,8 +79,16 @@ deploy:
   repo: https://github.com/csbun/blog
   branch: gh-pages
 
-# Disqus
-disqus_shortname: csbun
+# # Disqus
+# disqus_shortname: csbun
+
+# Gitalk
+# https://github.com/gitalk/gitalk
+gitalk:
+  clientID: 445f3ebe09ddd1d6a1eb
+  clientSecret: 677a9844625ec22c3e39dcea819678794bb84d71
+  repo: blog
+  owner: csbun
 
 # 目录
 toc:

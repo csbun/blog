@@ -22,6 +22,24 @@
      || document.getElementsByTagName('body')[0]).appendChild(ds);
   })();
 </script>
+<% } else if (config.gitalk){ %>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    const gitalk = new Gitalk({
+      clientID: '<%= config.gitalk.clientID %>',
+      clientSecret: '<%= config.gitalk.clientSecret %>',
+      repo: '<%= config.gitalk.repo %>',
+      owner: '<%= config.gitalk.owner %>',
+      admin: ['csbun'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      // createIssueManually: true,
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+    });
+    gitalk.render('comments')
+  })();
+</script>
 <% } %>
 
 <%- partial('cdn_after_footer') %>
