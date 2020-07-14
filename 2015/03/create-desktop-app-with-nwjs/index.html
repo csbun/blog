@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用 NW.js 创建桌面应用 | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- hexo-algolia -->
+  <meta property="algolia:search" data-application-id="1DJDVE2IL4" data-api-key="c784a416f2e153ae75b1288ed8c3b0d8" data-index-name="BLOG">
+
+  <meta name="description" content="前段时间简单研究了一下 NW.js，基于 Chromium 和 node.js，可以使用 Web 技术来编写跨平台的桌面应用。">
+<meta name="keywords" content="NW.js,desktop,Node,webkit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 NW.js 创建桌面应用">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/03/create-desktop-app-with-nwjs/index.html">
+<meta property="og:site_name" content="Hans Chan&#39;s Blog">
+<meta property="og:description" content="前段时间简单研究了一下 NW.js，基于 Chromium 和 node.js，可以使用 Web 技术来编写跨平台的桌面应用。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-12-12T13:06:56.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 NW.js 创建桌面应用">
+<meta name="twitter:description" content="前段时间简单研究了一下 NW.js，基于 Chromium 和 node.js，可以使用 Web 技术来编写跨平台的桌面应用。">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <link rel="stylesheet" href="/blog/font-awesome/css/font-awesome.min.css">
+  
+
+<!-- Hotjar Tracking Code for csbun.github.io/blog/ -->
+<script>
+(function(h,o,t,j,a,r){
+  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:483587,hjsv:5};
+  a=o.getElementsByTagName('head')[0];
+  r=o.createElement('script');r.async=1;
+  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- End Hotjar Tracking Code -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-69725995-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<meta name="google-site-verification" content="w7Jze6jotMvxHSzsNqwEukg5f2L6VNFgRcPZBwBGln8" />
+
+
+  
+  <!-- Google Adsense -->
+  <script data-ad-client="ca-pub-6414613701003177" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/blog/" id="logo"><i class="logo" style="background-image: url(/blog/css/images/logo.png)"></i><span class="site-title">Hans Chan&#39;s Blog</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/blog/.">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/blog/tags">Tags</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/blog/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/tags">Tags</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615?s=256">
+      <h2 id="name">叉起来就可以烧</h2>
+      <h3 id="title">傻逼切图仔</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>广州 · Guangzhou, China</span>
+      <a id="follow" href="https://github.com/csbun/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        40
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        66
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="https://github.com/csbun" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="/blog/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-create-desktop-app-with-nwjs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用 NW.js 创建桌面应用
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/blog/2015/03/create-desktop-app-with-nwjs/">
+      <time datetime="2015-03-10T11:50:29.000Z" itemprop="datePublished">2015-03-10</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>前段时间简单研究了一下 <a href="http://nwjs.io/" target="_blank" rel="noopener">NW.js</a>，基于 Chromium 和 node.js，可以使用 Web 技术来编写跨平台的桌面应用。</p>
+<a id="more"></a>
+<h2><span id="安装">安装</span></h2><p>其实理论上是可以不用安装 NW.js 到本地的，但是为了方便开发，也可以按照其<a href="https://github.com/nwjs/nw.js#downloads" target="_blank" rel="noopener">在 GitHub 上的介绍</a>进行下载安装。</p>
+<h3><span id="sublime-工具">sublime 工具</span></h3><p>这里我还安装了个 <a href="https://github.com/nwjs/nw.js/wiki/Debugging-with-Sublime-Text-2-and-3" target="_blank" rel="noopener">sublime 工具</a>，配置好后在根目录使用快捷键 <code>⌘ B</code> 就可以启动应用。</p>
+<h2><span id="创建项目">创建项目</span></h2><p>并没有特别的要求，只要有 package.json 就可以了：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"nw-demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"index.html"</span>,</span><br><span class="line">  <span class="attr">"window"</span>: &#123;</span><br><span class="line">    <span class="attr">"toolbar"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"width"</span>: <span class="number">660</span>,</span><br><span class="line">    <span class="attr">"height"</span>: <span class="number">500</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>&quot;main&quot;: &quot;index.html&quot;</code> 指定了入口文件，那么这个 index.html 也是必须要存在的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="启动项目">启动项目</span></h2><p>在 package.json 所在目录执行（Mac）：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/Applications/</span>nwjs.app<span class="regexp">/Contents/</span>MacOS<span class="regexp">/nwjs .</span></span><br></pre></td></tr></table></figure>
+<p>就会弹出应用窗口（内容为上述 index.html）。其他操作系统看<a href="https://github.com/nwjs/nw.js#quick-start" target="_blank" rel="noopener">这里</a>，我也没试过。</p>
+<h2><span id="使用-js">使用 JS</span></h2><p>在 index.html 内，我们有两种方法来使用 JS：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"path/to/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript"><span class="comment">// do something</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这两种方式是无差异的。什么意思？就是第一种方式等同于把 index.js 的内容直接按第二种方式的方法贴在页面 <code>&lt;script&gt;</code> 标签中，和 index.js 本身所在的路径无关。</p>
+<h2><span id="模块化">模块化</span></h2><p>看起来这个这个 index.js 的文件路径时候没多大关系，但当项目大起来的时候，模块化的概念还是得引入，而此时模块路径就是一个不得不关注的话题了。</p>
+<p>但是我翻了好几个 <a href="https://github.com/zcbenz/nw-sample-apps" target="_blank" rel="noopener">demos repository</a> 和 <a href="https://github.com/nwjs/nw.js/wiki/List-of-apps-and-companies-using-nw.js" target="_blank" rel="noopener">List of apps and companies using nw.js</a> 发现都没有使用任何模块化工具：无一例外地是把全部 js 以 <code>&lt;script src=&quot;...&quot;&gt;</code> 的方式插入页面。</p>
+<p>但是我还是不甘心，还是试了一下：鉴于 NW.js 是基于 Node 的，那自然可以使用 CommonJS 规范：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    这里不用 &lt;script src="..."&gt;</span></span><br><span class="line"><span class="comment">    是为了让这个无效的 src 在 require 时不产生相对路径的困惑</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="built_in">require</span>(<span class="string">'./js/index'</span>);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * js/index.js</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./cmp/alert'</span>)();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * js/cmp/alert.js</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">'something'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>完美运行，一切看起来很好。</p>
+<h2><span id="使用-node-module">使用 Node Module</span></h2><p>回到 NW.js 基于 Node 上来，我们可以使用 Node 本身的 Module，也可以用 <a href="https://npm.com" target="_blank" rel="noopener">npm</a> 上的：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="selector-tag">i</span> --save jquery</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"files"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">require</span>(<span class="string">'./js/files'</span>)();</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * js/files.js</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> $ = <span class="built_in">require</span>(<span class="string">'jquery'</span>);</span><br><span class="line"><span class="keyword">var</span> $files = $(<span class="string">'#files'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    fs.readdir(process.cwd(), <span class="function"><span class="keyword">function</span> (<span class="params">err, files</span>) </span>&#123;</span><br><span class="line">        files.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">f</span>) </span>&#123;</span><br><span class="line">            $(<span class="string">'&lt;li&gt;'</span>).html(f).appendTo($files);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完美运行，这里的 <code>require(&#39;fs&#39;)</code> 和 <code>process.cwd()</code> 都如同写 Node 一样，一切看起来很好。</p>
+<h2><span id="使用-nwgui">使用 nw.gui</span></h2><p>做桌面应用难免要使用到一些 <a href="https://github.com/nwjs/nw.js/wiki/Native-UI-API-Manual" target="_blank" rel="noopener">Native UI</a>，那么我们做个右击菜单：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * js/menu.js</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// Load native UI library</span></span><br><span class="line"><span class="keyword">var</span> gui = <span class="built_in">require</span>(<span class="string">'nw.gui'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create an empty menu</span></span><br><span class="line"><span class="keyword">var</span> menu = <span class="keyword">new</span> gui.Menu(&#123; <span class="attr">type</span>: <span class="string">'menubar'</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a normal item with label and icon</span></span><br><span class="line"><span class="keyword">var</span> item = <span class="keyword">new</span> gui.MenuItem(&#123;</span><br><span class="line">    type: <span class="string">'normal'</span>, </span><br><span class="line">    label: <span class="string">'I\'m a menu item'</span>,</span><br><span class="line">    click: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        alert(<span class="string">'WaW!'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add some items</span></span><br><span class="line">menu.append(item);</span><br><span class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">type</span>: <span class="string">'separator'</span> &#125;));</span><br><span class="line">menu.append(<span class="keyword">new</span> gui.MenuItem(&#123; <span class="attr">label</span>: <span class="string">'Item C'</span> &#125;));</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.addEventListener(<span class="string">'contextmenu'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ev</span>) </span>&#123; </span><br><span class="line">    ev.preventDefault();</span><br><span class="line">    menu.popup(ev.x, ev.y);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/menu.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>用这样的方法插入 js 到 html 里，依旧是完美运行。但是如果使用上面的 require 的方式呢：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">require</span>(<span class="string">'./js/menu'</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>结果就是，报错：</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Error: </span>Cannot find module 'nw.gui'</span><br></pre></td></tr></table></figure>
+<p>嗯，我似乎明白为什么别人不用模块化了…</p>
+<h2><span id="打包应用">打包应用</span></h2><p>官方的<a href="https://github.com/nwjs/nw.js/wiki/How-to-package-and-distribute-your-apps" target="_blank" rel="noopener">介绍</a>老长老长了，我用了 <a href="https://github.com/mllrsohn/node-webkit-builder" target="_blank" rel="noopener">node-webkit-builder</a></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save-dev <span class="keyword">node</span><span class="title">-webkit-builder</span></span><br></pre></td></tr></table></figure>
+<p>然后写个 build.js：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> NwBuilder = <span class="built_in">require</span>(<span class="string">'node-webkit-builder'</span>);</span><br><span class="line"><span class="keyword">var</span> nw = <span class="keyword">new</span> NwBuilder(&#123;</span><br><span class="line">    files: [</span><br><span class="line">        <span class="string">'./package.json'</span>,</span><br><span class="line">        <span class="string">'./css/*'</span>,</span><br><span class="line">        <span class="string">'./img/*'</span>,</span><br><span class="line">        <span class="string">'./index.html'</span>,</span><br><span class="line">        <span class="string">'./js/**/**'</span>,</span><br><span class="line">        <span class="string">'./node_modules/jquery/dist/jquery.js'</span></span><br><span class="line">    ],</span><br><span class="line">    macIcns: <span class="string">'./logo.icns'</span>,</span><br><span class="line">    platforms: [<span class="string">'osx64'</span>] <span class="comment">// 'osx32', 'osx64', 'win32', 'win64'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Log stuff you want</span></span><br><span class="line">nw.on(<span class="string">'log'</span>,  <span class="built_in">console</span>.log);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Build returns a promise</span></span><br><span class="line">nw.build().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'all done!'</span>);</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.error(error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>执行 <code>node build.js</code> 就可以了。生成的应用会在目录 <code>build/&lt;package.name&gt;/</code> 下面，按平台分成多个文件夹。</p>
+<blockquote>
+<p>这里配置了应用的图标，随便找个可以转换 icns 文件的网站把自己的设计图搞上去生成就可以了。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/03/create-desktop-app-with-nwjs/" data-id="ckclwh8tp000q8plwwqp39eho" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/NW-js/">NW.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Node/">Node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/desktop/">desktop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/webkit/">webkit</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2015/04/navigator-permissions/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          用 navigator.permissions 检查浏览器权限
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2015/02/angular-commonjs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Angular 1.3.14 开始支持 CommonJS</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments"></section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 13.33px;">Browserify</a> <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/CommonJS/" style="font-size: 13.33px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blog/tags/ES2015/" style="font-size: 13.33px;">ES2015</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Headless/" style="font-size: 10px;">Headless</a> <a href="/blog/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/Karma/" style="font-size: 10px;">Karma</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Native/" style="font-size: 10px;">Native</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/PWA/" style="font-size: 10px;">PWA</a> <a href="/blog/tags/Preact/" style="font-size: 13.33px;">Preact</a> <a href="/blog/tags/Puppeteer/" style="font-size: 10px;">Puppeteer</a> <a href="/blog/tags/React/" style="font-size: 20px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Rollup/" style="font-size: 10px;">Rollup</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 13.33px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/Storybook/" style="font-size: 10px;">Storybook</a> <a href="/blog/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/blog/tags/Workbox/" style="font-size: 10px;">Workbox</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/ci/" style="font-size: 16.67px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/deserialization/" style="font-size: 10px;">deserialization</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/install/" style="font-size: 10px;">install</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/nightmare/" style="font-size: 10px;">nightmare</a> <a href="/blog/tags/npm/" style="font-size: 10px;">npm</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/publish/" style="font-size: 10px;">publish</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/serialization/" style="font-size: 10px;">serialization</a> <a href="/blog/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/blog/tags/test/" style="font-size: 20px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/vue/" style="font-size: 10px;">vue</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a> <a href="/blog/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/blog/tags/weex/" style="font-size: 10px;">weex</a> <a href="/blog/tags/美食/" style="font-size: 13.33px;">美食</a> <a href="/blog/tags/风土人情/" style="font-size: 10px;">风土人情</a> <a href="/blog/tags/风景/" style="font-size: 10px;">风景</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/02/workbox/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/DSC04075.JPG)" alt="Workbox 入门" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/02/workbox/" class="title">Workbox 入门</a></p>
+              <p class="item-date"><time datetime="2018-02-27T09:38:34.000Z" itemprop="datePublished">2018-02-27</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/01/preact-code-h/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/P51001-124945.jpg)" alt="Preact 源码解析 —— h/createElement" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/01/preact-code-h/" class="title">Preact 源码解析 —— h/createElement</a></p>
+              <p class="item-date"><time datetime="2018-01-25T12:04:25.000Z" itemprop="datePublished">2018-01-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/09/puppeteer/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/csbun/thal/raw/master/media/desertious.jpg
+)" alt="译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/09/puppeteer/" class="title">译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫</a></p>
+              <p class="item-date"><time datetime="2017-08-31T16:14:09.000Z" itemprop="datePublished">2017-09-01</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/08/npm-scripts/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60417-160040.jpg)" alt="npm scripts 之 publish 和 install" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/08/npm-scripts/" class="title">npm scripts 之 publish 和 install</a></p>
+              <p class="item-date"><time datetime="2017-08-24T10:18:32.000Z" itemprop="datePublished">2017-08-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/06/weex-challenger/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60412-162831.jpg)" alt="我试了一下 weex" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/06/weex-challenger/" class="title">我试了一下 weex</a></p>
+              <p class="item-date"><time datetime="2017-06-15T12:03:59.000Z" itemprop="datePublished">2017-06-15</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <!-- Top -->
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <!-- Buy Me a Coffee -->
+    <div style="margin: 10px;">
+      <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/csbun">
+        <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span>
+      </a>
+    </div>
+    <div id="footer-info" class="inner">
+      &copy; 2014 - 2020 叉起来就可以烧<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    const gitalk = new Gitalk({
+      clientID: '445f3ebe09ddd1d6a1eb',
+      clientSecret: '677a9844625ec22c3e39dcea819678794bb84d71',
+      repo: 'blog',
+      owner: 'csbun',
+      admin: ['csbun'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      // createIssueManually: true,
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+    });
+    gitalk.render('comments')
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+    <script src="//unpkg.com/algolia-search-idd@0.1.0/dest/index.min.js"></script>
+<script type="text/javascript">
+(function () {
+  const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+  $('.search-form')
+    .attr('autocomplete', 'off')
+    // .on('submit', function(e) {
+    //   e.preventDefault();
+    // });
+  window.algoliaSearchIDD({
+    el: '.search-form-input',
+    applicationID: algoliaConfig.applicationId,
+    apiKey: algoliaConfig.apiKey,
+    indexName: algoliaConfig.indexName,
+  });
+})()
+</script>
+  </div>
+</body>
+</html>

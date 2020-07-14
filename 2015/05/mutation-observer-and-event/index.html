@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用 MutationObserver 和 Mutation events 监听 DOM 变化 | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- hexo-algolia -->
+  <meta property="algolia:search" data-application-id="1DJDVE2IL4" data-api-key="c784a416f2e153ae75b1288ed8c3b0d8" data-index-name="BLOG">
+
+  <meta name="description" content="最近需要做一个功能，检查页面 DOM 变化，然后对变化的某些 DOM 进行一些操作。于是上网搜索到 MutationObserver，中文文档已经很清楚了，看起来使用也很简单，于是就写下这么一个方法：">
+<meta name="keywords" content="Mutation Observer,events,DOM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 MutationObserver 和 Mutation events 监听 DOM 变化">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/05/mutation-observer-and-event/index.html">
+<meta property="og:site_name" content="Hans Chan&#39;s Blog">
+<meta property="og:description" content="最近需要做一个功能，检查页面 DOM 变化，然后对变化的某些 DOM 进行一些操作。于是上网搜索到 MutationObserver，中文文档已经很清楚了，看起来使用也很简单，于是就写下这么一个方法：">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-12-12T13:06:56.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 MutationObserver 和 Mutation events 监听 DOM 变化">
+<meta name="twitter:description" content="最近需要做一个功能，检查页面 DOM 变化，然后对变化的某些 DOM 进行一些操作。于是上网搜索到 MutationObserver，中文文档已经很清楚了，看起来使用也很简单，于是就写下这么一个方法：">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <link rel="stylesheet" href="/blog/font-awesome/css/font-awesome.min.css">
+  
+
+<!-- Hotjar Tracking Code for csbun.github.io/blog/ -->
+<script>
+(function(h,o,t,j,a,r){
+  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:483587,hjsv:5};
+  a=o.getElementsByTagName('head')[0];
+  r=o.createElement('script');r.async=1;
+  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- End Hotjar Tracking Code -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-69725995-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<meta name="google-site-verification" content="w7Jze6jotMvxHSzsNqwEukg5f2L6VNFgRcPZBwBGln8" />
+
+
+  
+  <!-- Google Adsense -->
+  <script data-ad-client="ca-pub-6414613701003177" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/blog/" id="logo"><i class="logo" style="background-image: url(/blog/css/images/logo.png)"></i><span class="site-title">Hans Chan&#39;s Blog</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/blog/.">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/blog/tags">Tags</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/blog/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/tags">Tags</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615?s=256">
+      <h2 id="name">叉起来就可以烧</h2>
+      <h3 id="title">傻逼切图仔</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>广州 · Guangzhou, China</span>
+      <a id="follow" href="https://github.com/csbun/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        40
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        66
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="https://github.com/csbun" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="/blog/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mutation-observer-and-event" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用 MutationObserver 和 Mutation events 监听 DOM 变化
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/blog/2015/05/mutation-observer-and-event/">
+      <time datetime="2015-05-13T06:44:37.000Z" itemprop="datePublished">2015-05-13</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>最近需要做一个功能，检查页面 DOM 变化，然后对变化的某些 DOM 进行一些操作。于是上网搜索到 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver" target="_blank" rel="noopener">MutationObserver</a>，中文文档已经很清楚了，看起来使用也很简单，于是就写下这么一个方法：</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> observeDOMChanges = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 对变化的 dom 的操作</span></span><br><span class="line">    <span class="keyword">var</span> changedHandler = <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// do with element ...</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 兼容浏览器前缀</span></span><br><span class="line">    <span class="keyword">var</span> MutationObserver = <span class="built_in">window</span>.MutationObserver ||</span><br><span class="line">                           <span class="built_in">window</span>.WebKitMutationObserver ||</span><br><span class="line">                           <span class="built_in">window</span>.MozMutationObserver;</span><br><span class="line">    <span class="comment">// MutationObserver 配置</span></span><br><span class="line">    <span class="keyword">var</span> MutationObserverConfig = &#123;</span><br><span class="line">        <span class="comment">// 监听子节点</span></span><br><span class="line">        childList: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">// 监听 href 属性</span></span><br><span class="line">        attributes: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">// 监听整棵树</span></span><br><span class="line">        subtree: <span class="literal">true</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 监听器</span></span><br><span class="line">    <span class="keyword">var</span> observer = MutationObserver ? <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span> (<span class="params">mutations</span>) </span>&#123;</span><br><span class="line">        mutations.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">mutation</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 处理 变化的 DOM</span></span><br><span class="line">            changedHandler(mutation.target);</span><br><span class="line">            <span class="comment">// 处理 新增的 DOM</span></span><br><span class="line">            <span class="keyword">if</span> (mutation.addedNodes) &#123;</span><br><span class="line">                mutation.addedNodes.forEach(changedHandler);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 删除的 DOM 无需处理 (mutation.removedNodes)</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;) : <span class="literal">undefined</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> observer ? <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            observer.observe(<span class="built_in">document</span>.body, MutationObserverConfig);</span><br><span class="line">        &#125; : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'MutationObserver not support!'</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>但是看看浏览器兼容情况，IE 要 11+ 吖！搞不来，于是只能把被抛弃的 <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Mutation_events" target="_blank" rel="noopener">Mutation events</a> 捡过来，据说性能也不是很好。</p>
+<blockquote>
+<p>This feature has been removed from the Web. Though some browsers may still support it, it is in the process of being dropped. Do not use it in old or new projects. Pages or Web apps using it may break at any time.</p>
+</blockquote>
+<p>代码片段如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> observeDOMChanges = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">var</span> bindMutationEvents = <span class="function"><span class="keyword">function</span> (<span class="params">eventName</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">document</span>.body.addEventListener(eventName, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            changedHandler(e.target);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        bindMutationEvents(<span class="string">'DOMSubtreeModified'</span>);</span><br><span class="line">        bindMutationEvents(<span class="string">'DOMNodeInserted'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>因为 Mutation events 也只支持到 IE9+，所以我们可以用 <code>addEventListener</code> 来进行判断，将兼容判断加起来完整代码就是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> observeDOMChanges = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 对变化的 dom 的操作</span></span><br><span class="line">    <span class="keyword">var</span> changedHandler = <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// do with element ...</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 检查 MutationObserver 浏览器兼容</span></span><br><span class="line">    <span class="keyword">var</span> MutationObserver = <span class="built_in">window</span>.MutationObserver ||</span><br><span class="line">                           <span class="built_in">window</span>.WebKitMutationObserver ||</span><br><span class="line">                           <span class="built_in">window</span>.MozMutationObserver;</span><br><span class="line">    <span class="keyword">if</span> (MutationObserver) &#123;</span><br><span class="line">        <span class="comment">// MutationObserver 配置</span></span><br><span class="line">        <span class="keyword">var</span> MutationObserverConfig = &#123;</span><br><span class="line">            <span class="comment">// 监听子节点</span></span><br><span class="line">            childList: <span class="literal">true</span>,</span><br><span class="line">            <span class="comment">// 监听 href 属性</span></span><br><span class="line">            attributes: <span class="literal">true</span>,</span><br><span class="line">            <span class="comment">// 监听整棵树</span></span><br><span class="line">            subtree: <span class="literal">true</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">// 监听器</span></span><br><span class="line">        <span class="keyword">var</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span> (<span class="params">mutations</span>) </span>&#123;</span><br><span class="line">            mutations.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">mutation</span>) </span>&#123;</span><br><span class="line">                <span class="comment">// 处理 变化的 DOM</span></span><br><span class="line">                changedHandler(mutation.target);</span><br><span class="line">                <span class="comment">// 处理 新增的 DOM</span></span><br><span class="line">                <span class="keyword">if</span> (mutation.addedNodes) &#123;</span><br><span class="line">                    mutation.addedNodes.forEach(changedHandler);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 删除的 DOM 无需处理 (mutation.removedNodes)</span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 开始监听</span></span><br><span class="line">            observer.observe(<span class="built_in">document</span>.body, MutationObserverConfig);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">document</span>.body.addEventListener) &#123;</span><br><span class="line">        <span class="comment">// addEventListener 和 Mutation events 都是 IE 9 以上才支持</span></span><br><span class="line">        <span class="keyword">var</span> bindMutationEvents = <span class="function"><span class="keyword">function</span> (<span class="params">eventName</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">document</span>.body.addEventListener(eventName, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                changedHandler(e.target);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> binded = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (binded) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            binded = <span class="literal">true</span>;</span><br><span class="line">            bindMutationEvents(<span class="string">'DOMSubtreeModified'</span>);</span><br><span class="line">            bindMutationEvents(<span class="string">'DOMNodeInserted'</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// IE 8- 就不管了</span></span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'MutationObserver not support!'</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>嗯，IE8- 怎么就可以放弃了呢？但是实在是没有什么好的办法，可以尝试用 <code>setTimeout</code> 定时去检查吧，但估计写起来又一大堆了 ╮(╯_╰)╭</p>
+<p>另外在吐槽一点，Mutation events 在 webkit 上支持的情况和 IE 上是不同的，<code>DOMSubtreeModified</code> 在 IE 上可以监听到 attr 变化的，但 webkit 上是不行（不用 MutationObserver 的情况下）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// definition ...</span></span><br><span class="line">observeDOMChanges();</span><br><span class="line"></span><br><span class="line"><span class="comment">// test</span></span><br><span class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line"><span class="comment">// works in IE and webkit via `DOMNodeInserted`</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(el);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// &lt;a&gt; -&gt; &lt;a href="xxx"&gt;</span></span><br><span class="line">    <span class="comment">// works in IE and webkit via `DOMSubtreeModified`</span></span><br><span class="line">    el.href = <span class="string">'path/to/somewhere'</span>;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// &lt;a href="a"&gt; -&gt; &lt;a href="b"&gt;</span></span><br><span class="line">        <span class="comment">// works in IE via `DOMSubtreeModified`</span></span><br><span class="line">        <span class="comment">// NOT works in webkit</span></span><br><span class="line">        el.href = <span class="string">'path/to/somewhere/else'</span>;</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>所以，wekit 内核老老实实用 MutationObserver，是最好的。但某些 webkit 内核浏览器既不支持 MutationObserver，Mutation events 又支持不好，老衲就无能为力了。</p>
+<p>最后，提醒一点：监听 DOM 变化修改 DOM 有风险，容易造成无限循环，上述例子的 <code>changedHandler</code> 必须做好判断，避免陷入无限循环中。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/05/mutation-observer-and-event/" data-id="ckclwh8u0000t8plwz2i27073" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/DOM/">DOM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Mutation-Observer/">Mutation Observer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/events/">events</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2015/06/service-worker/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ServiceWorker
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2015/04/use-selenium-for-ui-test/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用 Selenium 进行 UI 测试</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments"></section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 13.33px;">Browserify</a> <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/CommonJS/" style="font-size: 13.33px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blog/tags/ES2015/" style="font-size: 13.33px;">ES2015</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Headless/" style="font-size: 10px;">Headless</a> <a href="/blog/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/Karma/" style="font-size: 10px;">Karma</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Native/" style="font-size: 10px;">Native</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/PWA/" style="font-size: 10px;">PWA</a> <a href="/blog/tags/Preact/" style="font-size: 13.33px;">Preact</a> <a href="/blog/tags/Puppeteer/" style="font-size: 10px;">Puppeteer</a> <a href="/blog/tags/React/" style="font-size: 20px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Rollup/" style="font-size: 10px;">Rollup</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 13.33px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/Storybook/" style="font-size: 10px;">Storybook</a> <a href="/blog/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/blog/tags/Workbox/" style="font-size: 10px;">Workbox</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/ci/" style="font-size: 16.67px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/deserialization/" style="font-size: 10px;">deserialization</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/install/" style="font-size: 10px;">install</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/nightmare/" style="font-size: 10px;">nightmare</a> <a href="/blog/tags/npm/" style="font-size: 10px;">npm</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/publish/" style="font-size: 10px;">publish</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/serialization/" style="font-size: 10px;">serialization</a> <a href="/blog/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/blog/tags/test/" style="font-size: 20px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/vue/" style="font-size: 10px;">vue</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a> <a href="/blog/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/blog/tags/weex/" style="font-size: 10px;">weex</a> <a href="/blog/tags/美食/" style="font-size: 13.33px;">美食</a> <a href="/blog/tags/风土人情/" style="font-size: 10px;">风土人情</a> <a href="/blog/tags/风景/" style="font-size: 10px;">风景</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/02/workbox/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/DSC04075.JPG)" alt="Workbox 入门" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/02/workbox/" class="title">Workbox 入门</a></p>
+              <p class="item-date"><time datetime="2018-02-27T09:38:34.000Z" itemprop="datePublished">2018-02-27</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/01/preact-code-h/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/P51001-124945.jpg)" alt="Preact 源码解析 —— h/createElement" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/01/preact-code-h/" class="title">Preact 源码解析 —— h/createElement</a></p>
+              <p class="item-date"><time datetime="2018-01-25T12:04:25.000Z" itemprop="datePublished">2018-01-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/09/puppeteer/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/csbun/thal/raw/master/media/desertious.jpg
+)" alt="译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/09/puppeteer/" class="title">译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫</a></p>
+              <p class="item-date"><time datetime="2017-08-31T16:14:09.000Z" itemprop="datePublished">2017-09-01</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/08/npm-scripts/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60417-160040.jpg)" alt="npm scripts 之 publish 和 install" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/08/npm-scripts/" class="title">npm scripts 之 publish 和 install</a></p>
+              <p class="item-date"><time datetime="2017-08-24T10:18:32.000Z" itemprop="datePublished">2017-08-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/06/weex-challenger/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60412-162831.jpg)" alt="我试了一下 weex" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/06/weex-challenger/" class="title">我试了一下 weex</a></p>
+              <p class="item-date"><time datetime="2017-06-15T12:03:59.000Z" itemprop="datePublished">2017-06-15</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <!-- Top -->
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <!-- Buy Me a Coffee -->
+    <div style="margin: 10px;">
+      <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/csbun">
+        <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span>
+      </a>
+    </div>
+    <div id="footer-info" class="inner">
+      &copy; 2014 - 2020 叉起来就可以烧<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    const gitalk = new Gitalk({
+      clientID: '445f3ebe09ddd1d6a1eb',
+      clientSecret: '677a9844625ec22c3e39dcea819678794bb84d71',
+      repo: 'blog',
+      owner: 'csbun',
+      admin: ['csbun'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      // createIssueManually: true,
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+    });
+    gitalk.render('comments')
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+    <script src="//unpkg.com/algolia-search-idd@0.1.0/dest/index.min.js"></script>
+<script type="text/javascript">
+(function () {
+  const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+  $('.search-form')
+    .attr('autocomplete', 'off')
+    // .on('submit', function(e) {
+    //   e.preventDefault();
+    // });
+  window.algoliaSearchIDD({
+    el: '.search-form-input',
+    applicationID: algoliaConfig.applicationId,
+    apiKey: algoliaConfig.apiKey,
+    indexName: algoliaConfig.indexName,
+  });
+})()
+</script>
+  </div>
+</body>
+</html>

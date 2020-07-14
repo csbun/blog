@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ServiceWorker | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- hexo-algolia -->
+  <meta property="algolia:search" data-application-id="1DJDVE2IL4" data-api-key="c784a416f2e153ae75b1288ed8c3b0d8" data-index-name="BLOG">
+
+  <meta name="description" content="我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 worker 线程，用于异步处理一些与页面元素、界面交互无关的工作。">
+<meta name="keywords" content="ServiceWorker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ServiceWorker">
+<meta property="og:url" content="http://csbun.github.io/blog/2015/06/service-worker/index.html">
+<meta property="og:site_name" content="Hans Chan&#39;s Blog">
+<meta property="og:description" content="我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 worker 线程，用于异步处理一些与页面元素、界面交互无关的工作。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-12-12T13:06:56.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ServiceWorker">
+<meta name="twitter:description" content="我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 worker 线程，用于异步处理一些与页面元素、界面交互无关的工作。">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <link rel="stylesheet" href="/blog/font-awesome/css/font-awesome.min.css">
+  
+
+<!-- Hotjar Tracking Code for csbun.github.io/blog/ -->
+<script>
+(function(h,o,t,j,a,r){
+  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:483587,hjsv:5};
+  a=o.getElementsByTagName('head')[0];
+  r=o.createElement('script');r.async=1;
+  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- End Hotjar Tracking Code -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-69725995-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<meta name="google-site-verification" content="w7Jze6jotMvxHSzsNqwEukg5f2L6VNFgRcPZBwBGln8" />
+
+
+  
+  <!-- Google Adsense -->
+  <script data-ad-client="ca-pub-6414613701003177" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/blog/" id="logo"><i class="logo" style="background-image: url(/blog/css/images/logo.png)"></i><span class="site-title">Hans Chan&#39;s Blog</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/blog/.">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/blog/tags">Tags</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/blog/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/tags">Tags</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615?s=256">
+      <h2 id="name">叉起来就可以烧</h2>
+      <h3 id="title">傻逼切图仔</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>广州 · Guangzhou, China</span>
+      <a id="follow" href="https://github.com/csbun/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        40
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        66
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="https://github.com/csbun" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="/blog/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-service-worker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ServiceWorker
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/blog/2015/06/service-worker/">
+      <time datetime="2015-06-02T12:57:35.000Z" itemprop="datePublished">2015-06-02</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>我们知道，浏览器是单线程的，使用 ServiceWorker 可以在后台创建脱离于主线程的 <a href="https://developer.mozilla.org/en-US/docs/Web/API/" target="_blank" rel="noopener">worker</a> 线程，用于异步处理一些与页面元素、界面交互无关的工作。</p>
+<a id="more"></a>
+<h2><span id="运行环境">运行环境</span></h2><h3><span id="浏览器支持">浏览器支持</span></h3><ul>
+<li>Chrome &gt;= 40.0</li>
+<li>Firefox &gt;= 33.0</li>
+<li>Opera &gt;= 24</li>
+<li>IE、Safari 不支持</li>
+</ul>
+<h3><span id="需要-https">需要 HTTPS</span></h3><p>由于安全问题，ServiceWorker 只能在 HTTPS 环境下运行。但是在开发环境，<code>localhost</code> 和 <code>127.0.0.1</code> 也是允许的。</p>
+<h3><span id="调试">调试</span></h3><p>Chrome DevTools 提供了查看当前运行中的 ServiceWorker 的工具，在浏览器中打开 <a href="chrome://inspect/#service-workers" target="_blank" rel="noopener">chrome://inspect/#service-workers</a> 即可。</p>
+<p>另外，在开发者工具的 Sources 界面有一个 Service Workers 的 tab，在那也可以 Unregister 当前使用的 ServiceWorker。</p>
+<h2><span id="生命周期">生命周期</span></h2><p>ServiceWorker 一般会经历下面一个生命周期：</p>
+<ul>
+<li>Download</li>
+<li>Install</li>
+<li>Activate</li>
+</ul>
+<p>当浏览器下载好 ServiceWorker 之后会马上 install，install 成功后标记为 activated，之后进入闲置状态，等待事件触发。原则上，同一个 ServiceWorker 在其注册（Register）的域（Scope）下只会 install 和 activate 一次，即便重新页面刷新、同时多开都不会（因为 ServiceWorker 是完全脱离页面主线程在后台运行的）。</p>
+<p>浏览器在一段时间后会重新下载 ServiceWorker（MDN 上说<a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API#Download.2C_install_and_activate" target="_blank" rel="noopener">不超过24小时</a>，我没有进行验证）。若下载后如果发现有更新，会在后台进行 install，但不会立即 activate 而是处于 waiting 状态。当没有页面加载旧的 ServiceWorker 时，新的 ServiceWorker 才会 activate（但我关掉 chrome 的所有 tab 再打开并没有触发新的 ServiceWorker，大概是还没有下载新的文件吧，有必要就在调试工具中干掉就好）。</p>
+<h2><span id="使用-serviceworker">使用 ServiceWorker</span></h2><h3><span id="register">register</span></h3><p>我们可以在页面上用下面的方式注册（<a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register" target="_blank" rel="noopener">register</a>）一个 ServiceWorker：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">'serviceWorker'</span> <span class="keyword">in</span> navigator) &#123;</span><br><span class="line">  navigator.serviceWorker.register(<span class="string">'/sw-test/sw.js'</span>, &#123;</span><br><span class="line">    scope: <span class="string">'/sw-test/'</span></span><br><span class="line">  &#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">reg</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// registration worked</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Registration succeeded. Scope is '</span> + reg.scope);</span><br><span class="line">  &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// registration failed</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Registration failed with '</span> + error);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里指定了 scope 是 <code>/sw-test/</code>，不指定的话默认是最后这个 <code>.js</code> 文件所在的 path（MDN 上说默认是 <code>/</code> 是不对的），例如 <code>register(&#39;/s/w/sw.js&#39;)</code> 的 scope 为 <code>location.origin/s/w/</code>。而且指定的 scope 只能在默认的目录或之下，不能在其父级目录，例如，不能这样 <code>register(&#39;/s/w/sw.js&#39;, {scope: &#39;/s/&#39;})</code>。另外，这个地址也可以是相对路径。</p>
+<p><code>register()</code> 方法返回的是一个 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">Promise</a>，如果能够下载到这个 <code>/sw-test/sw.js</code> 文件就会进入 <code>then</code> 否则 <code>catch</code>。</p>
+<h3><span id="install">install</span></h3><p>register 成功之后就会触发 ServiceWorker 的 <a href="https://developer.mozilla.org/en-US/docs/Web/API/InstallEvent" target="_blank" rel="noopener">install 事件</a>，可以在 <code>sw.js</code> 文件中绑定：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set the callback for the install step</span></span><br><span class="line"><span class="comment">// 这里的 `self` 即为当前的 ServiceWorker，用 `this` 也可以</span></span><br><span class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Perform install steps</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>通常我们在 ServiceWorker 里面需要缓存或者预加载一些静态资源，那么我们可以开启一个 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache" target="_blank" rel="noopener">cache</a> 来保存他们：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> CACHE_NAME = <span class="string">'v1'</span>;</span><br><span class="line">self.addEventListener(<span class="string">'install'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.open(CACHE_NAME)</span><br><span class="line">      .then(<span class="function"><span class="keyword">function</span> (<span class="params">cache</span>) </span>&#123;</span><br><span class="line">        cache.addAll(urlsToCache).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'cache success.'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// TODO 我在 chrome 上面跑会报 cache.addAll is not a function</span></span><br><span class="line">        <span class="built_in">console</span>.error(<span class="string">'cache failed:'</span>, error);</span><br><span class="line">      &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="activate">activate</span></h3><p>上面说过旧的 ServiceWorker 全部失效后新的 ServiceWorker 才会 activated，那么我们可以在 activate 时将旧的不需要的 cache 清除掉：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> expectedCacheNames = [<span class="string">'v2'</span>, <span class="string">'v3'</span>];</span><br><span class="line">self.addEventListener(<span class="string">'activate'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Active worker won't be treated as activated until promise resolves successfully.</span></span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.keys().then(<span class="function"><span class="keyword">function</span> (<span class="params">cacheNames</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">        cacheNames.map(<span class="function"><span class="keyword">function</span> (<span class="params">cacheName</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (expectedCacheNames.indexOf(cacheName) == <span class="number">-1</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Deleting out of date cache:'</span>, cacheName);</span><br><span class="line">            <span class="keyword">return</span> caches.delete(cacheName);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      );</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3><span id="fetch">fetch</span></h3><p>在 ServiceWorker 闲置时，我们可以让其监听主线程上的 request，进行处理。例如，我们可以把一些请求的返回数据 cache 下来，这样即使应用在离线状态下也可以使用。（听起来和 Application Cache 好像吖）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> CACHE_NAME = <span class="string">'v1'</span>;</span><br><span class="line">self.addEventListener(<span class="string">'fetch'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> eventResponse = caches.match(event.request)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 命中 cache，直接返回</span></span><br><span class="line">      <span class="keyword">if</span> (response) &#123;</span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 没有命中，则克隆一个 request 出来（因为 request 是 stream）</span></span><br><span class="line">      <span class="keyword">var</span> fetchRequest = event.request.clone();</span><br><span class="line">      <span class="comment">// 真实请求</span></span><br><span class="line">      <span class="keyword">return</span> fetch(fetchRequest).then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 假设我们只 cache 有效的 response</span></span><br><span class="line">        <span class="keyword">if</span>(!response || response.status !== <span class="number">200</span> || response.type !== <span class="string">'basic'</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> response;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 因为 response 是 stream，所以要 clone 让浏览器和 cache 分别自行处理</span></span><br><span class="line">        <span class="keyword">var</span> responseToCache = response.clone();</span><br><span class="line">        <span class="comment">// 请求的返回值放入 cache</span></span><br><span class="line">        caches.open(CACHE_NAME).then(<span class="function"><span class="keyword">function</span> (<span class="params">cache</span>) </span>&#123;</span><br><span class="line">          cache.put(event.request, responseToCache);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 同时输出</span></span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="comment">// 响应 fetch 事件输出</span></span><br><span class="line">  event.respondWith(eventResponse);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里的 fetch 会将页面上所有请求都截获，包括当前页面的 http、img、css、script 和 XMLHttpRequest 等，所以当我把服务停掉，刷新页面时都能正常访问！因为上述资源都被 cache 了，不会有请求到服务端，因此更新页面之后也不会立即更新！因此使用需谨慎，或者更改逻辑，区分资源，不要全部都 cache。</p>
+<h2><span id="参考资料">参考资料</span></h2><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker" target="_blank" rel="noopener">ServiceWorker on MDN</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API" target="_blank" rel="noopener">ServiceWorker API on MDN</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers" target="_blank" rel="noopener">Using Service Workers</a></li>
+<li><a href="http://www.html5rocks.com/en/tutorials/service-worker/introduction/" target="_blank" rel="noopener">Introduction to Service Worker</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2015/06/service-worker/" data-id="ckclwh8u800128plwhtjt6bbc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ServiceWorker/">ServiceWorker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2015/06/docker-with-node/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Docker With Node
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2015/05/mutation-observer-and-event/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">用 MutationObserver 和 Mutation events 监听 DOM 变化</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments"></section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 13.33px;">Browserify</a> <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/CommonJS/" style="font-size: 13.33px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blog/tags/ES2015/" style="font-size: 13.33px;">ES2015</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Headless/" style="font-size: 10px;">Headless</a> <a href="/blog/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/Karma/" style="font-size: 10px;">Karma</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Native/" style="font-size: 10px;">Native</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/PWA/" style="font-size: 10px;">PWA</a> <a href="/blog/tags/Preact/" style="font-size: 13.33px;">Preact</a> <a href="/blog/tags/Puppeteer/" style="font-size: 10px;">Puppeteer</a> <a href="/blog/tags/React/" style="font-size: 20px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Rollup/" style="font-size: 10px;">Rollup</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 13.33px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/Storybook/" style="font-size: 10px;">Storybook</a> <a href="/blog/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/blog/tags/Workbox/" style="font-size: 10px;">Workbox</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/ci/" style="font-size: 16.67px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/deserialization/" style="font-size: 10px;">deserialization</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/install/" style="font-size: 10px;">install</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/nightmare/" style="font-size: 10px;">nightmare</a> <a href="/blog/tags/npm/" style="font-size: 10px;">npm</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/publish/" style="font-size: 10px;">publish</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/serialization/" style="font-size: 10px;">serialization</a> <a href="/blog/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/blog/tags/test/" style="font-size: 20px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/vue/" style="font-size: 10px;">vue</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a> <a href="/blog/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/blog/tags/weex/" style="font-size: 10px;">weex</a> <a href="/blog/tags/美食/" style="font-size: 13.33px;">美食</a> <a href="/blog/tags/风土人情/" style="font-size: 10px;">风土人情</a> <a href="/blog/tags/风景/" style="font-size: 10px;">风景</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/02/workbox/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/DSC04075.JPG)" alt="Workbox 入门" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/02/workbox/" class="title">Workbox 入门</a></p>
+              <p class="item-date"><time datetime="2018-02-27T09:38:34.000Z" itemprop="datePublished">2018-02-27</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/01/preact-code-h/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/P51001-124945.jpg)" alt="Preact 源码解析 —— h/createElement" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/01/preact-code-h/" class="title">Preact 源码解析 —— h/createElement</a></p>
+              <p class="item-date"><time datetime="2018-01-25T12:04:25.000Z" itemprop="datePublished">2018-01-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/09/puppeteer/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/csbun/thal/raw/master/media/desertious.jpg
+)" alt="译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/09/puppeteer/" class="title">译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫</a></p>
+              <p class="item-date"><time datetime="2017-08-31T16:14:09.000Z" itemprop="datePublished">2017-09-01</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/08/npm-scripts/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60417-160040.jpg)" alt="npm scripts 之 publish 和 install" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/08/npm-scripts/" class="title">npm scripts 之 publish 和 install</a></p>
+              <p class="item-date"><time datetime="2017-08-24T10:18:32.000Z" itemprop="datePublished">2017-08-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/06/weex-challenger/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60412-162831.jpg)" alt="我试了一下 weex" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/06/weex-challenger/" class="title">我试了一下 weex</a></p>
+              <p class="item-date"><time datetime="2017-06-15T12:03:59.000Z" itemprop="datePublished">2017-06-15</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <!-- Top -->
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <!-- Buy Me a Coffee -->
+    <div style="margin: 10px;">
+      <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/csbun">
+        <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span>
+      </a>
+    </div>
+    <div id="footer-info" class="inner">
+      &copy; 2014 - 2020 叉起来就可以烧<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    const gitalk = new Gitalk({
+      clientID: '445f3ebe09ddd1d6a1eb',
+      clientSecret: '677a9844625ec22c3e39dcea819678794bb84d71',
+      repo: 'blog',
+      owner: 'csbun',
+      admin: ['csbun'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      // createIssueManually: true,
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+    });
+    gitalk.render('comments')
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+    <script src="//unpkg.com/algolia-search-idd@0.1.0/dest/index.min.js"></script>
+<script type="text/javascript">
+(function () {
+  const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+  $('.search-form')
+    .attr('autocomplete', 'off')
+    // .on('submit', function(e) {
+    //   e.preventDefault();
+    // });
+  window.algoliaSearchIDD({
+    el: '.search-form-input',
+    applicationID: algoliaConfig.applicationId,
+    apiKey: algoliaConfig.apiKey,
+    indexName: algoliaConfig.indexName,
+  });
+})()
+</script>
+  </div>
+</body>
+</html>

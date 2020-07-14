@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我试了一下 weex | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- hexo-algolia -->
+  <meta property="algolia:search" data-application-id="1DJDVE2IL4" data-api-key="c784a416f2e153ae75b1288ed8c3b0d8" data-index-name="BLOG">
+
+  <meta name="description" content="致读者weex 有风险，入门需谨慎。">
+<meta name="keywords" content="weex,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我试了一下 weex">
+<meta property="og:url" content="http://csbun.github.io/blog/2017/06/weex-challenger/index.html">
+<meta property="og:site_name" content="Hans Chan&#39;s Blog">
+<meta property="og:description" content="致读者weex 有风险，入门需谨慎。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://csbun.github.io/blog/2017/06/weex-challenger/dotWe.png">
+<meta property="og:image" content="http://csbun.github.io/blog/2017/06/weex-challenger/preview.png">
+<meta property="og:updated_time" content="2018-12-12T15:53:45.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我试了一下 weex">
+<meta name="twitter:description" content="致读者weex 有风险，入门需谨慎。">
+<meta name="twitter:image" content="http://csbun.github.io/blog/2017/06/weex-challenger/dotWe.png">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <link rel="stylesheet" href="/blog/font-awesome/css/font-awesome.min.css">
+  
+
+<!-- Hotjar Tracking Code for csbun.github.io/blog/ -->
+<script>
+(function(h,o,t,j,a,r){
+  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:483587,hjsv:5};
+  a=o.getElementsByTagName('head')[0];
+  r=o.createElement('script');r.async=1;
+  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- End Hotjar Tracking Code -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-69725995-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<meta name="google-site-verification" content="w7Jze6jotMvxHSzsNqwEukg5f2L6VNFgRcPZBwBGln8" />
+
+
+  
+  <!-- Google Adsense -->
+  <script data-ad-client="ca-pub-6414613701003177" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/blog/" id="logo"><i class="logo" style="background-image: url(/blog/css/images/logo.png)"></i><span class="site-title">Hans Chan&#39;s Blog</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/blog/.">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/blog/tags">Tags</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/blog/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/blog/tags">Tags</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615?s=256">
+      <h2 id="name">叉起来就可以烧</h2>
+      <h3 id="title">傻逼切图仔</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>广州 · Guangzhou, China</span>
+      <a id="follow" href="https://github.com/csbun/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        40
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        66
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="https://github.com/csbun" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="/blog/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-weex-challenger" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+    <div class="article-banner">
+		  <img src="/blog/gallery/sri-lanka/P60412-162831.jpg">
+    </div>
+	
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      我试了一下 weex
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/blog/2017/06/weex-challenger/">
+      <time datetime="2017-06-15T12:03:59.000Z" itemprop="datePublished">2017-06-15</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h2><span id="致读者">致读者</span></h2><p>weex 有风险，入门需谨慎。</p>
+<a id="more"></a>
+<h2><span id="入门">入门</span></h2><h3><span id="hello-world">Hello World</span></h3><p>什么都不装，先到 <a href="http://dotwe.org/vue" target="_blank" rel="noopener">dotWe</a> 中看看效果：</p>
+<img src="/blog/2017/06/weex-challenger/dotWe.png" title="dotWe">
+<p>这是一段 vue 的代码，一个图标和一行文字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;image :src=&quot;logoUrl&quot; class=&quot;logo&quot;&gt;&lt;/image&gt;</span><br><span class="line">    &lt;text class=&quot;title&quot;&gt;Hello &#123;&#123;target&#125;&#125;&lt;/text&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .wrapper &#123; align-items: center; margin-top: 120px; &#125;</span><br><span class="line">  .title &#123; font-size: 48px; &#125;</span><br><span class="line">  .logo &#123; width: 360px; height: 82px; &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      logoUrl: &apos;https://alibaba.github.io/weex/img/weex_logo_blue@3x.png&apos;,</span><br><span class="line">      target: &apos;World&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>将其贴在左侧代码区，点击 <code>RUN</code> 即可在 preview 区看到 Web 实现的效果。如果要看 Native 版，则可以下载 <a href="https://weex.incubator.apache.org/cn/playground.html" target="_blank" rel="noopener">Weex Playground</a>，安装到手机中后扫描右侧的 QRCode 即可。</p>
+<p>dotWe 只能运行一个 vue 文件，做单个组件的测试还是可以的，在实际业务应用的时候明显是不够，因此我们需要一个完整的工程项目。</p>
+<h3><span id="初始化">初始化</span></h3><p>在已经有 Node 的前提下，安装配套工具并初始化项目：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install -g weex-toolkit</span><br><span class="line">weex init weex-challenger</span><br><span class="line"><span class="built_in">cd</span> weex-challenger</span><br><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<p>注：我这里使用的版本是 weex-toolkit(1.0.5)</p>
+<h3><span id="运行">运行</span></h3><h4><span id="web">Web</span></h4><p>开两个命令行分别运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+<p>看到 <code>serving /Users/hans/workspace/weex-challenger on port 8080</code> 即可打开 <a href="http://127.0.0.1:8080/" target="_blank" rel="noopener">http://127.0.0.1:8080/</a>。然而很不幸页面是空白的，因为还有一个 <a href="https://github.com/weexteam/weex-toolkit/commit/5793aa32d120ff2b8b629f7b860862d7a31dfc6a" target="_blank" rel="noopener">commit</a> 没有发布。所以我们只要同样改一下 <em>weex.html</em> 的 15 行 <code>weex-vue-render</code> 的路径即可：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./node_modules/weex-vue-render/dist/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>👈 左边的预览窗口就会出现 weex 的 LOGO。完整代码请看 <a href="https://github.com/csbun/weex-challenger/tree/v0.1.0" target="_blank" rel="noopener">这里</a>。</p>
+<img src="/blog/2017/06/weex-challenger/preview.png" title="Web 预览效果">
+<h4><span id="native">Native</span></h4><p>同样使用 <a href="https://weex.incubator.apache.org/cn/playground.html" target="_blank" rel="noopener">Weex Playground</a> 扫描上面 <a href="http://127.0.0.1:8080/" target="_blank" rel="noopener">http://127.0.0.1:8080/</a> 中的的二维码，即会在 Native App 中打开一个新的 Page 显示上面相同的界面。</p>
+<h3><span id="单页面应用">单页面应用</span></h3><p>SPA 的应该是一个很常见的需求，我们现在就在默认的初始化项目上使用 Vue 全家桶实现一个简单的单页面应用。</p>
+<h4><span id="vue-router">vue-router</span></h4><p>假设我们的场景是有 Foo，Bar 两个 Tab，点击分别进入两个不同的页面。首先我们要有一个入口组件承载 <em>app.vue</em>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div @androidback=&quot;back&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;nav&quot;&gt;</span><br><span class="line">      &lt;text class=&quot;nav-i&quot; @click=&quot;jumpFoo&quot;&gt;Foo&lt;/text&gt;</span><br><span class="line">      &lt;text class=&quot;nav-i&quot; @click=&quot;jumpBar&quot;&gt;Bar&lt;/text&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;router-view style=&quot;flex:1&quot;&gt;&lt;/router-view&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export default &#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">      back: function() &#123;</span><br><span class="line">        this.$router.back();</span><br><span class="line">      &#125;,</span><br><span class="line">      jumpFoo: function() &#123;</span><br><span class="line">        this.$router.push(&apos;/foo&apos;);</span><br><span class="line">      &#125;,</span><br><span class="line">      jumpBar: function() &#123;</span><br><span class="line">        this.$router.push(&apos;/bar/0&apos;);</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>jumpFoo</code> 和 <code>jumpBar</code> 是使用 <a href="https://weex.incubator.apache.org/cn/references/vue/difference-of-vuex.html#编程式导航" target="_blank" rel="noopener">Weex 官方限制</a> 的 <a href="https://router.vuejs.org/zh-cn/essentials/navigation.html" target="_blank" rel="noopener">编程式导航</a> 的方式来实现页面跳转。</p>
+<p>在 <em>router.js</em> 文件中，我们给 <code>FooView</code> 和 <code>BarView</code> 绑定对应的路径 <code>/foo</code> 和 <code>/bar</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line"><span class="keyword">import</span> FooView <span class="keyword">from</span> <span class="string">'./foo.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> BarView <span class="keyword">from</span> <span class="string">'./bar.vue'</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(Router);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/foo'</span>, <span class="attr">component</span>: FooView &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/bar/:id'</span>, <span class="attr">component</span>: BarView &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>最后在入口文件 <em>app.js</em> 中绑定 <code>App</code> 和 <code>router</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./src/app.vue'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./src/router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vue(Vue.util.extend(&#123; <span class="attr">el</span>: <span class="string">'#root'</span>, router &#125;, App));</span><br><span class="line"></span><br><span class="line">router.push(<span class="string">'/foo'</span>);</span><br></pre></td></tr></table></figure>
+<p>完整的代码示例请看 <a href="https://github.com/csbun/weex-challenger/tree/v0.2.0" target="_blank" rel="noopener">这里</a>，更新的内容看这个 <a href="https://github.com/csbun/weex-challenger/commit/8e7f0443a0336f30cdc33ee9fc3bc4ae1b079a1b" target="_blank" rel="noopener">commit</a>。</p>
+<h2><span id="发布">发布</span></h2><p>因为玩过 <a href="https://facebook.github.io/react-native/" target="_blank" rel="noopener">React Native</a>，打包成一个应用本是一件不复杂的事情，然而在 weex 中就没那么规范了。</p>
+<p><a href="https://www.npmjs.com/package/weex-toolkit" target="_blank" rel="noopener">weex-toolkit</a> 虽然已经集成了 <a href="https://www.npmjs.com/package/weexpack" target="_blank" rel="noopener">weexpack</a> 的功能，但二者初始化出来的项目完全不同。也就是 <code>weex-toolkit init</code> != <code>weexpack create</code>，以致于后面的 <code>weexpack platform</code> 也无法继续。暂时没空折腾了。。。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2017/06/weex-challenger/" data-id="ckclwh8w3005a8plwn6g1uizv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/vue/">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/weex/">weex</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2017/08/npm-scripts/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          npm scripts 之 publish 和 install
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2017/03/preact-storybook/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Using Storybook with Preact</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments"></section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/blog/tags/Android/" style="font-size: 10px;">Android</a> <a href="/blog/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/blog/tags/Browserify/" style="font-size: 13.33px;">Browserify</a> <a href="/blog/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/blog/tags/CommonJS/" style="font-size: 13.33px;">CommonJS</a> <a href="/blog/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/blog/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/blog/tags/ES2015/" style="font-size: 13.33px;">ES2015</a> <a href="/blog/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/blog/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/blog/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/blog/tags/Headless/" style="font-size: 10px;">Headless</a> <a href="/blog/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/blog/tags/Java/" style="font-size: 10px;">Java</a> <a href="/blog/tags/Karma/" style="font-size: 10px;">Karma</a> <a href="/blog/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/blog/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/blog/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/blog/tags/Native/" style="font-size: 10px;">Native</a> <a href="/blog/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/blog/tags/PWA/" style="font-size: 10px;">PWA</a> <a href="/blog/tags/Preact/" style="font-size: 13.33px;">Preact</a> <a href="/blog/tags/Puppeteer/" style="font-size: 10px;">Puppeteer</a> <a href="/blog/tags/React/" style="font-size: 20px;">React</a> <a href="/blog/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/blog/tags/Rollup/" style="font-size: 10px;">Rollup</a> <a href="/blog/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/blog/tags/ServiceWorker/" style="font-size: 13.33px;">ServiceWorker</a> <a href="/blog/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/blog/tags/Storybook/" style="font-size: 10px;">Storybook</a> <a href="/blog/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/blog/tags/Workbox/" style="font-size: 10px;">Workbox</a> <a href="/blog/tags/async/" style="font-size: 13.33px;">async</a> <a href="/blog/tags/ci/" style="font-size: 16.67px;">ci</a> <a href="/blog/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/blog/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/blog/tags/debug/" style="font-size: 10px;">debug</a> <a href="/blog/tags/deserialization/" style="font-size: 10px;">deserialization</a> <a href="/blog/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/blog/tags/events/" style="font-size: 10px;">events</a> <a href="/blog/tags/generator/" style="font-size: 10px;">generator</a> <a href="/blog/tags/google/" style="font-size: 10px;">google</a> <a href="/blog/tags/install/" style="font-size: 10px;">install</a> <a href="/blog/tags/koa/" style="font-size: 10px;">koa</a> <a href="/blog/tags/less/" style="font-size: 10px;">less</a> <a href="/blog/tags/log/" style="font-size: 10px;">log</a> <a href="/blog/tags/logo/" style="font-size: 10px;">logo</a> <a href="/blog/tags/nightmare/" style="font-size: 10px;">nightmare</a> <a href="/blog/tags/npm/" style="font-size: 10px;">npm</a> <a href="/blog/tags/performance/" style="font-size: 10px;">performance</a> <a href="/blog/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/blog/tags/publish/" style="font-size: 10px;">publish</a> <a href="/blog/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/blog/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/blog/tags/serialization/" style="font-size: 10px;">serialization</a> <a href="/blog/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/blog/tags/test/" style="font-size: 20px;">test</a> <a href="/blog/tags/ui/" style="font-size: 10px;">ui</a> <a href="/blog/tags/vue/" style="font-size: 10px;">vue</a> <a href="/blog/tags/webkit/" style="font-size: 10px;">webkit</a> <a href="/blog/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/blog/tags/weex/" style="font-size: 10px;">weex</a> <a href="/blog/tags/美食/" style="font-size: 13.33px;">美食</a> <a href="/blog/tags/风土人情/" style="font-size: 10px;">风土人情</a> <a href="/blog/tags/风景/" style="font-size: 10px;">风景</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/02/workbox/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/DSC04075.JPG)" alt="Workbox 入门" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/02/workbox/" class="title">Workbox 入门</a></p>
+              <p class="item-date"><time datetime="2018-02-27T09:38:34.000Z" itemprop="datePublished">2018-02-27</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2018/01/preact-code-h/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/taiwan/P51001-124945.jpg)" alt="Preact 源码解析 —— h/createElement" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2018/01/preact-code-h/" class="title">Preact 源码解析 —— h/createElement</a></p>
+              <p class="item-date"><time datetime="2018-01-25T12:04:25.000Z" itemprop="datePublished">2018-01-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/09/puppeteer/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/csbun/thal/raw/master/media/desertious.jpg
+)" alt="译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/09/puppeteer/" class="title">译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫</a></p>
+              <p class="item-date"><time datetime="2017-08-31T16:14:09.000Z" itemprop="datePublished">2017-09-01</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/08/npm-scripts/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60417-160040.jpg)" alt="npm scripts 之 publish 和 install" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/08/npm-scripts/" class="title">npm scripts 之 publish 和 install</a></p>
+              <p class="item-date"><time datetime="2017-08-24T10:18:32.000Z" itemprop="datePublished">2017-08-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/blog/2017/06/weex-challenger/" class="thumbnail">
+  
+    <span style="background-image:url(/blog/gallery/sri-lanka/P60412-162831.jpg)" alt="我试了一下 weex" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/blog/2017/06/weex-challenger/" class="title">我试了一下 weex</a></p>
+              <p class="item-date"><time datetime="2017-06-15T12:03:59.000Z" itemprop="datePublished">2017-06-15</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <!-- Top -->
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <!-- Buy Me a Coffee -->
+    <div style="margin: 10px;">
+      <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/csbun">
+        <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span>
+      </a>
+    </div>
+    <div id="footer-info" class="inner">
+      &copy; 2014 - 2020 叉起来就可以烧<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    const gitalk = new Gitalk({
+      clientID: '445f3ebe09ddd1d6a1eb',
+      clientSecret: '677a9844625ec22c3e39dcea819678794bb84d71',
+      repo: 'blog',
+      owner: 'csbun',
+      admin: ['csbun'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      // createIssueManually: true,
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+    });
+    gitalk.render('comments')
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+    <script src="//unpkg.com/algolia-search-idd@0.1.0/dest/index.min.js"></script>
+<script type="text/javascript">
+(function () {
+  const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+  $('.search-form')
+    .attr('autocomplete', 'off')
+    // .on('submit', function(e) {
+    //   e.preventDefault();
+    // });
+  window.algoliaSearchIDD({
+    el: '.search-form-input',
+    applicationID: algoliaConfig.applicationId,
+    apiKey: algoliaConfig.apiKey,
+    indexName: algoliaConfig.indexName,
+  });
+})()
+</script>
+  </div>
+</body>
+</html>
