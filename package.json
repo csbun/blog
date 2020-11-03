@@ -16,7 +16,7 @@
   "scripts": {
     "new": "hexo new",
     "start": "hexo s",
-    "d": "hexo g && hexo d && hexo algolia"
+    "d": "echo '{}' > db.json && hexo g && hexo d && hexo algolia"
   },
   "hexo": {
     "version": "3.5.0"
