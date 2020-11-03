@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://csbun.github.io/blog/"/>
-  <updated>2020-11-02T07:37:42.972Z</updated>
+  <updated>2020-11-03T11:52:46.477Z</updated>
   <id>http://csbun.github.io/blog/</id>
   
   <author>
@@ -15,28 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>android-as-a-server</title>
-    <link href="http://csbun.github.io/blog/2020/11/android-as-a-server/"/>
-    <id>http://csbun.github.io/blog/2020/11/android-as-a-server/</id>
-    <published>2020-11-02T07:36:12.000Z</published>
-    <updated>2020-11-02T07:37:42.972Z</updated>
-    
-    <content type="html"><![CDATA[<p>How to Run an SSH server on your Android phone with Termux Linux environment app</p><p><a href="http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html" target="_blank" rel="noopener">http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html</a></p><p>内网穿透</p><p>colabug.com/2020/0608/7443520/</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;How to Run an SSH server on your Android phone with Termux Linux environment app&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://awesomeprojectsxyz.blogspot.com/2
-      
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Workbox 入门</title>
@@ -495,6 +473,28 @@
     
     
       <category term="contentEditable" scheme="http://csbun.github.io/blog/tags/contentEditable/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 iron-node 进行 Node Debug</title>
+    <link href="http://csbun.github.io/blog/2015/09/using-iron-node/"/>
+    <id>http://csbun.github.io/blog/2015/09/using-iron-node/</id>
+    <published>2015-09-15T07:05:33.000Z</published>
+    <updated>2020-11-03T11:52:46.277Z</updated>
+    
+    <content type="html"><![CDATA[<p>简单折腾了一下 <a href="http://s-a.github.io/iron-node/" target="_blank" rel="noopener">iron-node</a>，调试 Node 再也不用苦逼地 console.log 了。</p><a id="more"></a><h2><span id="安装">安装</span></h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g iron-<span class="keyword">node</span><span class="title"></span></span><br></pre></td></tr></table></figure><h2><span id="启动">启动</span></h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iron-<span class="keyword">node</span> <span class="title">path</span>/to/file.js</span><br></pre></td></tr></table></figure><p>运行上述命令启动，会自动打开一个 Chrome Developer Tools 界面，运行 <code>node path/to/file.js</code> 的输出会在 Console 标签页中输出。</p><h2><span id="断点">断点</span></h2><p>最简单的断点方式当然是在源码中添加 <code>debugger;</code>，如这段：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inc = <span class="function"><span class="keyword">function</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">debugger</span>; <span class="comment">// break point here</span></span><br><span class="line">    <span class="keyword">return</span> ++num;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'inc(3) = '</span> + inc(<span class="number">3</span>));</span><br></pre></td></tr></table></figure><p>同时，也在 Sources 标签页 的 (no domain) 分类中可以看到运行的源码。这样就可以像平时调试页面一样点击行号添加删除断点。</p><blockquote><p>尝试了一下使用 Map Workspace 无效，没有文件目录结果，这一点比较痛苦。</p></blockquote><h2><span id="文件更新">文件更新</span></h2><p>当文件更新时，只要在 Chrome Developer Tools 界面按快捷键 <code>Command+R</code> 刷新即可，而且刷新后短点仍然存在。</p><blockquote><p>焦点必须在 DevTool 上，而不是预览界面（显示 DEBUG.md 或 README.md 的 index.html）</p></blockquote><h2><span id="使用-es6">使用 ES6</span></h2><p>虽然 Node 已经升级的到 v4.0.0，支持 ES6 了，但是 iron-node 好像还没完全跟上，所以要开启一些 <a href="https://github.com/thlorenz/v8-flags/blob/master/flags-0.11.md" target="_blank" rel="noopener">v8 flags</a>。入口文件所在目录创建文件 <code>.iron-node.js.</code>，如在我的例子中，是开启箭头函数：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    v8: &#123;</span><br><span class="line">        flags : [</span><br><span class="line">            <span class="string">'--harmony-arrow-functions'</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    app: &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>详情可以直接参考 <a href="https://github.com/s-a/iron-node/blob/master/.iron-node.js" target="_blank" rel="noopener">官方例子</a>。如果想设置为全局配置，就看 <a href="https://github.com/s-a/iron-node/blob/master/docs/CONFIGURATION.md" target="_blank" rel="noopener">这里</a>。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;简单折腾了一下 &lt;a href=&quot;http://s-a.github.io/iron-node/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;iron-node&lt;/a&gt;，调试 Node 再也不用苦逼地 console.log 了。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Node" scheme="http://csbun.github.io/blog/tags/Node/"/>
+    
+      <category term="debug" scheme="http://csbun.github.io/blog/tags/debug/"/>
     
   </entry>
   
