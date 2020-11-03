@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android-as-a-server | Hans Chan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- hexo-algolia -->
+  <meta property="algolia:search" data-application-id="1DJDVE2IL4" data-api-key="c784a416f2e153ae75b1288ed8c3b0d8" data-index-name="BLOG">
+
+  <meta name="description" content="How to Run an SSH server on your Android phone with Termux Linux environment app http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html 内网穿透 colabug.com/2020/0608/74">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android-as-a-server">
+<meta property="og:url" content="http://csbun.github.io/blog/2020/11/android-as-a-server/index.html">
+<meta property="og:site_name" content="Hans Chan&#39;s Blog">
+<meta property="og:description" content="How to Run an SSH server on your Android phone with Termux Linux environment app http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html 内网穿透 colabug.com/2020/0608/74">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-11-02T07:37:42.972Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android-as-a-server">
+<meta name="twitter:description" content="How to Run an SSH server on your Android phone with Termux Linux environment app http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html 内网穿透 colabug.com/2020/0608/74">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+
+<!-- Hotjar Tracking Code for csbun.github.io/blog/ -->
+<script>
+(function(h,o,t,j,a,r){
+  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:483587,hjsv:5};
+  a=o.getElementsByTagName('head')[0];
+  r=o.createElement('script');r.async=1;
+  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- End Hotjar Tracking Code -->
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-69725995-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<meta name="google-site-verification" content="w7Jze6jotMvxHSzsNqwEukg5f2L6VNFgRcPZBwBGln8" />
+
+
+  
+  <!-- Google Adsense -->
+  <script data-ad-client="ca-pub-6414613701003177" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">Hans Chan&#39;s Blog</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+          <td><a class="main-nav-link" href="/tags">Tags</a></td>
+        
+        <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://www.gravatar.com/avatar/dc4674b8f674322328c02339cf8da615?s=256">
+      <h2 id="name">叉起来就可以烧</h2>
+      <h3 id="title">傻逼切图仔</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>广州 · Guangzhou, China</span>
+      <a id="follow" href="https://github.com/csbun/">FOLLOW</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        41
+        <span>posts</span>
+      </div>
+      <div class="article-info-block">
+        66
+        <span>tags</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="https://github.com/csbun" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-android-as-a-server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      
+	
+    <div class="article-banner">
+		  <img src="/gallery/TODO.jpg">
+    </div>
+	
+
+
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android-as-a-server
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2020/11/android-as-a-server/">
+      <time datetime="2020-11-02T07:36:12.000Z" itemprop="datePublished">2020-11-02</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>How to Run an SSH server on your Android phone with Termux Linux environment app</p>
+<p><a href="http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html" target="_blank" rel="noopener">http://awesomeprojectsxyz.blogspot.com/2018/07/how-to-run-ssh-server-on-your-android.html</a></p>
+<p>内网穿透</p>
+<p>colabug.com/2020/0608/7443520/</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://csbun.github.io/blog/2020/11/android-as-a-server/" data-id="ckh1xh8il0068v8lwv4vj5vr2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/workbox/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Workbox 入门</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments"></section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">tag cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Angular/" style="font-size: 20px;">Angular</a> <a href="/tags/Browserify/" style="font-size: 13.33px;">Browserify</a> <a href="/tags/Chrome/" style="font-size: 10px;">Chrome</a> <a href="/tags/CommonJS/" style="font-size: 13.33px;">CommonJS</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Docker/" style="font-size: 16.67px;">Docker</a> <a href="/tags/ES2015/" style="font-size: 13.33px;">ES2015</a> <a href="/tags/Filter/" style="font-size: 10px;">Filter</a> <a href="/tags/Flux/" style="font-size: 13.33px;">Flux</a> <a href="/tags/Fluxxor/" style="font-size: 10px;">Fluxxor</a> <a href="/tags/Headless/" style="font-size: 10px;">Headless</a> <a href="/tags/JSON/" style="font-size: 10px;">JSON</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Karma/" style="font-size: 10px;">Karma</a> <a href="/tags/Meteor/" style="font-size: 10px;">Meteor</a> <a href="/tags/Mutation-Observer/" style="font-size: 10px;">Mutation Observer</a> <a href="/tags/NW-js/" style="font-size: 10px;">NW.js</a> <a href="/tags/Native/" style="font-size: 10px;">Native</a> <a href="/tags/Node/" style="font-size: 16.67px;">Node</a> <a href="/tags/PWA/" style="font-size: 10px;">PWA</a> <a href="/tags/Preact/" style="font-size: 13.33px;">Preact</a> <a href="/tags/Puppeteer/" style="font-size: 10px;">Puppeteer</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/RequireJS/" style="font-size: 10px;">RequireJS</a> <a href="/tags/Rollup/" style="font-size: 10px;">Rollup</a> <a href="/tags/Selenium/" style="font-size: 13.33px;">Selenium</a> <a href="/tags/ServiceWorker/" style="font-size: 13.33px;">ServiceWorker</a> <a href="/tags/Stateful/" style="font-size: 10px;">Stateful</a> <a href="/tags/Storybook/" style="font-size: 10px;">Storybook</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/Workbox/" style="font-size: 10px;">Workbox</a> <a href="/tags/async/" style="font-size: 13.33px;">async</a> <a href="/tags/ci/" style="font-size: 16.67px;">ci</a> <a href="/tags/contentEditable/" style="font-size: 10px;">contentEditable</a> <a href="/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/deserialization/" style="font-size: 10px;">deserialization</a> <a href="/tags/desktop/" style="font-size: 10px;">desktop</a> <a href="/tags/events/" style="font-size: 10px;">events</a> <a href="/tags/generator/" style="font-size: 10px;">generator</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/install/" style="font-size: 10px;">install</a> <a href="/tags/koa/" style="font-size: 10px;">koa</a> <a href="/tags/less/" style="font-size: 10px;">less</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/logo/" style="font-size: 10px;">logo</a> <a href="/tags/nightmare/" style="font-size: 10px;">nightmare</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/performance/" style="font-size: 10px;">performance</a> <a href="/tags/permissions/" style="font-size: 10px;">permissions</a> <a href="/tags/publish/" style="font-size: 10px;">publish</a> <a href="/tags/requestAnimationFrame/" style="font-size: 10px;">requestAnimationFrame</a> <a href="/tags/requestIdleCallback/" style="font-size: 10px;">requestIdleCallback</a> <a href="/tags/serialization/" style="font-size: 10px;">serialization</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/test/" style="font-size: 20px;">test</a> <a href="/tags/ui/" style="font-size: 10px;">ui</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webkit/" style="font-size: 10px;">webkit</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/美食/" style="font-size: 13.33px;">美食</a> <a href="/tags/风土人情/" style="font-size: 10px;">风土人情</a> <a href="/tags/风景/" style="font-size: 10px;">风景</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recents</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2020/11/android-as-a-server/" class="thumbnail">
+  
+    <span style="background-image:url(/gallery/TODO.jpg)" alt="android-as-a-server" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2020/11/android-as-a-server/" class="title">android-as-a-server</a></p>
+              <p class="item-date"><time datetime="2020-11-02T07:36:12.000Z" itemprop="datePublished">2020-11-02</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2018/02/workbox/" class="thumbnail">
+  
+    <span style="background-image:url(/gallery/taiwan/DSC04075.JPG)" alt="Workbox 入门" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2018/02/workbox/" class="title">Workbox 入门</a></p>
+              <p class="item-date"><time datetime="2018-02-27T09:38:34.000Z" itemprop="datePublished">2018-02-27</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2018/01/preact-code-h/" class="thumbnail">
+  
+    <span style="background-image:url(/gallery/taiwan/P51001-124945.jpg)" alt="Preact 源码解析 —— h/createElement" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2018/01/preact-code-h/" class="title">Preact 源码解析 —— h/createElement</a></p>
+              <p class="item-date"><time datetime="2018-01-25T12:04:25.000Z" itemprop="datePublished">2018-01-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/09/puppeteer/" class="thumbnail">
+  
+    <span style="background-image:url(https://github.com/csbun/thal/raw/master/media/desertious.jpg
+)" alt="译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/09/puppeteer/" class="title">译文：Puppeteer 与 Chrome Headless —— 从入门到爬虫</a></p>
+              <p class="item-date"><time datetime="2017-08-31T16:14:09.000Z" itemprop="datePublished">2017-09-01</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/08/npm-scripts/" class="thumbnail">
+  
+    <span style="background-image:url(/gallery/sri-lanka/P60417-160040.jpg)" alt="npm scripts 之 publish 和 install" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/08/npm-scripts/" class="title">npm scripts 之 publish 和 install</a></p>
+              <p class="item-date"><time datetime="2017-08-24T10:18:32.000Z" itemprop="datePublished">2017-08-24</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <!-- Top -->
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <!-- Buy Me a Coffee -->
+    <div style="margin: 10px;">
+      <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style>
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/csbun">
+        <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span>
+      </a>
+    </div>
+    <div id="footer-info" class="inner">
+      &copy; 2014 - 2020 叉起来就可以烧<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    const gitalk = new Gitalk({
+      clientID: '445f3ebe09ddd1d6a1eb',
+      clientSecret: '677a9844625ec22c3e39dcea819678794bb84d71',
+      repo: 'blog',
+      owner: 'csbun',
+      admin: ['csbun'],
+      id: location.pathname,      // Ensure uniqueness and length less than 50
+      // createIssueManually: true,
+      distractionFreeMode: false,  // Facebook-like distraction free mode
+    });
+    gitalk.render('comments')
+  })();
+</script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+    <script src="//unpkg.com/algolia-search-idd@0.1.0/dest/index.min.js"></script>
+<script type="text/javascript">
+(function () {
+  const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+  $('.search-form')
+    .attr('autocomplete', 'off')
+    // .on('submit', function(e) {
+    //   e.preventDefault();
+    // });
+  window.algoliaSearchIDD({
+    el: '.search-form-input',
+    applicationID: algoliaConfig.applicationId,
+    apiKey: algoliaConfig.apiKey,
+    indexName: algoliaConfig.indexName,
+  });
+})()
+</script>
+  </div>
+</body>
+</html>
