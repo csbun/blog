@@ -89,8 +89,8 @@ deploy:
 # Gitalk
 # https://github.com/gitalk/gitalk
 gitalk:
-  clientID: 445f3ebe09ddd1d6a1eb
-  clientSecret: 677a9844625ec22c3e39dcea819678794bb84d71
+  clientID: c804b99a7d41b2d2cbef
+  clientSecret: 83cfe9d88987685998971477af4d76fa6e01dde0
   repo: blog
   owner: csbun
 

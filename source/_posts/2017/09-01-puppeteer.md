@@ -10,7 +10,7 @@ tags:
 
 ![A Desert in painters perception](https://github.com/csbun/thal/raw/master/media/desertious.jpg)
 
-[`Puppeteer`](https://github.com/GoogleChrome/puppeteer) 是 Google Chrome 团队官方的无界面（Headless）Chrome 工具。正因为这个官方声明，许多业内自动化测试库都已经停止维护，包括 **[PhantomJS](http://phantomjs.org/)**。**[Selenium IDE for Firefox](https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/)** 项目也因为缺乏维护者而终止。
+[`Puppeteer`](https://github.com/GoogleChrome/puppeteer) 是 Google Chrome 团队官方的无头（Headless）Chrome 工具。正因为这个官方声明，许多业内自动化测试库都已经停止维护，包括 **[PhantomJS](http://phantomjs.org/)**。**[Selenium IDE for Firefox](https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/)** 项目也因为缺乏维护者而终止。
 
 > 译者注：关于 PhantomJS 和 Selenium IDE for Firefox 停止维护并没有找到相关的公告，但这两个项目的确已经都超过 2 年没有发布新版本了。但另一个今年 5 月才开启的项目 [Chromeless](https://github.com/graphcool/chromeless) 目前在 Github 上已经超过 1w star，目前还非常活跃。
 
@@ -113,7 +113,7 @@ node_modules/
 creds.js
 ```
 
-#### 以非无界面（non headless）模式启动
+#### 以非无头（non headless）模式启动
 
 在调用 Puppeteer 的 `launch` 方法的时候传入参数对象中带有 `headless: false`，即可启动其 GUI 界面，进行可视化调试。
 
