@@ -19,7 +19,9 @@ since: 2014 # The start year showing in your copyright section.
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://csbun.github.io/blog/
+# 用新域名，注意 Gittalk 配置 https://github.com/settings/applications/1423438
+# url: http://csbun.github.io/blog/
+url: http://blog.csbun.ga
 # 因为注册了域名 csbun.ga 所以不用 path 中添加 root: /blog/
 # 在 https://github.com/csbun/blog/settings 配置 Custom domain
 # 在 https://my.freenom.com/clientarea.php?managedns=csbun.ga&domainid=1100598859 配置 CNAME

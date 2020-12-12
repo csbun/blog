@@ -7,7 +7,7 @@ tags:
 - Puppeteer
 ---
 
-停更了2年，终于又有空写个小文章，关于 [Playwright][pw]，一个 Microsoft 开源的跨浏览器自动化工具，类似 Puppeteer 的 Chromium + Firefox + WebKit 版。
+停更了近 3 年，终于又有空写个小文章，关于 [Playwright][pw]，一个 Microsoft 开源的跨浏览器自动化工具，类似 Puppeteer 的 Chromium + Firefox + WebKit 版。
 
 Step by step guide to use [Playwright][pw].
 
@@ -388,6 +388,8 @@ And call this function after we generated the two screenshots:
 Bingo! Google Maps did a great job in the two different browser with almost the same behavior. The only different are font weight and also the navigate route weight.
 
 <img alt="Maps diff" src="https://raw.githubusercontent.com/csbun/zhagana/master/resources/map-diff.png" width="300px" />
+
+All source code can be found in [Github](https://github.com/csbun/zhagana).
 
 ## Postscript
 
