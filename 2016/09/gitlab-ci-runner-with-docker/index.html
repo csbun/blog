@@ -9,10 +9,10 @@
   <meta property="algolia:search" data-application-id="1DJDVE2IL4" data-api-key="c784a416f2e153ae75b1288ed8c3b0d8" data-index-name="BLOG">
 
   <meta name="description" content="Install CI Runner:Install a CI Runner on a machine is quite easy, here is the linux-repository:在一台普通机器上安装 CI Runner 应该是一件很简单的事情，下面是 Linux 的安装方法： Add GitLab’s official repository via apt-get or yum: 12">
-<meta name="keywords" content="ci,Docker">
+<meta name="keywords" content="Docker,ci">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GitLab CI Runner with Docker">
-<meta property="og:url" content="http://csbun.github.io/blog/2016/09/gitlab-ci-runner-with-docker/index.html">
+<meta property="og:url" content="http://blog.csbun.ga/2016/09/gitlab-ci-runner-with-docker/index.html">
 <meta property="og:site_name" content="Hans Chan&#39;s Blog">
 <meta property="og:description" content="Install CI Runner:Install a CI Runner on a machine is quite easy, here is the linux-repository:在一台普通机器上安装 CI Runner 应该是一件很简单的事情，下面是 Linux 的安装方法： Add GitLab’s official repository via apt-get or yum: 12">
 <meta property="og:locale" content="en">
@@ -93,7 +93,7 @@ ga('send', 'pageview');
         </nav>
       
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://blog.csbun.ga"></form>
       </div>
     </div>
   </div>
@@ -108,7 +108,7 @@ ga('send', 'pageview');
           <td><a class="main-nav-link" href="/tags">Tags</a></td>
         
         <td>
-          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://blog.csbun.ga"></form>
         </td>
       </tr>
     </table>
@@ -214,7 +214,7 @@ ga('send', 'pageview');
 <p>Here we use a simple <a href="https://hub.docker.com/_/centos/" target="_blank" rel="noopener">centos7 docker image</a>. Now we have a pure environment at each build.<br>这里我们选了一个 <a href="https://hub.docker.com/_/centos/" target="_blank" rel="noopener">centos7 的 Docker 镜像</a>，这样我们每次构建都有一个“纯净”的环境。</p>
 <h3><span id="create-docker-image">Create Docker Image</span></h3><p>Centos7 might too simple to do complex build with special requirements. We can <a href="https://docs.docker.com/engine/getstarted/step_four/" target="_blank" rel="noopener">build our own image</a> by <a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="noopener">creating</a> a <em>Dockerfile</em>, Base <code>FROM</code> centos and installed with java7 using <code>RUN</code> command.<br>当我们需要复杂的构建环境时，Centos7 明显是不够用的。所以我们可以<a href="https://docs.docker.com/engine/getstarted/step_four/" target="_blank" rel="noopener">自己做一个镜像</a>，只需<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="noopener">创建</a>一个 <em>Dockerfile</em> 文件，声明基于（<code>FROM</code>）centos，且通过 <code>RUN</code> 命令安装 java7。</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> centos:<span class="number">7</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> Hans Chan &lt;icsbun@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># yum install dependences</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> yum install -y java-1.7.0-openjdk \</span></span><br><span class="line"><span class="bash">                   java-1.7.0-openjdk-devel</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://csbun.github.io/blog/2015/06/docker-with-node/#build-and-push">Build</a> it on your machine:<br>在你的机器上<a href="http://csbun.github.io/blog/2015/06/docker-with-node/#build-and-push">构建</a>这个镜像：</p>
+<p><a href="http://csbun.github.io/blog/2015/06/docker-with-node/#build-and-push" target="_blank" rel="noopener">Build</a> it on your machine:<br>在你的机器上<a href="http://csbun.github.io/blog/2015/06/docker-with-node/#build-and-push" target="_blank" rel="noopener">构建</a>这个镜像：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t &lt;docker-user-name&gt;/&lt;docker-image-name&gt; .</span><br></pre></td></tr></table></figure>
 <p>Run it on your machine:<br>在你的机器上运行这个镜像：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># login bash</span></span><br><span class="line">docker run -i -t &lt;docker-user-name&gt;/&lt;docker-image-name&gt; /bin/bash</span><br><span class="line"><span class="comment"># check the java version</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
@@ -227,7 +227,7 @@ ga('send', 'pageview');
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://csbun.github.io/blog/2016/09/gitlab-ci-runner-with-docker/" data-id="cki1ecdej001m6blwn964zppw" class="article-share-link">Share</a>
+      <a data-url="http://blog.csbun.ga/2016/09/gitlab-ci-runner-with-docker/" data-id="ckiljxtsu001m8blwmvapoj4p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ci/">ci</a></li></ul>

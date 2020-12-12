@@ -12,26 +12,26 @@
 <meta name="keywords" content="ServiceWorker,Workbox,PWA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Workbox 入门">
-<meta property="og:url" content="http://csbun.github.io/blog/2018/02/workbox/index.html">
+<meta property="og:url" content="http://blog.csbun.ga/2018/02/workbox/index.html">
 <meta property="og:site_name" content="Hans Chan&#39;s Blog">
 <meta property="og:description" content="Workbox · JavaScript Libraries for adding offline support to web apps. 一个为网页应用添加离线支持的 JavaScript 库。  本文内容基于 Workbox@3.0.0">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/gs1.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/gs2.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/gs3.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/gs4.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/gs5.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/ol1.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/co1.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/cli1.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/cli2.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/wp1.png">
-<meta property="og:image" content="http://csbun.github.io/2018/02/workbox/wp2.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/gs1.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/gs2.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/gs3.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/gs4.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/gs5.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/ol1.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/co1.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/cli1.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/cli2.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/wp1.png">
+<meta property="og:image" content="http://blog.csbun.ga/2018/02/workbox/wp2.png">
 <meta property="og:updated_time" content="2020-11-03T11:52:46.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Workbox 入门">
 <meta name="twitter:description" content="Workbox · JavaScript Libraries for adding offline support to web apps. 一个为网页应用添加离线支持的 JavaScript 库。  本文内容基于 Workbox@3.0.0">
-<meta name="twitter:image" content="http://csbun.github.io/2018/02/workbox/gs1.png">
+<meta name="twitter:image" content="http://blog.csbun.ga/2018/02/workbox/gs1.png">
   
   
     <link rel="icon" href="favicon.ico">
@@ -103,7 +103,7 @@ ga('send', 'pageview');
         </nav>
       
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://blog.csbun.ga"></form>
       </div>
     </div>
   </div>
@@ -118,7 +118,7 @@ ga('send', 'pageview');
           <td><a class="main-nav-link" href="/tags">Tags</a></td>
         
         <td>
-          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://csbun.github.io/blog"></form>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://blog.csbun.ga"></form>
         </td>
       </tr>
     </table>
@@ -249,7 +249,7 @@ ga('send', 'pageview');
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主文档: 网络优先</span></span><br><span class="line">workbox.routing.registerRoute(</span><br><span class="line">  /index\.html/,</span><br><span class="line">  workbox.strategies.networkFirst(&#123;</span><br><span class="line">    cacheName: <span class="string">'workbox:html'</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>缓存成功后，即便断网，页面依旧可以访问及使用：</p>
 <img src="/2018/02/workbox/ol1.png" title="Web 完全离线">
-<p>具体 <a href="https://csbun.github.io/workbox-examples/workbox-get-started/index.html">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-get-started" target="_blank" rel="noopener">原码</a>。</p>
+<p>具体 <a href="https://csbun.github.io/workbox-examples/workbox-get-started/index.html" target="_blank" rel="noopener">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-get-started" target="_blank" rel="noopener">原码</a>。</p>
 <h2><span id="跨域请求">跨域请求</span></h2><p>在大多数的应用场景中，我们通常会将静态资源放到 CDN 中，这就涉及到跨域问题。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>不同域的文件<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://developers.google.com/web/tools/workbox/images/Workbox-Logo-Grey.svg"</span> <span class="attr">alt</span>=<span class="string">"不同域的文件"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>不同域的文件 且 <span class="tag">&lt;<span class="name">code</span>&gt;</span>access-control-allow-origin: *<span class="tag">&lt;/<span class="name">code</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/resize-image@0.0.4/example/google.png"</span> <span class="attr">alt</span>=<span class="string">"不同域的文件 且 allow cross origin"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 不同域的js 且 access-control-allow-origin: * --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/jquery@3.3.1/dist/jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>经测试，Workbox 可以用 <code>networkFirst</code> 和 <code>staleWhileRevalidate</code> 两种策略 Cache 跨域资源，而 <code>cacheFirst</code> 则完全不行。按 <a href="https://developers.google.com/web/tools/workbox/guides/handle-third-party-requests#workbox_caches_opaque_response_sometimes" target="_blank" rel="noopener">官网的解释</a>，Fetch 跨域的请求是无法知道该请求是否成功，因此 <code>cacheFirst</code> 则有可能缓存下了失败的请求，并从此以后都会接管页面的这个请求导致页面错误。而 <code>networkFirst</code> 和 <code>staleWhileRevalidate</code> 是有更新机制的，即使一次错误下次也许就修复了呢。</p>
@@ -260,7 +260,7 @@ ga('send', 'pageview');
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Force Caching of Opaque Responses</span></span><br><span class="line">workbox.routing.registerRoute(</span><br><span class="line">  <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'https://developers\.google\.com/'</span>),</span><br><span class="line">  workbox.strategies.cacheFirst(&#123;</span><br><span class="line">    cacheName: <span class="string">`<span class="subst">$&#123;CACHE_NAME&#125;</span>:cache-first`</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">// Force Cache</span></span><br><span class="line">      <span class="keyword">new</span> workbox.cacheableResponse.Plugin(&#123;</span><br><span class="line">        statuses: [<span class="number">0</span>, <span class="number">200</span>], <span class="comment">// One or more status codes that a Response can have and be considered cacheable.</span></span><br><span class="line">      &#125;),</span><br><span class="line">    ]</span><br><span class="line">  &#125;),</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>此时能看到 <code>https://developers.google.com/</code> 域名下的资源也被缓存了：</p>
 <img src="/2018/02/workbox/co1.png" title="强制跨域 CacheFirst">
-<p>具体的 <a href="https://csbun.github.io/workbox-examples/workbox-cross-origin/index.html">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-cross-origin" target="_blank" rel="noopener">源码</a></p>
+<p>具体的 <a href="https://csbun.github.io/workbox-examples/workbox-cross-origin/index.html" target="_blank" rel="noopener">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-cross-origin" target="_blank" rel="noopener">源码</a></p>
 <h2><span id="cli-工具">CLI 工具</span></h2><p>细心的小朋友一定发现了，上面的 <code>routing</code> 需要第三次访问才能真正从 Cache 中将缓存返回（或者支持离线），有没有办法将这个时间提前到第二次呢？这里，我们直接用 CLI 工具来解决这个问题。</p>
 <p>当作为命令行工具时，Workbox 有 3 个主要的命令：</p>
 <ul>
@@ -283,7 +283,7 @@ ga('send', 'pageview');
 <img src="/2018/02/workbox/cli1.png" title="第一次访问全部进行 Cache">
 <p>第二次访问，资源已经全部从 Service Worker 中返回，做到完全离线：</p>
 <img src="/2018/02/workbox/cli2.png" title="第二次访问 Web 完全离线">
-<p>具体 <a href="https://csbun.github.io/workbox-examples/workbox-using-cli/index.html">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-using-cli" target="_blank" rel="noopener">原码</a>。</p>
+<p>具体 <a href="https://csbun.github.io/workbox-examples/workbox-using-cli/index.html" target="_blank" rel="noopener">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-using-cli" target="_blank" rel="noopener">原码</a>。</p>
 <h2><span id="配合-webpack-使用">配合 Webpack 使用</span></h2><p>很多时候，项目是通过 webpack 构建的，于是我们期望在构建过程中，可以将所用到的静态资源进行预加载。如下有个简单的例子：</p>
 <figure class="highlight javascript"><figcaption><span>index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 业务代码</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'../css/style.css'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> elImg = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>);</span><br><span class="line">elImg.src = <span class="built_in">require</span>(<span class="string">'../images/icon-48.png'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(elImg);</span><br></pre></td></tr></table></figure>
 <p>因此我们至少有 3 个静态资源：</p>
@@ -317,12 +317,12 @@ ga('send', 'pageview');
 <img src="/2018/02/workbox/wp1.png" title="第一次访问进行 Cache">
 <p>第二次访问，被标识为 <code>exclude</code> 的 <code>index.html</code> 也被缓存到 <code>workbox-runtime</code> 的 Cache Storage 下面（这里这么做只是为了功能测试），其他资源按 <code>staleWhileRevalidate</code> 的规则直接从 Cache 返回。</p>
 <img src="/2018/02/workbox/wp2.png" title="第二次访问">
-<p>之后离线都能访问了。具体 <a href="https://csbun.github.io/workbox-examples/workbox-using-webpack/dist/index.html">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-using-webpack" target="_blank" rel="noopener">原码</a>。</p>
+<p>之后离线都能访问了。具体 <a href="https://csbun.github.io/workbox-examples/workbox-using-webpack/dist/index.html" target="_blank" rel="noopener">Demo</a> 和 <a href="https://github.com/csbun/workbox-examples/tree/master/workbox-using-webpack" target="_blank" rel="noopener">原码</a>。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://csbun.github.io/blog/2018/02/workbox/" data-id="cki1ecdf400276blwccz0bhg5" class="article-share-link">Share</a>
+      <a data-url="http://blog.csbun.ga/2018/02/workbox/" data-id="ckiljxtt000228blwntse718i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PWA/">PWA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ServiceWorker/">ServiceWorker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Workbox/">Workbox</a></li></ul>
