@@ -23,7 +23,7 @@ since: 2014 # The start year showing in your copyright section.
 # url: http://blog.csbun.ga
 url: http://csbun.github.io/blog/
 # 因为注册了域名 csbun.ga 所以不用 path 中添加 root: /blog/
-# 在 https://github.com/csbun/blog/settings 配置 Custom domain
+# 在 https://github.com/csbun/blog/settings/pages 配置 Custom domain
 # 在 https://my.freenom.com/clientarea.php?managedns=csbun.ga&domainid=1100598859 配置 CNAME
 # root: /
 root: /blog/
@@ -90,6 +90,7 @@ deploy:
 
 # Gitalk
 # https://github.com/gitalk/gitalk
+# https://github.com/settings/applications/1423438
 gitalk:
   clientID: c804b99a7d41b2d2cbef
   clientSecret: 83cfe9d88987685998971477af4d76fa6e01dde0
